@@ -1,0 +1,147 @@
+{
+    "success": true,
+    "projectName": "Jewellery Store Website",
+    "websiteType": "E-commerce",
+    "pages": [
+        {
+            "id": "page-1",
+            "name": "Home",
+            "description": "The main entry point of the website, showcasing the store's best features and promotions.",
+            "sections": [
+                {
+                    "id": "section-1",
+                    "name": "Navbar",
+                    "description": "Provides navigation links to other pages on the website."
+                },
+                {
+                    "id": "section-2",
+                    "name": "Hero",
+                    "description": "Displays a prominent banner or slideshow highlighting the store's latest collections or deals."
+                },
+                {
+                    "id": "section-3",
+                    "name": "About Us",
+                    "description": "Gives a brief overview of the store's history, mission, and values."
+                },
+                {
+                    "id": "section-4",
+                    "name": "Footer",
+                    "description": "Contains secondary information such as contact details, social media links, and a site map."
+                }
+            ]
+        },
+        {
+            "id": "page-2",
+            "name": "Services",
+            "description": "Outlines the various services offered by the store, including custom jewellery design and repair.",
+            "sections": [
+                {
+                    "id": "section-5",
+                    "name": "Navbar",
+                    "description": "Provides navigation links to other pages on the website."
+                },
+                {
+                    "id": "section-6",
+                    "name": "Services",
+                    "description": "Lists the different services provided by the store, with brief descriptions and prices."
+                },
+                {
+                    "id": "section-7",
+                    "name": "Why Choose Us",
+                    "description": "Explains the benefits of choosing the store for jewellery services, such as expert craftsmanship and competitive pricing."
+                },
+                {
+                    "id": "section-8",
+                    "name": "Footer",
+                    "description": "Contains secondary information such as contact details, social media links, and a site map."
+                }
+            ]
+        },
+        {
+            "id": "page-3",
+            "name": "Gallery",
+            "description": "Showcases the store's jewellery collections and custom designs through high-quality images.",
+            "sections": [
+                {
+                    "id": "section-9",
+                    "name": "Navbar",
+                    "description": "Provides navigation links to other pages on the website."
+                },
+                {
+                    "id": "section-10",
+                    "name": "Gallery",
+                    "description": "Displays a curated selection of jewellery pieces, with filtering and sorting options for easy browsing."
+                },
+                {
+                    "id": "section-11",
+                    "name": "Portfolio",
+                    "description": "Highlights the store's bespoke jewellery designs and custom projects."
+                },
+                {
+                    "id": "section-12",
+                    "name": "Footer",
+                    "description": "Contains secondary information such as contact details, social media links, and a site map."
+                }
+            ]
+        },
+        {
+            "id": "page-4",
+            "name": "Testimonials",
+            "description": "Features customer reviews and testimonials to build trust and credibility.",
+            "sections": [
+                {
+                    "id": "section-13",
+                    "name": "Navbar",
+                    "description": "Provides navigation links to other pages on the website."
+                },
+                {
+                    "id": "section-14",
+                    "name": "Testimonial",
+                    "description": "Displays quotes and reviews from satisfied customers, with optional images and ratings."
+                },
+                {
+                    "id": "section-15",
+                    "name": "Team",
+                    "description": "Introduces the store's staff and experts, including their experience and qualifications."
+                },
+                {
+                    "id": "section-16",
+                    "name": "Footer",
+                    "description": "Contains secondary information such as contact details, social media links, and a site map."
+                }
+            ]
+        },
+        {
+            "id": "page-5",
+            "name": "Contact",
+            "description": "Provides contact information and a form for customers to get in touch with the store.",
+            "sections": [
+                {
+                    "id": "section-17",
+                    "name": "Navbar",
+                    "description": "Provides navigation links to other pages on the website."
+                },
+                {
+                    "id": "section-18",
+                    "name": "Contact Form",
+                    "description": "Allows customers to send messages or inquiries to the store."
+                },
+                {
+                    "id": "section-19",
+                    "name": "Location",
+                    "description": "Displays the store's physical address and map location."
+                },
+                {
+                    "id": "section-20",
+                    "name": "Footer",
+                    "description": "Contains secondary information such as contact details, social media links, and a site map."
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "totalPages": 5,
+        "totalSections": 20,
+        "generatedAt": "2025-11-10T11:58:36.617Z"
+    }
+}
