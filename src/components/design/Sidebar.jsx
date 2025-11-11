@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import { useState } from "react";
-const SideBar = () => {
+const SideBar = ({ activeIndex, setActiveIndex }) => {
 
     const tabs = [
         {
@@ -64,19 +64,26 @@ const SideBar = () => {
     ];
 
     return (
-        <div className="w-20 bg-[#2B2321] h-full flex flex-col p-4  pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
-            {tabs.map((tab, index) => (
-                <React.Fragment key={index}>
-                    <div
-                        className={`flex items-center justify-center w-10 h-10 border border-[#4B4442] rounded-md cursor-pointer 
-    ${[1, 2].includes(index) ? "bg-[#695BE8] border border-[#695BE8]" : "bg-[#3A2F2C]"}`}
-                    >
-                        {tab.icon}
-                    </div>
-                    {index === 1 && <div className="h-0.5 w-full  bg-[#3A2F2C] my-2"></div>}
-                </React.Fragment>
-            ))}
-        </div>
+       <div className="w-20 bg-[#2B2321] h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
+      {tabs.map((tab, index) => (
+        <React.Fragment key={index}>
+          <div
+            onClick={() => setActiveIndex(index)}
+            className={`flex items-center justify-center w-10 h-10 border border-[#4B4442] rounded-md cursor-pointer 
+              ${
+                activeIndex === index
+                  ? "bg-[#695BE8] border-[#695BE8]"
+                  : "bg-[#3A2F2C]" 
+              }`}
+          >
+            {tab.icon}
+          </div>
+          {index === 1 && (
+            <div className="h-0.5 w-full bg-[#3A2F2C] my-2"></div>
+          )}
+        </React.Fragment>
+      ))}
+    </div>
     );
 };
 

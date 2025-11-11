@@ -1,4 +1,5 @@
 'use client'
+import { redirect } from "next/navigation";
 import React from "react";
 import { useState } from "react";
 const SideBar = () => {
@@ -43,7 +44,11 @@ const SideBar = () => {
           <div
             className={`flex items-center justify-center w-10 h-10 border-[#4B4442] border  rounded-md cursor-pointer 
               ${index >= tabs.length - 2 ? "bg-[#695BE8] border border-[#695BE8]" : "bg-[#3A2F2C]"}`}
-
+              onClick={()=>{
+                if(index == 1){
+                  redirect('/sitemappage')
+                }
+              }}
           >
             {tab.icon}
           </div>
