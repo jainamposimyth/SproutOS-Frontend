@@ -242,7 +242,7 @@ const Hero = () => {
                 node.id === updatedData.id ? { ...node, data: updatedData.data } : node
             )
         );
-        setSelectedNode(null); // close sidebar
+        setSelectedNode(null); 
     };
 
     const generateSitemap = async (userPrompt) => {
@@ -255,8 +255,15 @@ const Hero = () => {
             });
 
             const apiData = res.data;
+            console.log(apiData)
             console.log(apiData.projectName)
             setGeneratedData(apiData);
+            const allSectionNames = apiData.pages.flatMap(page =>
+                page.sections.map(section => section.name)
+                );
+
+                console.log(allSectionNames);
+
             setProjectName(apiData.projectName)
             setShowPromptInput(false);
         } catch (error) {
@@ -354,9 +361,9 @@ const Hero = () => {
                                     <label
                                         htmlFor="description"
                                         className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-[#88827E] transition-all
-                      peer-placeholder-shown:opacity-100
-                      peer-focus:opacity-0 peer-focus:hidden
-                      pointer-events-none"
+                            peer-placeholder-shown:opacity-100
+                            peer-focus:opacity-0 peer-focus:hidden
+                            pointer-events-none"
                                     >
                                         A compelling hero section with a catchy tagline, a brief description of the agency, and a call-to-action button.
                                     </label>
@@ -435,7 +442,7 @@ const Hero = () => {
                     >
                         Regenerate
                     </Button>
-
+                       
                     <Button
                         onClick={() => {
                             setIsSaving(true);

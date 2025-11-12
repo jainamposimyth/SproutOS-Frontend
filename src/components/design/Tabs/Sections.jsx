@@ -2,8 +2,10 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import React from 'react'
+import { useSelectedElement } from '@/context/SelectedElement'
 import { useState } from 'react'
 const Sections = () => {
+  const { selectedTexts,setSelectedTexts} = useSelectedElement();
         const [ThemeToggle, setThemeToggle] = useState('light')
           const [alignment, setAlignment] = useState('left')
           const [assets,setAssets]= useState('image')
@@ -21,7 +23,10 @@ const Sections = () => {
    <main className="bg-[#FFFDFA]  text-black flex-1 overflow-y-auto rounded-t-xl">
                     <div className='h-full w-80 border p-6 overflow-x-auto '>
                         <div className='text-xl font-[500] text-[#413735]'>
-              Section
+              Section 
+              <div>
+     
+              </div>
             </div>
             <div className="flex rounded-md p-1 mt-5 border bg-[#EFEFFF] border-[#695BE8] ">
 
@@ -50,7 +55,7 @@ const Sections = () => {
                peer-focus:opacity-0 peer-focus:hidden
                pointer-events-none"
                 >
-              Max Letters
+             {selectedTexts}
                 </label>
     
             </div>

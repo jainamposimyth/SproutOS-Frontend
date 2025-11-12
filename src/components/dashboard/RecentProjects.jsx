@@ -3,8 +3,8 @@ import React from 'react'
 const RecentProjects = ({title}) => {
   return (
   
-  <div className="p-2 pt-3 ">
-    <div className="pb-3 border border-[#D7D3C9] w-64 rounded-xl">
+  <div className="p-2 pt-3 cursor-pointer ">
+    <div className="pb-3 border border-[#D7D3C9] w-full rounded-xl">
 
     <img src="./thumbnail.png" alt="" />
   <div className="flex justify-between items-start">

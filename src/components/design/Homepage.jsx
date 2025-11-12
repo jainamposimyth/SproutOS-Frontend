@@ -7,9 +7,16 @@ export default function Homepage() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <div className="flex h-screen">
-      <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
-      <Hero activeIndex={activeIndex} />
+    <div className="flex min-h-screen bg-[#FFFDF9]">
+    
+      <div className="hidden sm:flex">
+        <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      </div>
+
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Hero activeIndex={activeIndex} />
+      </div>
     </div>
   )
 }

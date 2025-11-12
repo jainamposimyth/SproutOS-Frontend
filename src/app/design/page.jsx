@@ -8,19 +8,17 @@ export default function DesignPage() {
 
   return (
       <div className="flex flex-col h-screen">
-      {/* Navbar at the very top */}
-      <Navbar />
 
-      {/* Main layout: Sidebar + Hero */}
-      <div className="flex flex-1 overflow-hidden">
+      <Navbar />
+       <div className="flex flex-1 overflow-hidden">
         <div className="w-20 bg-[#2B2321] border-r border-[#3A2F2C]">
           <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
-        </div>
+          </div>
 
-        <div className="flex-1 overflow-auto bg-[#F5F3EB]">
+          <div className="flex-1 overflow-auto  ">
           <Hero activeIndex={activeIndex} />
+          </div>
         </div>
       </div>
-    </div>
   )
 }
