@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { X, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '../ui/input';
 
 export default function SideEditor({ node, onSave, onClose }) {
   const [title, setTitle] = useState(node.data.title || '');
@@ -33,75 +34,92 @@ export default function SideEditor({ node, onSave, onClose }) {
   };
 
   return (
-    <div className="fixed top-0 right-0 h-full w-80 bg-white border-l border-gray-200 shadow-xl z-50 p-4 overflow-y-auto transition-transform duration-300">
+    <div>
+  <div className="absolute top-0 left-16 rounded-t-xl h-full w-80 bg-white border-l border-gray-200 shadow-xl z-50 p-4 overflow-y-auto transition-transform duration-300">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-black">Edit Page</h2>
+        <h2 className="text-lg font-semibold text-black">Project</h2>
         <button onClick={onClose}>
           <X className="w-5 h-5 text-gray-500 hover:text-black" />
         </button>
       </div>
 
-      {/* Page Title */}
-      <label className="block text-black text-sm font-medium mb-1">Page Title</label>
-      <input
+
+  <div className='text-md font-[500] pt-3 text-[#413735]'>
+              Name
+            </div>
+      <Input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="w-full border border-gray-300 text-black rounded-md p-2 text-sm mb-4"
-      />
+       className="w-full border border-[#D7D3C9] text-black rounded-md p-3 mt-2 text-sm mb-4 
+             focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0 "
+/>
 
-      {/* Sections */}
-      <label className="block text-sm font-medium text-black mb-2">Sections</label>
 
-      <div className="space-y-2">
+       <div className='text-md  pt-5 font-[500] text-[#413735]'>
+              Sections
+            </div>
+
+      <div className="">
         {sections.map((section, index) => (
           <div
             key={index}
-            className="border border-gray-200 rounded-md p-2 bg-[#F9F9F9]"
+            className="rounded-md p-2 "
           >
-            {/* Section Header */}
             <div
               className="flex justify-between items-center cursor-pointer"
               onClick={() => handleToggleExpand(index)}
             >
-              <input
+              <Input
                 type="text"
                 value={section.name}
                 onChange={(e) => handleSectionChange(index, 'name', e.target.value)}
-                className="w-full border border-gray-300 text-black rounded-md p-1 text-sm mr-2"
-              />
+              className="w-full border border-[#D7D3C9] text-black rounded-md p-3 mt-2 text-sm mb-4 
+             focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0 "
+/>
+    
               {expandedIndex === index ? (
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 ml-3 -mt-2 text-gray-600" />
               ) : (
-                <ChevronRight className="w-4 h-4 text-gray-600" />
+                <ChevronRight className="w-4 h-4 ml-3 -mt-2 text-gray-600" />
               )}
             </div>
 
-            {/* Section Description (only visible when expanded) */}
+
             {expandedIndex === index && (
+
+           <>
+            <div className='text-sm font-[500] text-[#413735]'>
+              Description
+            </div>
+
               <textarea
                 value={section.description}
                 onChange={(e) =>
                   handleSectionChange(index, 'description', e.target.value)
                 }
                 placeholder="Enter description..."
-                className="w-full mt-2 border border-gray-300 text-black rounded-md p-2 text-sm"
+                className="w-full mt-2 border border-gray-300 text-black rounded-md p-2 text-sm resize-none focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0"
                 rows={3}
               />
+              </>
             )}
           </div>
         ))}
       </div>
 
-      {/* Footer Buttons */}
+   
       <div className="flex text-black justify-end gap-2 mt-6">
-        <Button variant="outline" onClick={onClose}>
+        <Button className="cursor-pointer" variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button onClick={handleSave}>
+        <Button className="bg-[#EFEFFF] hover:bg-[#EFEFFF] text-[#695BE8] border border-[#847DFE] cursor-pointer" onClick={handleSave}> 
           Save
         </Button>
       </div>
     </div>
+
+    </div>
+  
   );
 }

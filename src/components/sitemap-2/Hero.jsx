@@ -128,10 +128,10 @@ const transformApiData = (apiData) => {
     const colGap = 300;
 
     // Find or create homepage
-    let homePageIndex = pages.findIndex(page => 
+    let homePageIndex = pages.findIndex(page =>
         page.name.toLowerCase() === 'home' || page.name.toLowerCase() === 'homepage'
     );
-    
+
     // If no homepage found, use first page as main card
     if (homePageIndex === -1) homePageIndex = 0;
 
@@ -166,7 +166,7 @@ const transformApiData = (apiData) => {
             }
         });
 
-      
+
         if (index !== homePageIndex) {
             edges.push({
                 id: `edge-${pages[homePageIndex].id}-${page.id}`,
@@ -213,11 +213,11 @@ const defaultData = {
         },
     ],
     edges: [
-        
+
         { id: "e1-2", source: "1", sourceHandle: "1-b", target: "2", targetHandle: "2-t", type: "smoothstep" },
         { id: "e1-3", source: "1", sourceHandle: "1-b", target: "3", targetHandle: "3-t", type: "smoothstep" },
         { id: "e1-4", source: "1", sourceHandle: "1-b", target: "4", targetHandle: "4-t", type: "smoothstep" },
-    
+
     ]
 };
 
@@ -232,17 +232,18 @@ const Hero = () => {
     const [showPromptInput, setShowPromptInput] = useState(true);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-    const [selectedNode,setSelectedNode] = useState(null)
+    const [selectedNode, setSelectedNode] = useState(null)
+    const [isSaving, setIsSaving] = useState(false)
     const router = useRouter()
-const [projectName,setProjectName] = useState('Project Name')
-const handleSaveNode = (updatedData) => {
-    setNodes((nds) =>
-      nds.map((node) =>
-        node.id === updatedData.id ? { ...node, data: updatedData.data } : node
-      )
-    );
-    setSelectedNode(null); // close sidebar
-  };
+    const [projectName, setProjectName] = useState('Project Name')
+    const handleSaveNode = (updatedData) => {
+        setNodes((nds) =>
+            nds.map((node) =>
+                node.id === updatedData.id ? { ...node, data: updatedData.data } : node
+            )
+        );
+        setSelectedNode(null); // close sidebar
+    };
 
     const generateSitemap = async (userPrompt) => {
         setIsGenerating(true);
@@ -254,7 +255,7 @@ const handleSaveNode = (updatedData) => {
             });
 
             const apiData = res.data;
-           console.log(apiData.projectName)
+            console.log(apiData.projectName)
             setGeneratedData(apiData);
             setProjectName(apiData.projectName)
             setShowPromptInput(false);
@@ -276,28 +277,29 @@ const handleSaveNode = (updatedData) => {
         setNodes([]);
         setEdges([]);
     };
-const saveSiteMap = async () => {
-  try {
-    const response = await axios.post('http://localhost:4000/api/save-sitemap', {
-      projectName,
-      nodes,
-      edges,
-      prompt,
-      language,
-    });
+    const saveSiteMap = async () => {
+        try {
+            const response = await axios.post('http://localhost:4000/api/save-sitemap', {
+                projectName,
+                nodes,
+                edges,
+                prompt,
+                language,
+            });
+            setIsSaving(false)
+            if (response.status === 200) {
+                alert('Sitemap has been saved!');
 
-    if (response.status === 200) {
-      alert('Sitemap has been saved!');
-    } else {
-      alert('Failed to save sitemap.');
-    }
-  } catch (error) {
-    console.error('Error saving sitemap:', error);
-    alert('Something went wrong while saving the sitemap.');
-  }
-};
+            } else {
+                alert('Failed to save sitemap.');
+            }
+        } catch (error) {
+            console.error('Error saving sitemap:', error);
+            alert('Something went wrong while saving the sitemap.');
+        }
+    };
 
- 
+
     const handleSubmitPrompt = (e) => {
         e.preventDefault();
         if (prompt.trim()) {
@@ -330,7 +332,7 @@ const saveSiteMap = async () => {
                         <div className="h-full w-80 border p-6">
                             <div className="text-xl font-[500] text-[#413735]">Project</div>
 
-                         
+
                             <div className="pt-5 gap-8 flex items-start justify-between">
                                 <div className="text-[#574E4C] text-lg font-[500]">
                                     Sitemap Prompt <span className="text-red-600">*</span>
@@ -361,7 +363,7 @@ const saveSiteMap = async () => {
                                 )}
                             </div>
 
-                            {/* Number of Pages */}
+
                             <div className="mt-4">
                                 <div className="flex flex-col gap-2">
                                     <div className="text-[#574E4C] font-[500] text-lg">Number of Pages</div>
@@ -382,7 +384,7 @@ const saveSiteMap = async () => {
                                 </div>
                             </div>
 
-                            {/* Language */}
+
                             <div className="mt-6">
                                 <div className="flex flex-col gap-2">
                                     <div className="text-[#574E4C] font-[500] text-lg">Language</div>
@@ -426,39 +428,42 @@ const saveSiteMap = async () => {
             <Navbar projectName={projectName} />
             <div className="relative flex min-h-screen">
                 <SideBar />
-              <div className="absolute top-3 flex gap-3 right-3 ">
-                  <Button 
-                    className=" bg-[#E7FFE7] hover:bg-[#E7FFE7]   border border-[#2EA343]  text-gray-700 cursor-pointer z-50 " 
-                    onClick={regenerate}
-                >
-                    Regenerate
-                </Button>
+                <div className="absolute top-3 flex gap-3 right-3 ">
+                    <Button
+                        className=" bg-[#E7FFE7] hover:bg-[#E7FFE7]   border border-[#2EA343]  text-gray-700 cursor-pointer z-50 "
+                        onClick={regenerate}
+                    >
+                        Regenerate
+                    </Button>
 
-                  <Button 
-                  onClick={saveSiteMap}
-                  
-                    className=" bg-white border border-black hover:text-white hover:bg-black   text-black cursor-pointer z-50 ">
-                    Save
-                </Button>
-              </div>
-                  <ReactFlow
+                    <Button
+                        onClick={() => {
+                            setIsSaving(true);
+                            saveSiteMap();
+                        }}
+                        className="bg-white border border-black hover:text-white hover:bg-black text-black cursor-pointer z-50"
+                    >
+                        {isSaving ? 'Saving...' : 'Save'}
+                    </Button>
+                </div>
+                <ReactFlow
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     nodeTypes={nodeTypes}
-                    onNodeClick={(_, node) => setSelectedNode(node)} 
+                    onNodeClick={(_, node) => setSelectedNode(node)}
                     fitView
                 >
                     <Background />
                 </ReactFlow>
                 {selectedNode && (
-  <SideEditor
-    node={selectedNode}
-    onSave={handleSaveNode}
-    onClose={() => setSelectedNode(null)}
-  />
-)}
+                    <SideEditor
+                        node={selectedNode}
+                        onSave={handleSaveNode}
+                        onClose={() => setSelectedNode(null)}
+                    />
+                )}
             </div>
         </div>
     );

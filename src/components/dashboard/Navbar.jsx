@@ -4,8 +4,8 @@ import { Button } from '../ui/button'
 
 const Navbar = () => {
     return (
-        <div className="h-16 bg-[#2B2321] flex items-center justify-between px-6 border-b border-[#3A2F2C]">
-       <div className='border-2 cursor-pointer  border-[#4B4442] px-3 py-2 rounded-lg'>
+        <div className="h-16  bg-[#2B2321] flex items-center justify-between px-6 border-b border-[#3A2F2C]">
+       <div className='border-2 cursor-pointer   border-[#4B4442] px-3 py-2 rounded-lg'>
                 <svg width="16" height="24" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.85185 16.26C4.42798 16.8141 5.14403 17.0911 6 17.0911C6.85597 17.0911 7.57202 16.8141 8.14815 16.26C8.72428 15.6896 9.01235 14.9482 9.01235 14.0356C9.01235 13.1556 8.72428 12.4385 8.14815 11.8845C7.57202 11.3304 6.85597 11.0534 6 11.0534C5.14403 11.0534 4.42798 11.3304 3.85185 11.8845C3.27572 12.4385 2.98765 13.1556 2.98765 14.0356C2.98765 14.9482 3.27572 15.6896 3.85185 16.26ZM10.2469 18.3378C9.09465 19.4459 7.67901 20 6 20C4.32099 20 2.89712 19.4459 1.7284 18.3378C0.576132 17.2296 0 15.7956 0 14.0356C0 12.2756 0.576132 10.8497 1.7284 9.75782C2.89712 8.66597 4.32099 8.12004 6 8.12004C7.67901 8.12004 9.09465 8.66597 10.2469 9.75782C11.4156 10.8497 12 12.2756 12 14.0356C12 15.7956 11.4156 17.2296 10.2469 18.3378Z" fill="#FFFDF9" />
                     <path d="M2.78487 5.78635C2.75508 5.81131 2.70986 5.78691 2.7149 5.74859L3.40127 0.532099C3.40615 0.494966 3.45377 0.481965 3.47719 0.511369L6.72116 4.58392C6.74465 4.6134 6.72059 4.65631 6.68289 4.65216L4.45248 4.40696C4.44081 4.40568 4.42912 4.4092 4.42016 4.41671L2.78487 5.78635Z" fill="#FFFDF9" />
@@ -14,17 +14,17 @@ const Navbar = () => {
                 </svg>
 
             </div>
-            <div className='bg-[#4B4442]  ml-38 flex w-96 rounded-md'>
-                <div className='pl-8 pt-2 ml-24'>
+            <div className='bg-[#4B4442]  ml-20 md:ml-38 flex w-56 md:w-96 rounded-md'>
+                <div className='md:pl-8  pt-2 ml-0 md:ml-24'>
 
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path opacity="0.9" d="M15.75 15.75L12.75 12.75M14.25 8.25C14.25 9.8413 13.6179 11.3674 12.4926 12.4926C11.3674 13.6179 9.8413 14.25 8.25 14.25C6.6587 14.25 5.13258 13.6179 4.00736 12.4926C2.88214 11.3674 2.25 9.8413 2.25 8.25C2.25 6.6587 2.88214 5.13258 4.00736 4.00736C5.13258 2.88214 6.6587 2.25 8.25 2.25C9.8413 2.25 11.3674 2.88214 12.4926 4.00736C13.6179 5.13258 14.25 6.6587 14.25 8.25Z" stroke="#D7D3C9" strokeWidth="1.125" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
 
                 </div>
-                <Input type="email" placeholder="Search Project" className="border-none focus-visible:ring-0 focus-visible:ring-offset-0  focus:outline-none placeholder:text-[#D7D3C9]" />
+                <Input type="email" placeholder="Search Project" className="border-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full  focus:outline-none placeholder:text-[#D7D3C9]" />
             </div>
-            <div className='flex gap-3 '>
+            <div className='md:flex hidden gap-3 '>
                <Button className="bg-[#2B2321] hover:bg-[#2B2321] cursor-pointer text-[#88827E]">
                 Feedback
                </Button>
