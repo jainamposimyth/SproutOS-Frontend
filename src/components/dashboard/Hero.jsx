@@ -28,13 +28,13 @@ const Hero = () => {
         </div>
 
 
-        <main className="flex-1 overflow-y-auto p-4 pt-24 sm:pt-28 md:pt-32 lg:pt-40 md:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto p-4 pt-48 sm:pt-28 md:pt-32 lg:pt-40 md:p-6 lg:p-8">
           <div className="flex flex-col items-center justify-start">
-            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center text-neutral-800 dark:text-white px-2 sm:px-4">
+            <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center text-neutral-800 dark:text-white px-2 sm:px-4">
               What do you want to Build?
             </h1>
 
-            {/* Textarea + Buttons */}
+        
             <div className="relative w-full sm:w-4/5 max-w-3xl mt-8 sm:mt-10 md:mt-6 lg:mt-8 px-2 sm:px-4 md:px-0">
               <textarea
                 id="description"
@@ -50,8 +50,8 @@ const Hero = () => {
                 Describe your project...
               </label>
 
-              {/* Left buttons below textarea */}
-              <div className="absolute left-10 sm:left-5 md:left-4 -bottom-8   sm:bottom-20 md:bottom-3 flex flex-wrap gap-5 md:gap-3">
+            
+              <div className="absolute left-12 sm:left-5 md:left-4 -bottom-8   sm:bottom-20 md:bottom-3 flex flex-wrap gap-3 md:gap-3">
                 <Button className="cursor-pointer bg-[#F5F3EB] border border-[#D7D3C9] hover:bg-[#F5F3EB] text-[#574E4C] text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
                   <svg
                     width="14"
@@ -132,7 +132,7 @@ const Hero = () => {
                   + New Project
                 </Button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3  mx-2 md:gap-4 lg:grid-cols-4">
                 <RecentProjects title="Project 1" />
                 <RecentProjects title="Project 2" />
                 <RecentProjects title="Project 3" />
