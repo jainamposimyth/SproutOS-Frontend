@@ -6,7 +6,7 @@ const RecentProjects = ({title}) => {
   <div className="p-2 pt-3 cursor-pointer ">
     <div className="pb-3 border border-sprout-color-border-weak w-full rounded-xl">
 
-    <img src="./thumbnail.png" alt="" />
+    <img src="./thumbnail.png" alt="" className='w-full' />
   <div className="flex justify-between items-start">
       <h1 className="text-sprout-color-text-default p-2 pl-4 ">{title}</h1>
             <div className="text-sprout-color-text-default flex gap-1 p-3 font-normal text-sm ">

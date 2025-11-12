@@ -73,7 +73,7 @@ const Hero = () => {
       <span className="sm:hidden">Builder</span>
     </Button>
 
-    <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weakertext-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
+    <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weaker text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
      
 
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
