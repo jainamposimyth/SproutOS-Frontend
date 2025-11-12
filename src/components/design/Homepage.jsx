@@ -7,7 +7,7 @@ export default function Homepage() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (
-    <div className="flex min-h-screen bg-[#FFFDF9]">
+    <div className="flex min-h-screen bg-sprout-color-background-weaker">
     
       <div className="hidden sm:flex">
         <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />

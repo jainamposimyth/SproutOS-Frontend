@@ -56,7 +56,7 @@ import ReactFlow, {
                         </svg>
     
                     </div>
-                    <h3 className="font-semibold text-sm mb-2 mt-3 text-center bg-[#EFEFFF] text-black p-0.5  rounded-md">
+                    <h3 className="font-semibold text-sm mb-2 mt-3 text-center bg-sprout-color-secondary-lightest text-black p-0.5  rounded-md">
                         {data.title}
                     </h3>
                 </div>
@@ -67,8 +67,8 @@ import ReactFlow, {
                             <AccordionItem
                                 value={`item-${idx}`}
                                 className={`
-          border border-[#D7D3C9] rounded-md bg-white shadow-sm overflow-hidden
-          data-[state=open]:bg-[#E7FFE7] data-[state=open]:border-[#2EA343]
+          border border-sprout-color-border-weakrounded-md bg-white shadow-sm overflow-hidden
+          data-[state=open]:bg-[#E7FFE7] data-[state=open]:border-sprout-color-success
         `}
                             >
                                 <AccordionTrigger
@@ -83,7 +83,7 @@ import ReactFlow, {
                                 </AccordionTrigger>
     
                                 <AccordionContent
-                                    className="px-2 py-1 text-[10px] text-gray-700 bg-[#E7FFE7] border-b border-[#2EA343] leading-snug"
+                                    className="px-2 py-1 text-[10px] text-gray-700 bg-[#E7FFE7] border-b border-sprout-color-success leading-snug"
                                 >
                                     {section && typeof section === "object" && section.description
                                         ? section.description

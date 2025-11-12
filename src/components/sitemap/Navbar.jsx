@@ -5,7 +5,7 @@ const Navbar = ({projectName}) => {
     
     return (
         <div className="h-16 bg-[#2B2321] flex items-start pt-3 px-4 border-b border-[#3A2F2C]">
-            <div className='border-2 cursor-pointer  border-[#4B4442] px-3 py-2 mb-2 rounded-lg'>
+            <div className='border-2 cursor-pointer  border-sprout-color-border-dark-weak px-3 py-2 mb-2 rounded-lg'>
                 <svg  width="16" height="24" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.85185 16.26C4.42798 16.8141 5.14403 17.0911 6 17.0911C6.85597 17.0911 7.57202 16.8141 8.14815 16.26C8.72428 15.6896 9.01235 14.9482 9.01235 14.0356C9.01235 13.1556 8.72428 12.4385 8.14815 11.8845C7.57202 11.3304 6.85597 11.0534 6 11.0534C5.14403 11.0534 4.42798 11.3304 3.85185 11.8845C3.27572 12.4385 2.98765 13.1556 2.98765 14.0356C2.98765 14.9482 3.27572 15.6896 3.85185 16.26ZM10.2469 18.3378C9.09465 19.4459 7.67901 20 6 20C4.32099 20 2.89712 19.4459 1.7284 18.3378C0.576132 17.2296 0 15.7956 0 14.0356C0 12.2756 0.576132 10.8497 1.7284 9.75782C2.89712 8.66597 4.32099 8.12004 6 8.12004C7.67901 8.12004 9.09465 8.66597 10.2469 9.75782C11.4156 10.8497 12 12.2756 12 14.0356C12 15.7956 11.4156 17.2296 10.2469 18.3378Z" fill="#FFFDF9" />
                     <path d="M2.78487 5.78635C2.75508 5.81131 2.70986 5.78691 2.7149 5.74859L3.40127 0.532099C3.40615 0.494966 3.45377 0.481965 3.47719 0.511369L6.72116 4.58392C6.74465 4.6134 6.72059 4.65631 6.68289 4.65216L4.45248 4.40696C4.44081 4.40568 4.42912 4.4092 4.42016 4.41671L2.78487 5.78635Z" fill="#FFFDF9" />
@@ -14,7 +14,7 @@ const Navbar = ({projectName}) => {
                 </svg>
 
             </div>
-            <div className="inline-block h-8 w-0.5 ml-3 mt-0.5  bg-[#4B4442]">
+            <div className="inline-block h-8 w-0.5 ml-3 mt-0.5  bg-sprout-color-border-dark-weak">
                 <div className="pl-5 pt-1 flex gap-2 ">
                     <div>
                         <svg className="mt-0.5" width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,10 +22,10 @@ const Navbar = ({projectName}) => {
                             <path d="M7.91406 17.5V12.9167C7.91406 12.4746 8.08966 12.0507 8.40222 11.7382C8.71478 11.4256 9.1387 11.25 9.58073 11.25H10.4141C10.8561 11.25 11.28 11.4256 11.5926 11.7382C11.9051 12.0507 12.0807 12.4746 12.0807 12.9167V17.5" stroke="#88827E" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </div>
-                    <div className="text-lg text-[#88827E]">
+                    <div className="text-lg text-sprout-color-text-disabled">
                         <Link href="/">   Home </Link>
                     </div>
-                    <div className="text-[#88827E] ">
+                    <div className="text-sprout-color-text-disabled ">
                         /
                     </div>
                 

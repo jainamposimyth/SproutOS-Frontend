@@ -69,10 +69,10 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
         <React.Fragment key={index}>
           <div
             onClick={() => setActiveIndex(index)}
-            className={`flex items-center justify-center w-10 h-10 border border-[#4B4442] rounded-md cursor-pointer 
+            className={`flex items-center justify-center w-10 h-10 border border-sprout-color-border-dark-weak rounded-md cursor-pointer 
               ${
                 activeIndex === index
-                  ? "bg-[#695BE8] border-[#695BE8]"
+                  ? "bg-sprout-color-secondary border-sprout-color-secondary"
                   : "bg-[#3A2F2C]" 
               }`}
           >

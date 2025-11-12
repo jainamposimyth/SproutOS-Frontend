@@ -44,19 +44,19 @@ export default function SideEditor({ node, onSave, onClose }) {
       </div>
 
 
-  <div className='text-md font-[500] pt-3 text-[#413735]'>
+  <div className='text-md font-[500] pt-3 text-sprout-color-text-default'>
               Name
             </div>
       <Input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-       className="w-full border border-[#D7D3C9] text-black rounded-md p-3 mt-2 text-sm mb-4 
-             focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0 "
+       className="w-full border border-sprout-color-border-weak text-black rounded-md p-3 mt-2 text-sm mb-4 
+             focus:outline-none focus:ring-0  focus:border focus:border-sprout-color-border-weak focus-visible:ring-0 "
 />
 
 
-       <div className='text-md  pt-5 font-[500] text-[#413735]'>
+       <div className='text-md  pt-5 font-[500] text-sprout-color-text-default'>
               Sections
             </div>
 
@@ -74,8 +74,8 @@ export default function SideEditor({ node, onSave, onClose }) {
                 type="text"
                 value={section.name}
                 onChange={(e) => handleSectionChange(index, 'name', e.target.value)}
-              className="w-full border border-[#D7D3C9] text-black rounded-md p-3 mt-2 text-sm mb-4 
-             focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0 "
+              className="w-full border border-sprout-color-border-weak text-black rounded-md p-3 mt-2 text-sm mb-4 
+             focus:outline-none focus:ring-0  focus:border focus:border-sprout-color-border-weak focus-visible:ring-0 "
 />
     
               {expandedIndex === index ? (
@@ -89,7 +89,7 @@ export default function SideEditor({ node, onSave, onClose }) {
             {expandedIndex === index && (
 
            <>
-            <div className='text-sm font-[500] text-[#413735]'>
+            <div className='text-sm font-[500] text-sprout-color-text-default'>
               Description
             </div>
 
@@ -99,7 +99,7 @@ export default function SideEditor({ node, onSave, onClose }) {
                   handleSectionChange(index, 'description', e.target.value)
                 }
                 placeholder="Enter description..."
-                className="w-full mt-2 border border-gray-300 text-black rounded-md p-2 text-sm resize-none focus:outline-none focus:ring-0  focus:border focus:border-[#D7D3C9] focus-visible:ring-0"
+                className="w-full mt-2 border border-gray-300 text-black rounded-md p-2 text-sm resize-none focus:outline-none focus:ring-0  focus:border focus:border-sprout-color-border-weak focus-visible:ring-0"
                 rows={3}
               />
               </>
@@ -113,7 +113,7 @@ export default function SideEditor({ node, onSave, onClose }) {
         <Button className="cursor-pointer" variant="outline" onClick={onClose}>
           Cancel
         </Button>
-        <Button className="bg-[#EFEFFF] hover:bg-[#EFEFFF] text-[#695BE8] border border-[#847DFE] cursor-pointer" onClick={handleSave}> 
+        <Button className="bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary border border-sprout-color-secondary-lighter cursor-pointer" onClick={handleSave}> 
           Save
         </Button>
       </div>

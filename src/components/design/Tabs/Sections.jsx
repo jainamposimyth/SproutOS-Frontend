@@ -14,33 +14,33 @@ const Sections = () => {
     `text-xs border rounded-sm p-0.5 transition-all duration-200 cursor-pointer
     ${
       alignment === pos
-        ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-        : 'border-transparent bg-transparent text-[#88827E]'
-    } hover:bg-[#EFEFFF]`
+        ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+        : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+    } hover:bg-sprout-color-secondary-lightest`
 
 
   return (
    <main className="bg-[#FFFDFA]  text-black flex-1 overflow-y-auto rounded-t-xl">
                     <div className='h-full w-80 border p-6 overflow-x-auto '>
-                        <div className='text-xl font-[500] text-[#413735]'>
+                        <div className='text-xl font-[500] text-sprout-color-text-default'>
               Section 
               <div>
      
               </div>
             </div>
-            <div className="flex rounded-md p-1 mt-5 border bg-[#EFEFFF] border-[#695BE8] ">
+            <div className="flex rounded-md p-1 mt-5 border bg-sprout-color-secondary-lightest border-sprout-color-secondary ">
 
 <svg className="ml-6 mt-1.5" width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fillRule="evenodd" clipRule="evenodd" d="M7.33906 2.05071C7.51432 1.87566 7.75188 1.77734 7.99957 1.77734C8.24726 1.77734 8.48482 1.87566 8.66007 2.05071L10.4235 3.81296C10.5103 3.89977 10.5792 4.00284 10.6262 4.11628C10.6733 4.22972 10.6975 4.35132 10.6975 4.47412C10.6975 4.59692 10.6733 4.71851 10.6262 4.83196C10.5792 4.9454 10.5103 5.04847 10.4235 5.13528L8.66007 6.89753C8.48482 7.07258 8.24726 7.17089 7.99957 7.17089C7.75188 7.17089 7.51432 7.07258 7.33906 6.89753L5.57565 5.13528C5.48879 5.04847 5.41989 4.9454 5.37289 4.83196C5.32588 4.71851 5.30168 4.59692 5.30168 4.47412C5.30168 4.35132 5.32588 4.22972 5.37289 4.11628C5.41989 4.00284 5.48879 3.89977 5.57565 3.81296L7.33906 2.05071ZM10.8634 5.57584C10.9502 5.48898 11.0533 5.42008 11.1667 5.37306C11.2801 5.32605 11.4017 5.30186 11.5245 5.30186C11.6473 5.30186 11.7689 5.32605 11.8823 5.37306C11.9958 5.42008 12.0989 5.48898 12.1857 5.57584L13.9478 7.3381C14.0347 7.4249 14.1036 7.52797 14.1506 7.64142C14.1976 7.75486 14.2218 7.87646 14.2218 7.99925C14.2218 8.12205 14.1976 8.24365 14.1506 8.35709C14.1036 8.47054 14.0347 8.57361 13.9478 8.66041L12.1857 10.4227C12.0989 10.5095 11.9958 10.5784 11.8823 10.6254C11.7689 10.6725 11.6473 10.6967 11.5245 10.6967C11.4017 10.6967 11.2801 10.6725 11.1667 10.6254C11.0533 10.5784 10.9502 10.5095 10.8634 10.4227L9.10123 8.66041C9.01438 8.57361 8.94548 8.47054 8.89847 8.35709C8.85146 8.24365 8.82726 8.12205 8.82726 7.99925C8.82726 7.87646 8.85146 7.75486 8.89847 7.64142C8.94548 7.52797 9.01438 7.4249 9.10123 7.3381L10.8634 5.57584ZM3.81348 5.57584C3.90028 5.48898 4.00335 5.42008 4.11679 5.37306C4.23022 5.32605 4.35181 5.30186 4.47461 5.30186C4.5974 5.30186 4.71899 5.32605 4.83243 5.37306C4.94587 5.42008 5.04893 5.48898 5.13573 5.57584L6.8979 7.3381C6.98476 7.4249 7.05366 7.52797 7.10067 7.64142C7.14768 7.75486 7.17187 7.87646 7.17187 7.99925C7.17187 8.12205 7.14768 8.24365 7.10067 8.35709C7.05366 8.47054 6.98476 8.57361 6.8979 8.66041L5.13573 10.4227C5.04893 10.5095 4.94587 10.5784 4.83243 10.6254C4.71899 10.6725 4.5974 10.6967 4.47461 10.6967C4.35181 10.6967 4.23022 10.6725 4.11679 10.6254C4.00335 10.5784 3.90028 10.5095 3.81348 10.4227L2.05131 8.66041C1.96446 8.57361 1.89556 8.47054 1.84855 8.35709C1.80154 8.24365 1.77734 8.12205 1.77734 7.99925C1.77734 7.87646 1.80154 7.75486 1.84855 7.64142C1.89556 7.52797 1.96446 7.4249 2.05131 7.3381L3.81348 5.57584ZM7.33844 9.10098C7.42524 9.01412 7.52831 8.94521 7.64174 8.8982C7.75518 8.85119 7.87677 8.82699 7.99957 8.82699C8.12236 8.82699 8.24395 8.85119 8.35739 8.8982C8.47083 8.94521 8.57389 9.01412 8.66069 9.10098L10.4229 10.8632C10.5981 11.0385 10.6965 11.2762 10.6965 11.5241C10.6965 11.7719 10.5981 12.0096 10.4229 12.1849L8.66069 13.9478C8.57389 14.0347 8.47083 14.1036 8.35739 14.1506C8.24395 14.1976 8.12236 14.2218 7.99957 14.2218C7.87677 14.2218 7.75518 14.1976 7.64174 14.1506C7.52831 14.1036 7.42524 14.0347 7.33844 13.9478L5.57627 12.1849C5.40124 12.0097 5.30293 11.7721 5.30293 11.5244C5.30293 11.2767 5.40124 11.0391 5.57627 10.8639L7.33844 9.10098Z" fill="#2EA343"/>
 </svg> 
-<Button className="bg-transparent  hover:bg-transparent  cursor-pointer text-[#695BE8]">Make a Global Section</Button>
+<Button className="bg-transparent  hover:bg-transparent  cursor-pointer text-sprout-color-secondary">Make a Global Section</Button>
  
             </div>
               <div className='pt-5 gap-8 '>
-              <div className='text-[#574E4C] text-lg font-[500]'>
+              <div className='text-sprout-color-text-weaker text-lg font-[500]'>
                Name <span className='text-red-600'>*</span>
               </div>
-                 <div className="relative mt-2 rounded-md border border-[#D7D3C9]">
+                 <div className="relative mt-2 rounded-md border border-sprout-color-border-weak">
               <Input
                 id="description"
                 placeholder=" "
@@ -50,7 +50,7 @@ const Sections = () => {
               
                 <label
                   htmlFor="description"
-                  className="absolute left-7 md:left-4 top-2 md:top-2 text-sm md:text-base text-[#88827E] transition-all
+                  className="absolute left-7 md:left-4 top-2 md:top-2 text-sm md:text-base text-sprout-color-text-disabled transition-all
                peer-placeholder-shown:opacity-100
                peer-focus:opacity-0 peer-focus:hidden
                pointer-events-none"
@@ -59,10 +59,10 @@ const Sections = () => {
                 </label>
     
             </div>
-             <div className='text-[#574E4C] mt-4 text-lg font-[500]'>
+             <div className='text-sprout-color-text-weaker mt-4 text-lg font-[500]'>
                Description <span className='text-red-600'>*</span>
               </div>
-              <div className="relative mt-2 rounded-md border border-[#D7D3C9]">
+              <div className="relative mt-2 rounded-md border border-sprout-color-border-weak">
                           <Input
                             id="description"
                             placeholder=" "
@@ -72,7 +72,7 @@ const Sections = () => {
                          
                             <label
                               htmlFor="description"
-                              className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-[#88827E] transition-all
+                              className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-sprout-color-text-disabledtransition-all
                            peer-placeholder-shown:opacity-100
                            peer-focus:opacity-0 peer-focus:hidden
                            pointer-events-none"
@@ -82,7 +82,7 @@ const Sections = () => {
                           
                         </div>
 
-                        <div className="flex item-start justify-between cursor-pointer w-full border border-[#D7D3C9] mt-4 rounded-md p-3">
+                        <div className="flex item-start justify-between cursor-pointer w-full border border-sprout-color-border-weak mt-4 rounded-md p-3">
 <div className="flex gap-3">
 <svg width="42" height="24" viewBox="0 0 42 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.444444" y="0.444444" width="41.1111" height="23.1111" rx="1.55556" fill="white"/>
@@ -108,21 +108,21 @@ const Sections = () => {
 
                         <div className="w-full h-[1px]  inline-block bg-[#D7D5D2]"></div>
 
-   <div className='text-xl mt-3 font-[500] text-[#413735]'>
+   <div className='text-xl mt-3 font-[500] text-sprout-color-text-default'>
               Layout
             </div>
             <div className="flex justify-between pt-4 ">
-                <div className="text-[#6F6765] font-[400] pt-2">
+                <div className="text-sprout-color-text-weakest font-[400] pt-2">
                     <h1>Theme</h1>
                 </div>
-                <div className="border-[#D7D3C9] border p-1  rounded-md flex">
+                <div className="border-sprout-color-border-weak border p-1  rounded-md flex">
                  <Button
         onClick={() => setThemeToggle('light')}
         className={`text-xs border ${
           ThemeToggle === 'light'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
             : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+        } hover:bg-sprout-color-secondary-lightest`}
       >
         Light
       </Button>
@@ -131,19 +131,19 @@ const Sections = () => {
         onClick={() => setThemeToggle('dark')}
         className={`text-xs border ${
           ThemeToggle === 'dark'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-            : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+            : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+        } hover:bg-sprout-color-secondary-lightest`}
       >
         Dark
       </Button>
                    </div>
             </div>
                    <div className="flex justify-between pt-4 ">
-                <div className="text-[#6F6765] font-[400] pt-2">
+                <div className="text-sprout-color-text-weakest font-[400] pt-2">
                     <h1>Alignment</h1>
                 </div>
-                <div className="border-[#D7D3C9] border p-2 gap-2 rounded-md   flex">
+                <div className="border-sprout-color-border-weak border p-2 gap-2 rounded-md   flex">
      <div onClick={() => setAlignment('left')} className={getButtonClasses('left')}>
      
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,17 +173,17 @@ const Sections = () => {
     </div>
                    </div>
                      <div className="flex justify-between pt-4 ">
-                <div className="text-[#6F6765] font-[400] pt-2">
+                <div className="text-sprout-color-text-weakest font-[400] pt-2">
                     <h1>Asset</h1>
                 </div>
-                <div className="border-[#D7D3C9] border p-2 gap-2  rounded-md flex">
+                <div className="border-sprout-color-border-weak border p-2 gap-2  rounded-md flex">
                  <div
         onClick={() => setAssets('image')}
         className={`text-xs border rounded-sm  p-1 ${
           assets === 'image'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-            : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+            : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+        } hover:bg-sprout-color-secondary-lightest`}
       >
        
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -198,9 +198,9 @@ const Sections = () => {
         onClick={() => setAssets('video')}
         className={`text-xs border rounded-sm p-1 ${
           assets === 'video'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-            : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+            : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+        } hover:bg-sprout-color-secondary-lightest`}
       >
     
 <svg width="20" height="20" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -212,17 +212,17 @@ const Sections = () => {
                    </div>
             </div>
               <div className="flex justify-between pt-4 ">
-                <div className="text-[#6F6765] font-[400] pt-2">
+                <div className="text-sprout-color-text-weakest font-[400] pt-2">
                     <h1>Element</h1>
                 </div>
-                <div className="border-[#D7D3C9] border p-1  rounded-md flex">
+                <div className="border-sprout-color-border-weak border p-1  rounded-md flex">
                  <Button
         onClick={() => setElementToggle('button')}
         className={`text-xs border ${
           elementToggle === 'button'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-            : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+            : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+        } hover:bg-sprout-color-secondary-lightest`}
       >
         Button
       </Button>
@@ -231,9 +231,9 @@ const Sections = () => {
         onClick={() => setElementToggle('form')}
         className={`text-xs border ${
           elementToggle === 'form'
-            ? 'border-[#695BE8] bg-[#EFEFFF] text-[#695BE8]'
-            : 'border-transparent bg-transparent text-[#88827E]'
-        } hover:bg-[#EFEFFF]`}
+            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+            : 'border-transparent bg-transparent text-sprout-color-text-disabled'
+        } hover:bg-sprout-color-secondary-lightest`}
       >
         Form
       </Button>

@@ -57,14 +57,14 @@ const Hero = () => {
           !response && (
             <main className="bg-[#FFFDFA]  text-black flex-1 overflow-y-auto rounded-t-xl">
               <div className='h-full w-80 border p-6 '>
-                <div className='text-xl font-[500] text-[#413735]'>
+                <div className='text-xl font-[500] text-sprout-color-text-default'>
                   Project
                 </div>
                 <div className='pt-5 gap-8 flex items-start justify-between'>
-                  <div className='text-[#574E4C] text-lg font-[500]'>
+                  <div className='text-sprout-color-text-weaker text-lg font-[500]'>
                     Sitemap Prompt <span className='text-red-600'>*</span>
                   </div>
-                  <div className='text-[#88827E] font-[500] cursor-pointer underline decoration-1 decoration-dotted underline-offset-2 decoration-[#88827E]'>
+                  <div className='text-sprout-color-text-disabled font-[500] cursor-pointer underline decoration-1 decoration-dotted underline-offset-2 decoration-sprout-color-text-disabled'>
                     Try example
                   </div>
 
@@ -74,13 +74,13 @@ const Hero = () => {
                     id="description"
                     placeholder=" "
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="peer w-full border  border-[#D7D3C9] bg-[#FFFDF9] rounded-md text-black placeholder-transparent px-3 md:px-4 pt-4 md:pt-6 text-sm md:text-base focus:outline-none  h-24 md:h-28 lg:h-32 resize-none"
+                    className="peer w-full border  border-sprout-color-border-weak bg-sprout-color-background-weaker rounded-md text-black placeholder-transparent px-3 md:px-4 pt-4 md:pt-6 text-sm md:text-base focus:outline-none  h-24 md:h-28 lg:h-32 resize-none"
                   />
 
                   {!prompt && (
                     <label
                       htmlFor="description"
-                      className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-[#88827E] transition-all
+                      className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-sprout-color-text-disabled transition-all
                peer-placeholder-shown:opacity-100
                peer-focus:opacity-0 peer-focus:hidden
                pointer-events-none"
@@ -93,7 +93,7 @@ const Hero = () => {
 
                 <div className='mt-4'>
                   <div className='flex flex-col gap-2'>
-                    <div className='text-[#574E4C] font-[500] text-lg'>
+                    <div className='text-sprout-color-text-weaker font-[500] text-lg'>
                       Number of Pages
                     </div>
                     <Select
@@ -101,7 +101,7 @@ const Hero = () => {
                       onValueChange={(value) => setSelectedPages(value)}
                     >
                       <SelectTrigger className="text-black w-[270px] h-[100px]">
-                        <div className="text-lg text-[#413735]">
+                        <div className="text-lg text-sprout-color-text-default">
                           {selectedPages} page{selectedPages > 1 ? "s" : ""}
                         </div>
                       </SelectTrigger>
@@ -135,11 +135,11 @@ const Hero = () => {
 
                 <div className='mt-6'>
                   <div className="flex flex-col gap-2">
-                    <div className="text-[#574E4C] font-[500] text-lg">Language</div>
+                    <div className="text-sprout-color-text-weaker font-[500] text-lg">Language</div>
 
                     <Select value={language} onValueChange={(value) => setLanguage(value)}>
                       <SelectTrigger className="text-black w-[270px] h-[100px]">
-                        <div className="text-lg text-[#413735]">{language}</div>
+                        <div className="text-lg text-sprout-color-text-default">{language}</div>
                       </SelectTrigger>
 
                       <SelectContent>
@@ -166,7 +166,7 @@ const Hero = () => {
 
                 </div>
                 <div className='mt-6 flex flex-col gap-3'>
-                  <Button className="bg-[#695BE8] w-[270px] h-[48px] hover:bg-[#695BE8] cursor-pointer" onClick={sendData}
+                  <Button className="bg-sprout-color-secondary w-[270px] h-[48px] hover:bg-sprout-color-secondary cursor-pointer" onClick={sendData}
                     disabled={loading}>
 
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +184,7 @@ const Hero = () => {
 
                     {loading ? 'Generating design...' : 'Generate design'}
                   </Button>
-                  <span className='text-[#88827E]  text-center text-sm pl-4'>This will override all page sections.</span>
+                  <span className='text-sprout-color-text-disabled  text-center text-sm pl-4'>This will override all page sections.</span>
                 </div>
               </div>
             </main>

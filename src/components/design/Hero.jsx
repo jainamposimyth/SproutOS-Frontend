@@ -5,13 +5,14 @@ import Sections from './Tabs/Sections'
 import StyleGuide from './Tabs/StyleGuide'
 import PromptBox from './Tabs/PromptBox'
 import Main from '../generate-website/Main'
+import AIEditor from './Tabs/AIEditor'
 export default function Hero({ activeIndex }) {
   const tabs = [
     <Sections key="sections" />,
     <div key="tab2">Tab 2 content here</div>,
   <PromptBox key="promptBox"/>,
  <StyleGuide key="styleguide" />,
-    <div key="tab5">Tab 5 content here</div>,
+ <AIEditor key="aieditor"/>,
     <div key="tab6">Tab 6 content here</div>,
   ]
 
@@ -25,7 +26,7 @@ export default function Hero({ activeIndex }) {
 
   <div className="w-3/4 p-4">
     <div className='p-12  text-black'>
-<div className='bg-[#ECE9DF] flex justify-between item-start p-3 rounded-md border-[#D7D3C9] border'>
+<div className='bg-sprout-color-background-strongest flex justify-between item-start p-3 rounded-md border-sprout-color-border-weak border'>
 
 <div className='flex gap-3 '>
   <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,9 +34,9 @@ export default function Hero({ activeIndex }) {
 <path d="M6 14.6667V8H10V14.6667" stroke="#88827E" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
-<div className='text-[#88827E] font-md font-[500]'>Home</div>
+<div className='text-sprout-color-text-disabledfont-md font-[500]'>Home</div>
 </div>
-<div className='border border-[#695BE8] bg-white rounded-sm'>
+<div className='border border-sprout-color-secondary bg-white rounded-sm'>
 <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M8 3.33325V12.6666" stroke="#695BE8" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
 <path d="M3.33337 8H12.6667" stroke="#695BE8" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
@@ -43,7 +44,7 @@ export default function Hero({ activeIndex }) {
 </div>
 
 </div>
- <div className="border border-[#D7D3C9] py-16 rounded-md mt-4">
+ <div className="border border-sprout-color-border-weak py-16 rounded-md mt-4">
       <Main/>
 </div>
 

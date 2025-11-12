@@ -112,7 +112,7 @@ const FlowDiagram = ({ data }) => {
           ref={mainCardRef}
           className="border-2 border-gray-200 rounded-2xl shadow-lg bg-white p-5 min-w-[250px] text-center hover:shadow-xl transition-all duration-300 w-full max-w-[300px]" // Added max-width
         >
-          <h1 className="font-semibold max-w-[250px] text-black mb-4 p-2 text-base bg-[#EFEFFF] rounded-md" contentEditable suppressContentEditableWarning={true} onInput={(e) => setMainTitle(e.currentTarget.textContent)}>
+          <h1 className="font-semibold max-w-[250px] text-black mb-4 p-2 text-base bg-sprout-color-secondary-lightest rounded-md" contentEditable suppressContentEditableWarning={true} onInput={(e) => setMainTitle(e.currentTarget.textContent)}>
             {mainPage.name}
 
           </h1>
@@ -125,11 +125,11 @@ const FlowDiagram = ({ data }) => {
               >
                 <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="item-1" className="w-full">
-                    <AccordionTrigger className="font-normal border border-[#D7D3C9] text-black p-2 hover:no-underline text-lg w-full">
+                    <AccordionTrigger className="font-normal border border-sprout-color-border-weak text-black p-2 hover:no-underline text-lg w-full">
                       {section.name}
                     </AccordionTrigger>
                     <AccordionContent className="w-full">
-                      <div className="bg-[#E7FFE7] border border-[#2EA343] p-3 mt-1 rounded-md text-gray-700 leading-relaxed w-full break-words">
+                      <div className="bg-[#E7FFE7] border border-sprout-color-success p-3 mt-1 rounded-md text-gray-700 leading-relaxed w-full break-words">
                         {section.description}
                       </div>
                     </AccordionContent>
@@ -221,7 +221,7 @@ const FlowDiagram = ({ data }) => {
                 ref={el => childCardRefs.current[idx] = el}
                 className="border-2 border-gray-200 rounded-2xl shadow-md bg-white p-4 min-w-[250px] text-center group-hover:shadow-lg transition-all duration-300"
               >
-                <h3 className="font-semibold min-w-[250px] text-black mb-4 p-2 text-base bg-[#EFEFFF] rounded-md">
+                <h3 className="font-semibold min-w-[250px] text-black mb-4 p-2 text-base bg-sprout-color-secondary-lightest rounded-md">
                   {page.name}
                 </h3>
                 <div className="flex flex-col gap-1">
@@ -232,11 +232,11 @@ const FlowDiagram = ({ data }) => {
                     >
                       <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
-                          <AccordionTrigger className="font-normal  border border-[#D7D3C9] text-black p-2 hover:no-underline text-lg">
+                          <AccordionTrigger className="font-normal  border border-sprout-color-border-weak text-black p-2 hover:no-underline text-lg">
                             {section.name}
                           </AccordionTrigger>
                           <AccordionContent>
-                            <div className="bg-[#E7FFE7] border mt-1 border-[#2EA343]  p-3 rounded-md text-gray-700 leading-relaxed">
+                            <div className="bg-[#E7FFE7] border mt-1 border-sprout-color-success  p-3 rounded-md text-gray-700 leading-relaxed">
                               {section.description}
                             </div>
                           </AccordionContent>

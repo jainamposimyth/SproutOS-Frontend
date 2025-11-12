@@ -19,9 +19,9 @@ const Hero = () => {
 
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F9F7F3] text-white">
+    <div className="flex flex-col min-h-screen bg-sprout-color-background-default text-white">
       {/* Navbar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#F9F7F3]">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-sprout-color-background-default">
         <Navbar />
       </div>
       <div className="flex flex-1  min-h-0">
@@ -39,15 +39,15 @@ const Hero = () => {
         
  <div className="relative p-[3px] rounded-lg bg-gradient-to-r from-[#FAE0D3] via-[#ED9167] to-[#F2D9CC] w-full sm:w-4/5 max-w-3xl mt-8 sm:mt-10 md:mt-6 lg:mt-8">
   {/* inner background wrapper */}
-  <div className="rounded-md bg-[#F5F3EB] px-2 sm:px-4 md:px-0">
+  <div className="rounded-md bg-sprout-color-background-stronger px-2 sm:px-4 md:px-0">
     <textarea
       id="description"
       placeholder=" "
-      className="peer w-full bg-[#F5F3EB] rounded-md text-black placeholder-transparent px-3 md:px-4 pt-6 md:pt-8 text-sm md:text-base focus:outline-none h-24 md:h-28 lg:h-32 resize-none"
+      className="peer w-full bg-sprout-color-background-stronger rounded-md text-black placeholder-transparent px-3 md:px-4 pt-6 md:pt-8 text-sm md:text-base focus:outline-none h-24 md:h-28 lg:h-32 resize-none"
     />
     <label
       htmlFor="description"
-      className="absolute left-3 sm:left-5 md:left-4 top-2 md:top-5 text-sm md:text-base text-[#88827E] transition-all 
+      className="absolute left-3 sm:left-5 md:left-4 top-2 md:top-5 text-sm md:text-base text-sprout-color-text-disabled transition-all 
       peer-placeholder-shown:opacity-100 
       peer-focus:opacity-0"
     >
@@ -57,7 +57,7 @@ const Hero = () => {
 
   {/* Bottom left buttons */}
   <div className="absolute left-5 md:left-4 bottom-3 flex flex-wrap gap-3">
-    <Button className="cursor-pointer bg-[#F5F3EB] border border-[#D7D3C9] hover:bg-[#F5F3EB] text-[#574E4C] text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
+    <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weaker text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
       {/* Prompt Builder icon */}
       <svg
         width="14"
@@ -76,7 +76,7 @@ const Hero = () => {
       <span className="sm:hidden">Builder</span>
     </Button>
 
-    <Button className="cursor-pointer bg-[#F5F3EB] border border-[#D7D3C9] hover:bg-[#F5F3EB] text-[#574E4C] text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
+    <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weakertext-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
       {/* English icon */}
      
 
@@ -99,7 +99,7 @@ const Hero = () => {
   </div>
 
   {/* Generate button (bottom right) */}
-  <Button className="absolute bottom-3 right-3 bg-[#695BE8] hover:bg-[#695BE8] text-[#FFFDF9] text-xs sm:text-sm px-3 sm:px-4 h-8 md:h-10">
+  <Button className="absolute bottom-3 right-3 bg-sprout-color-secondary hover:bg-sprout-color-secondary text-sprout-color-background-weaker text-xs sm:text-sm px-3 sm:px-4 h-8 md:h-10">
    
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clipPath="url(#clip0_428_4907)">
@@ -124,7 +124,7 @@ const Hero = () => {
               {CTAButtons.map((btns, idx) => (
                 <Button
                   key={idx}
-                  className="border-[#D7D3C9] bg-[#F9F7F3] px-2 sm:px-3 py-2 cursor-pointer hover:bg-[#F9F7F3] border text-[#6F6765] text-xs sm:text-sm"
+                  className="border-sprout-color-border-weak bg-sprout-color-background-default px-2 sm:px-3 py-2 cursor-pointer hover:bg-sprout-color-background-default border text-sprout-color-text-weakest text-xs sm:text-sm"
                 >
                   {btns.title}
                 </Button>
@@ -134,10 +134,10 @@ const Hero = () => {
 
           {/* Recent Projects Section */}
      <div className="mt-6 sm:mt-8 md:mt-12 px-3 sm:px-6 lg:px-0">
-  <div className="text-[#413735] font-semibold text-base sm:text-lg pt-6 sm:pt-8 md:pt-12">
+  <div className="text-sprout-color-text-default font-semibold text-base sm:text-lg pt-6 sm:pt-8 md:pt-12">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
       <h1 className="text-lg sm:text-xl md:text-2xl font-semibold">Recent Projects</h1>
-      <Button className="border-[#695BE8] border cursor-pointer text-[#695BE8] bg-[#FFFDF9] hover:bg-[#FFFDF9] text-xs sm:text-sm md:text-base px-3 sm:px-4 md:px-5 h-8 md:h-10">
+      <Button className="border-sprout-color-secondary border cursor-pointer text-sprout-color-secondary bg-sprout-color-background-weaker hover:bg-sprout-color-background-weaker text-xs sm:text-sm md:text-base px-3 sm:px-4 md:px-5 h-8 md:h-10">
         + New Project
       </Button>
     </div>

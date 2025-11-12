@@ -150,7 +150,7 @@ const SideBar = () => {
     return (
     <div className="w-60 bg-[#2B2321] h-full flex flex-col p-4 text-white border-r border-[#3A2F2C]">
     
-<div className="border flex gap-2 cursor-pointer rounded-md border-[#4B4442] p-3 mb-3">
+<div className="border flex gap-2 cursor-pointer rounded-md border-sprout-color-border-dark-weak  p-3 mb-3">
 <img src="./j-icon.png" alt="" width={32} height={32}/>
 <span className="text-[#FFFDF9] pt-0.5">Jainam.posimyth</span>
 <span className="text-[#FFFDF9] pt-0.5"><ChevronsUpDown strokeWidth={1}/></span>
@@ -164,13 +164,13 @@ const SideBar = () => {
                        }   }
                     className={`flex gap-2 pl-3 mb-3 p-2 rounded-md cursor-pointer transition
             ${activeIndex === index
-                            ? "bg-[#413735] border border-[#4B4442]"
-                            : "hover:bg-[#4B4442]/40 bg-transparent"
+                            ? "bg-[#413735] border border-sprout-color-border-dark-weak "
+                            : "hover:bg-sprout-color-border-dark-weak  bg-transparent"
                         }`}
                 >
                     {item.icon(activeIndex === index)}
                     <h1
-                        className={`text-lg font-normal ${activeIndex === index ? "text-[#FFFDF9]" : "text-[#88827E]"
+                        className={`text-lg font-normal ${activeIndex === index ? "text-[#FFFDF9]" : "text-sprout-color-text-disabled"
                             }`}
                     >
                         {item.title}
@@ -181,7 +181,7 @@ const SideBar = () => {
             ))}
 
 
-            <div className="w-52  -ml-2 h-0.5 bg-[#4B4442]"></div>
+            <div className="w-52  -ml-2 h-0.5 bg-sprout-color-border-dark-weak "></div>
             {options2.map((item, index) => (
                 <div
                     key={index}
@@ -192,13 +192,13 @@ const SideBar = () => {
                         }}
                     className={`flex gap-2 pl-3  p-2 mt-3 rounded-md cursor-pointer transition
             ${secondActiveIndex === index
-                            ? "bg-[#413735] border border-[#4B4442]"
-                            : "hover:bg-[#4B4442]/40 bg-transparent"
+                            ? "bg-[#413735] border border-sprout-color-border-dark-weak "
+                            : "hover:bg-sprout-color-border-dark-weak /40 bg-transparent"
                         }`}
                 >
                     {item.icon(secondActiveIndex === index)}
                     <h1
-                        className={`text-lg font-normal ${secondActiveIndex === index ? "text-[#FFFDF9]" : "text-[#88827E]"
+                        className={`text-lg font-normal ${secondActiveIndex === index ? "text-sprout-color-background-weaker" : "text-[#88827E]"
                             }`}
                     >
                         {item.title}
@@ -207,7 +207,7 @@ const SideBar = () => {
 
 
             ))}
-             <div className="w-52 mt-3 -ml-2 h-0.5 bg-[#4B4442]"></div>
+             <div className="w-52 mt-3 -ml-2 h-0.5 bg-sprout-color-border-dark-weak "></div>
   {options3.map((item, index) => (
                 <div
                     key={index}
@@ -218,13 +218,13 @@ const SideBar = () => {
                         }}
                     className={`flex gap-2 pl-3  p-2 mt-3 rounded-md cursor-pointer transition
             ${ThirdActiveIndex === index
-                            ? "bg-[#413735] border border-[#4B4442]"
-                            : "hover:bg-[#4B4442]/40 bg-transparent"
+                            ? "bg-[#413735] border border-sprout-color-border-dark-weak "
+                            : "hover:bg-sprout-color-border-dark-weak /40 bg-transparent"
                         }`}
                 >
                     {item.icon(ThirdActiveIndex === index)}
                     <h1
-                        className={`text-lg font-normal ${ThirdActiveIndex === index ? "text-[#FFFDF9]" : "text-[#88827E]"
+                        className={`text-lg font-normal ${ThirdActiveIndex === index ? "text-sprout-color-background-weaker" : "text-[#88827E]"
                             }`}
                     >
                         {item.title}

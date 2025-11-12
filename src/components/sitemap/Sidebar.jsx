@@ -42,8 +42,8 @@ const SideBar = () => {
       {tabs.map((tab, index) => (
         <React.Fragment key={index}>
           <div
-            className={`flex items-center justify-center w-10 h-10 border-[#4B4442] border  rounded-md cursor-pointer 
-              ${index >= tabs.length - 2 ? "bg-[#695BE8] border border-[#695BE8]" : "bg-[#3A2F2C]"}`}
+            className={`flex items-center justify-center w-10 h-10 border-sprout-color-border-dark-weak border  rounded-md cursor-pointer 
+              ${index >= tabs.length - 2 ? "bg-sprout-color-secondary border border-sprout-color-secondary" : "bg-[#3A2F2C]"}`}
               onClick={()=>{
                 if(index == 1){
                   redirect('/sitemappage')

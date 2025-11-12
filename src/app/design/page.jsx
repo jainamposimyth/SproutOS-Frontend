@@ -11,7 +11,7 @@ export default function DesignPage() {
 
       <Navbar />
        <div className="flex flex-1 overflow-hidden">
-        <div className="w-20 bg-[#2B2321] border-r border-[#3A2F2C]">
+        <div className="w-20 bg-sprout-color-background-dark border-r border-[#3A2F2C]">
           <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
           </div>
 
