@@ -26,18 +26,17 @@
 --color-sprout-color-text-disabled:#88827E;
 
 
-  /* Border Colors */
   --color-sprout-color-border-default: #B5B2AA;
   --color-sprout-color-border-dark-weak: #4B4442;
   --color-sprout-color-border-dark-default: #4B4442;
 
-  /* Success Colors */
+  
   --color-sprout-color-success-lightest: #E7FFE7;
   --color-sprout-color-success-lighter: #A7EAAA;
   --color-sprout-color-success: #2EA343;
   --color-sprout-color-success-darker: #0A842A;
 
-  /* Warning Colors */
+
   --color-sprout-color-warning-lightest: #FFF8B9;
   --color-sprout-color-warning-lighter: #F4DB6F;
   --color-sprout-color-warning: #A88D10;

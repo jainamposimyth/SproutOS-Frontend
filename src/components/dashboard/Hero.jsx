@@ -20,7 +20,7 @@ const Hero = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-sprout-color-background-default text-white">
-      {/* Navbar */}
+     
       <div className="fixed top-0 left-0 right-0 z-50 bg-sprout-color-background-default">
         <Navbar />
       </div>
@@ -38,7 +38,6 @@ const Hero = () => {
 
         
  <div className="relative p-[3px] rounded-lg bg-gradient-to-r from-[#FAE0D3] via-[#ED9167] to-[#F2D9CC] w-full sm:w-4/5 max-w-3xl mt-8 sm:mt-10 md:mt-6 lg:mt-8">
-  {/* inner background wrapper */}
   <div className="rounded-md bg-sprout-color-background-stronger px-2 sm:px-4 md:px-0">
     <textarea
       id="description"
@@ -55,10 +54,8 @@ const Hero = () => {
     </label>
   </div>
 
-  {/* Bottom left buttons */}
   <div className="absolute left-5 md:left-4 bottom-3 flex flex-wrap gap-3">
     <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weaker text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
-      {/* Prompt Builder icon */}
       <svg
         width="14"
         height="14"
@@ -77,7 +74,6 @@ const Hero = () => {
     </Button>
 
     <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weakertext-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
-      {/* English icon */}
      
 
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +94,6 @@ const Hero = () => {
     </Button>
   </div>
 
-  {/* Generate button (bottom right) */}
   <Button className="absolute bottom-3 right-3 bg-sprout-color-secondary hover:bg-sprout-color-secondary text-sprout-color-background-weaker text-xs sm:text-sm px-3 sm:px-4 h-8 md:h-10">
    
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +114,6 @@ const Hero = () => {
 </div>
 
 
-            {/* Category Buttons */}
             <div className="flex flex-wrap justify-center gap-2 px-2 sm:px-4  pt-16 sm:pt-2">
               {CTAButtons.map((btns, idx) => (
                 <Button
@@ -132,7 +126,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Recent Projects Section */}
      <div className="mt-6 sm:mt-8 md:mt-12 px-3 sm:px-6 lg:px-0">
   <div className="text-sprout-color-text-default font-semibold text-base sm:text-lg pt-6 sm:pt-8 md:pt-12">
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
@@ -142,7 +135,6 @@ const Hero = () => {
       </Button>
     </div>
 
-    {/* Responsive grid */}
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8">
       <RecentProjects title="Project 1" />
       <RecentProjects title="Project 2" />
