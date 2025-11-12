@@ -11,17 +11,17 @@ const RecentProjects = ({title}) => {
       <h1 className="text-sprout-color-text-default p-2 pl-4 ">{title}</h1>
             <div className="text-sprout-color-text-default flex gap-1 p-3 font-normal text-sm ">
                 
-<svg className="mt-1" width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clipPath="url(#clip0_428_4801)">
-<path d="M5.00001 9.16665C7.3012 9.16665 9.16668 7.30117 9.16668 4.99998C9.16668 2.69879 7.3012 0.833313 5.00001 0.833313C2.69882 0.833313 0.833344 2.69879 0.833344 4.99998C0.833344 7.30117 2.69882 9.16665 5.00001 9.16665Z" stroke="#88827E" strokeWidth="0.833333" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M5 2.5V5L6.66667 5.83333" stroke="#88827E" strokeWidth="0.833333" strokeLinecap="round" strokeLinejoin="round"/>
-</g>
-<defs>
-<clipPath id="clip0_428_4801">
-<rect width="10" height="10" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+          <svg className="mt-1" width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0_428_4801)">
+          <path d="M5.00001 9.16665C7.3012 9.16665 9.16668 7.30117 9.16668 4.99998C9.16668 2.69879 7.3012 0.833313 5.00001 0.833313C2.69882 0.833313 0.833344 2.69879 0.833344 4.99998C0.833344 7.30117 2.69882 9.16665 5.00001 9.16665Z" stroke="#88827E" strokeWidth="0.833333" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M5 2.5V5L6.66667 5.83333" stroke="#88827E" strokeWidth="0.833333" strokeLinecap="round" strokeLinejoin="round"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_428_4801">
+          <rect width="10" height="10" fill="white"/>
+          </clipPath>
+          </defs>
+          </svg>
 
       <h1> 5 days ago</h1>         
                </div>

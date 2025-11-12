@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import React, { useCallback } from 'react'
+import React from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 import { Button } from '../ui/button'
@@ -182,7 +182,7 @@ const Hero = () => {
                       </defs>
                     </svg>
 
-                    {loading ? 'Generating design...' : 'Generate design'}
+                    {loading ? 'Generating Sitemap...' : 'Generate Sitemap'}
                   </Button>
                   <span className='text-sprout-color-text-disabled  text-center text-sm pl-4'>This will override all page sections.</span>
                 </div>

@@ -47,9 +47,9 @@ const PromptBox = ({}) => {
                                     <label
                                         htmlFor="description"
                                         className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-sprout-color-text-disabled transition-all
-                      peer-placeholder-shown:opacity-100
-                      peer-focus:opacity-0 peer-focus:hidden
-                      pointer-events-none"
+                                        peer-placeholder-shown:opacity-100
+                                        peer-focus:opacity-0 peer-focus:hidden
+                                        pointer-events-none"
                                     >
                                         A compelling hero section with a catchy tagline, a brief description of the agency, and a call-to-action button.
                                     </label>
@@ -104,18 +104,18 @@ const PromptBox = ({}) => {
                                     disabled={loading || isGenerating}
                                 >
 
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clipPath="url(#clip0_428_4907)">
-<circle cx="7.99609" cy="8" r="7.55556" stroke="#FFFDF9" strokeWidth="0.888889"/>
-<path opacity="0.8" d="M11.9846 3.9983C10.3535 6.41572 10.3535 9.58137 11.9846 11.9988C9.5672 10.3677 6.40155 10.3677 3.98413 11.9988C5.61524 9.58137 5.61524 6.41572 3.98413 3.9983C6.40155 5.62941 9.5672 5.62941 11.9846 3.9983Z" fill="#FFFDF9"/>
-<path d="M7.99609 2C8.58579 5.03621 10.9599 7.4103 13.9961 8C10.9599 8.5897 8.58579 10.9638 7.99609 14C7.4064 10.9638 5.03231 8.5897 1.99609 8C5.03231 7.4103 7.4064 5.03621 7.99609 2Z" fill="#FFFDF9"/>
-</g>
-<defs>
-<clipPath id="clip0_428_4907">
-<rect width="16" height="16" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clipPath="url(#clip0_428_4907)">
+                                <circle cx="7.99609" cy="8" r="7.55556" stroke="#FFFDF9" strokeWidth="0.888889"/>
+                                <path opacity="0.8" d="M11.9846 3.9983C10.3535 6.41572 10.3535 9.58137 11.9846 11.9988C9.5672 10.3677 6.40155 10.3677 3.98413 11.9988C5.61524 9.58137 5.61524 6.41572 3.98413 3.9983C6.40155 5.62941 9.5672 5.62941 11.9846 3.9983Z" fill="#FFFDF9"/>
+                                <path d="M7.99609 2C8.58579 5.03621 10.9599 7.4103 13.9961 8C10.9599 8.5897 8.58579 10.9638 7.99609 14C7.4064 10.9638 5.03231 8.5897 1.99609 8C5.03231 7.4103 7.4064 5.03621 7.99609 2Z" fill="#FFFDF9"/>
+                                </g>
+                                <defs>
+                                <clipPath id="clip0_428_4907">
+                                <rect width="16" height="16" fill="white"/>
+                                </clipPath>
+                                </defs>
+                                </svg>
 
                                     {isGenerating ? 'Generating design...' : 'Generate design'}
                                 </Button>

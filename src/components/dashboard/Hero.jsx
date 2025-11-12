@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import RecentProjects from "./RecentProjects"
-import { useEffect } from "react"
+
 
 const Hero = () => {
   const CTAButtons = [

@@ -5,7 +5,7 @@ import Navbar from '../sitemap/Navbar';
 import SideBar from '../sitemap/Sidebar';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-import SideEditor from '../sitemap/SideEditor';
+
 import {
     SelectItem,
     Select,
@@ -361,10 +361,10 @@ const Hero = () => {
                                     <label
                                         htmlFor="description"
                                         className="absolute left-7 md:left-4 top-3 md:top-4 text-sm md:text-base text-sprout-color-text-disabled transition-all
-                            peer-placeholder-shown:opacity-100
-                            peer-focus:opacity-0 peer-focus:hidden
-                            pointer-events-none"
-                                    >
+                                        peer-placeholder-shown:opacity-100
+                                        peer-focus:opacity-0 peer-focus:hidden
+                                        pointer-events-none"
+                                                    >
                                         A compelling hero section with a catchy tagline, a brief description of the agency, and a call-to-action button.
                                     </label>
                                 )}
@@ -464,13 +464,13 @@ const Hero = () => {
                 >
                     <Background />
                 </ReactFlow>
-                {selectedNode && (
+                {/* {selectedNode && (
                     <SideEditor
                         node={selectedNode}
                         onSave={handleSaveNode}
                         onClose={() => setSelectedNode(null)}
                     />
-                )}
+                )} */}
             </div>
         </div>
     );

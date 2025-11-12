@@ -17,7 +17,7 @@ const StyleGuide = () => {
     <main className="bg-[#FFFDFA]  text-black flex-1 overflow-y-auto rounded-t-xl">
          <div className='h-full w-80 border p-6 overflow-x-auto '>
                         <div className='text-xl font-[500] text-sprout-color-text-default'>
-              Section
+              Section 
             </div>
             <div className='flex flex-col pt-6 gap-6'>
               <Button className="bg-sprout-color-secondary-lightest cursor-pointer border border-sprout-color-secondary hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary">

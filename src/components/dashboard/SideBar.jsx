@@ -1,12 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { Button } from "../ui/button";
-import icon from '../../../public/j-icon.png'
+
 import {ChevronsUpDown} from 'lucide-react'
 const SideBar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
