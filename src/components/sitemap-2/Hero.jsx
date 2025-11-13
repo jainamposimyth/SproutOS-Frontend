@@ -77,13 +77,13 @@ const PageNode = ({ id, data }) => {
                         <AccordionItem
                             value={`item-${idx}`}
                             className={`
-      border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-hidden
-      data-[state=open]:bg-[#E7FFE7] data-[state=open]:border-sprout-color-success
-    `}
+                            border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-hidden
+                            data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
+                            `}
                         >
                             <AccordionTrigger
                                 className="flex items-center justify-between w-full px-2 py-1.5 text-xs font-medium text-gray-800 
-                 hover:bg-[#E7FFE7] rounded-md no-underline hover:no-underline focus:no-underline"
+                                 hover:bg-sprout-color-success-lightestrounded-md no-underline hover:no-underline focus:no-underline"
                                 style={{
                                     minWidth: "140px",
                                     maxWidth: "180px",
@@ -93,7 +93,7 @@ const PageNode = ({ id, data }) => {
                             </AccordionTrigger>
 
                             <AccordionContent
-                                className="px-2 py-1 text-[10px] text-gray-700 bg-[#E7FFE7] border-b border-sprout-color-success leading-snug"
+                                className="px-2 py-1 text-[10px] text-gray-700 bg-[#] border-b border-sprout-color-success leading-snug"
                             >
                                 {section && typeof section === "object" && section.description
                                     ? section.description
@@ -236,6 +236,7 @@ const Hero = () => {
     const [isSaving, setIsSaving] = useState(false)
     const router = useRouter()
     const [projectName, setProjectName] = useState('Project Name')
+    
     const handleSaveNode = (updatedData) => {
         setNodes((nds) =>
             nds.map((node) =>
@@ -437,7 +438,7 @@ const Hero = () => {
                 <SideBar />
                 <div className="absolute top-3 flex gap-3 right-3 ">
                     <Button
-                        className=" bg-[#E7FFE7] hover:bg-[#E7FFE7]   border border-sprout-color-success  text-gray-700 cursor-pointer z-50 "
+                        className=" bg-sprout-color-success-lightest hover:bg-sprout-color-success-lightest  border border-sprout-color-success  text-gray-700 cursor-pointer z-50 "
                         onClick={regenerate}
                     >
                         Regenerate
@@ -461,16 +462,17 @@ const Hero = () => {
                     nodeTypes={nodeTypes}
                     onNodeClick={(_, node) => setSelectedNode(node)}
                     fitView
+
                 >
                     <Background />
                 </ReactFlow>
-                {/* {selectedNode && (
+                {selectedNode && (
                     <SideEditor
                         node={selectedNode}
                         onSave={handleSaveNode}
                         onClose={() => setSelectedNode(null)}
                     />
-                )} */}
+                )}
             </div>
         </div>
     );

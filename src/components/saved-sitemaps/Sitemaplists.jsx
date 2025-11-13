@@ -10,14 +10,14 @@ export default function SitemapList() {
   useEffect(() => {
     const GetAllSitemaps = async () => {
       const res = await axios.get("http://localhost:4000/api/sitemaps")
-      console.log("Fetched sitemaps:", res.data)
+
       setSitemaps(res.data)
     }
     GetAllSitemaps()
   }, [])
 
   const handleClick = (siteId) => {
-    // ✅ Use parameter from click handler
+
     router.push(`/saved-sitemaps/${siteId}`)
   }
 
@@ -27,7 +27,7 @@ export default function SitemapList() {
       {sitemaps.map((site) => (
         <div
           key={site.id}
-          onClick={() => handleClick(site.id)} // ✅ correctly pass the id here
+          onClick={() => handleClick(site.id)}
           className="border p-3 rounded-md mb-3 hover:bg-gray-100 cursor-pointer transition"
         >
           <h3 className="font-semibold">{site.projectName}</h3>

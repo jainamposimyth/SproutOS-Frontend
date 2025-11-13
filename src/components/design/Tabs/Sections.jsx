@@ -2,9 +2,11 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import React from 'react'
+import { useContent } from '@/context/CreateContext'
 import { useSelectedElement } from '@/context/SelectedElement'
 import { useState } from 'react'
 const Sections = () => {
+  const { templateContents } = useContent();
   const { selectedTexts,setSelectedTexts} = useSelectedElement();
         const [ThemeToggle, setThemeToggle] = useState('light')
           const [alignment, setAlignment] = useState('left')
@@ -24,6 +26,7 @@ const Sections = () => {
                     <div className='h-full w-80 border p-6 overflow-x-auto '>
                         <div className='text-xl font-[500] text-sprout-color-text-default'>
               Section 
+             
               <div>
      
               </div>

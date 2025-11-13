@@ -67,13 +67,13 @@ import ReactFlow, {
                             <AccordionItem
                                 value={`item-${idx}`}
                                 className={`
-          border border-sprout-color-border-weakrounded-md bg-white shadow-sm overflow-hidden
-          data-[state=open]:bg-[#E7FFE7] data-[state=open]:border-sprout-color-success
+          border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-hidden
+          data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
         `}
                             >
                                 <AccordionTrigger
                                     className="flex items-center justify-between w-full px-2 py-1.5 text-xs font-medium text-gray-800 
-                     hover:bg-[#E7FFE7] rounded-md no-underline hover:no-underline focus:no-underline"
+                     hover:bg-sprout-color-success-lightest rounded-md no-underline hover:no-underline focus:no-underline"
                                     style={{
                                         minWidth: "140px",
                                         maxWidth: "180px",
@@ -83,7 +83,7 @@ import ReactFlow, {
                                 </AccordionTrigger>
     
                                 <AccordionContent
-                                    className="px-2 py-1 text-[10px] text-gray-700 bg-[#E7FFE7] border-b border-sprout-color-success leading-snug"
+                                    className="px-2 py-1 text-[10px] text-gray-700 bg-sprout-color-success-lightest border-b border-sprout-color-success leading-snug"
                                 >
                                     {section && typeof section === "object" && section.description
                                         ? section.description

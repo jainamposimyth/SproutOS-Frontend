@@ -129,7 +129,7 @@ const FlowDiagram = ({ data }) => {
                       {section.name}
                     </AccordionTrigger>
                     <AccordionContent className="w-full">
-                      <div className="bg-[#E7FFE7] border border-sprout-color-success p-3 mt-1 rounded-md text-gray-700 leading-relaxed w-full break-words">
+                      <div className="bg-sprout-color-success-lightest border border-sprout-color-success p-3 mt-1 rounded-md text-gray-700 leading-relaxed w-full break-words">
                         {section.description}
                       </div>
                     </AccordionContent>
@@ -236,7 +236,7 @@ const FlowDiagram = ({ data }) => {
                             {section.name}
                           </AccordionTrigger>
                           <AccordionContent>
-                            <div className="bg-[#E7FFE7] border mt-1 border-sprout-color-success  p-3 rounded-md text-gray-700 leading-relaxed">
+                            <div className="bg-sprout-color-success-lightest border mt-1 border-sprout-color-success  p-3 rounded-md text-gray-700 leading-relaxed">
                               {section.description}
                             </div>
                           </AccordionContent>

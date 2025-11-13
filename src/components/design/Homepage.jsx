@@ -12,9 +12,7 @@ export default function Homepage() {
       <div className="hidden sm:flex">
         <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
       </div>
-
-
-      <div className="flex-1 flex flex-col overflow-hidden">
+       <div className="flex-1 flex flex-col overflow-hidden">
         <Hero activeIndex={activeIndex} />
       </div>
     </div>
