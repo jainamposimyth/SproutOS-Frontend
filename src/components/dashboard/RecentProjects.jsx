@@ -4,11 +4,11 @@ const RecentProjects = ({title}) => {
   return (
   
   <div className="p-2 pt-3 cursor-pointer ">
-    <div className="pb-3 border border-sprout-color-border-weak w-full rounded-xl">
+    <div className="pb-3 border border-sprout-color-border-weak w-full md:w-[250px] rounded-xl">
 
     <img src="./thumbnail.png" alt="" className='w-full' />
   <div className="flex justify-between items-start">
-      <h1 className="text-sprout-color-text-default p-2 pl-4 ">{title}</h1>
+      <h1 className="text-sprout-color-text-default p-2 pl-4 md:whitespace-nowrap ">{title}</h1>
             <div className="text-sprout-color-text-default flex gap-1 p-3 font-normal text-sm ">
                 
           <svg className="mt-1" width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,7 +23,7 @@ const RecentProjects = ({title}) => {
           </defs>
           </svg>
 
-      <h1> 5 days ago</h1>         
+      <h1 className='md:whitespace-nowrap'> 5 days ago</h1>         
                </div>
   </div>
     

@@ -142,7 +142,7 @@ const SideBar = () => {
 
     ];
     return (
-    <div className="w-60 bg-[#2B2321] h-full flex flex-col p-4 text-white border-r border-[#3A2F2C]">
+    <div className="w-60 bg-sprout-color-background-dark h-full flex flex-col p-4 text-white border-r border-[#3A2F2C]">
     
 <div className="border flex gap-2 cursor-pointer rounded-md border-sprout-color-border-dark-weak  p-3 mb-3">
 <img src="./j-icon.png" alt="" width={32} height={32}/>

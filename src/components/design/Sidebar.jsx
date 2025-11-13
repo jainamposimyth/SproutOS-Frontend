@@ -64,7 +64,7 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
     ];
 
     return (
-       <div className="w-20 bg-[#2B2321] h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
+       <div className="w-20 bg-sprout-color-background-dark h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
       {tabs.map((tab, index) => (
         <React.Fragment key={index}>
           <div

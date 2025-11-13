@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import SideBar from '@/components/design/Sidebar'
 import Hero from '@/components/design/Hero'
-import Navbar from '@/components/sitemap/Navbar'
+import Navbar from '../../components/design/Navbar'
 export default function DesignPage() {
   const [activeIndex, setActiveIndex] = useState(0)
 

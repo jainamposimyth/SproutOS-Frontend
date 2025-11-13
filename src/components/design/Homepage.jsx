@@ -13,7 +13,7 @@ export default function Homepage() {
         <SideBar activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
       </div>
 
-      {/* Main content area */}
+
       <div className="flex-1 flex flex-col overflow-hidden">
         <Hero activeIndex={activeIndex} />
       </div>

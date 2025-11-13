@@ -32,6 +32,9 @@ const Navbar = ({ projectName }) => {
                     <span className="whitespace-nowrap text-md mt-0.5">{projectName}</span>
 
                 </div>
+                <div className='flex  items-end'>
+                    test
+                </div>
 
             </div>
         </div>

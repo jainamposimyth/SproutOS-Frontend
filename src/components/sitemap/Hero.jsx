@@ -27,9 +27,10 @@ const Hero = () => {
   const [language, setLanguage] = useState("english");
 
 
- 
-    const sendData = async () => {
+
+  const sendData = async () => {
     try {
+      
       setLoading(true);
       const res = await axios.post('http://localhost:4000/api/generate-structure', {
         prompt: prompt,
@@ -85,7 +86,7 @@ const Hero = () => {
                peer-focus:opacity-0 peer-focus:hidden
                pointer-events-none"
                     >
-                      
+
                       A compelling hero section with a catchy tagline, a brief description of the agency, and a call-to-action button.
                     </label>
                   )}
@@ -110,6 +111,7 @@ const Hero = () => {
                         <SelectItem value="1" className="text-lg p-2 border-b">
                           1 page
                         </SelectItem>
+
                         <SelectItem value="2" className="text-lg p-2 border-b">
                           2 pages
                         </SelectItem>
