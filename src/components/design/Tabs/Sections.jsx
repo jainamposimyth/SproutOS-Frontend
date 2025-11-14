@@ -246,7 +246,94 @@ const Sections = (
                    
             </div>
             <div className="w-full h-[1px]  inline-block bg-[#D7D5D2]"></div>
+          <div className='mt-3'>
+              <div className="text-sprout-color-text-weakest font-[400] pt-2">
+                                  <h1>Color</h1>
 
+                                  <div className='border p-3 rounded-md mt-3  flex justify-between border-sprout-color-border-weak'>
+                                        
+           <div className='flex gap-2'>
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_428_6285)">
+              <rect width="24" height="24" rx="4" fill="#FFFDF9"/>
+              <rect y="12" width="24" height="12" fill="#020202"/>
+              <rect width="24" height="12" fill="white"/>
+              <rect x="6" y="6" width="12" height="12" rx="6" fill="#004AEC"/>
+              </g>
+              <rect x="0.1875" y="0.1875" width="23.625" height="23.625" rx="3.8125" stroke="#D7D3C9" stroke-width="0.375"/>
+              <defs>
+              <clipPath id="clip0_428_6285">
+              <rect width="24" height="24" rx="4" fill="white"/>
+              </clipPath>
+              </defs>
+              </svg>
+
+                           <h1 className='text-sprout-color-text-default'>Scheme 1</h1>
+                           
+           </div>
+           <div className='mt-2'>
+
+<svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.17847 9.17847L5.17847 5.17847L1.17847 1.17847" stroke="#413735" stroke-width="1.66667" stroke-linecap="square" stroke-linejoin="round"/>
+</svg>
+
+           </div>
+                           
+                                  </div>
+                              </div>
+          </div>
+             <div className="w-full h-[1px]  inline-block bg-[#D7D5D2]"></div>
+              <div className='mt-3'>
+              <div className="text-sprout-color-text-weakest font-[400] pt-2">
+                                  <h1>Image</h1>
+
+                                  <div className='border p-3 rounded-md mt-1  flex justify-between border-sprout-color-border-weak'>
+                                        
+           <div className='flex gap-2'>
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_428_6285)">
+              <rect width="24" height="24" rx="4" fill="#FFFDF9"/>
+              <rect y="12" width="24" height="12" fill="#020202"/>
+              <rect width="24" height="12" fill="white"/>
+              <rect x="6" y="6" width="12" height="12" rx="6" fill="#004AEC"/>
+              </g>
+              <rect x="0.1875" y="0.1875" width="23.625" height="23.625" rx="3.8125" stroke="#D7D3C9" stroke-width="0.375"/>
+              <defs>
+              <clipPath id="clip0_428_6285">
+              <rect width="24" height="24" rx="4" fill="white"/>
+              </clipPath>
+              </defs>
+              </svg>
+
+                           <h1 className='text-sprout-color-text-default'>Image</h1>
+                           
+           </div>
+           <div className='mt-2'>
+
+<svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.17847 9.17847L5.17847 5.17847L1.17847 1.17847" stroke="#413735" stroke-width="1.66667" stroke-linecap="square" stroke-linejoin="round"/>
+</svg>
+
+           </div>
+                           
+                                  </div>
+                              </div>
+          </div>
+     <div className="w-full h-[1px]  inline-block bg-[#D7D5D2]"></div>
+     <div className='mt-3  border border-sprout-color-border-weak p-2 rounded-md '>
+          <div className='flex border border-sprout-color-border-weak justify-between'>
+
+<div className=' flex gap-4  p-2 rounded-md'>
+  <svg className='mt-0.5' width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12.1071 1.84584L12.2771 1.86717C12.7264 1.92917 13.3211 2.0125 13.6578 2.34984C13.9338 2.62517 14.0398 3.07317 14.1031 3.47317L14.1404 3.7305C14.2244 4.33717 14.2464 5.13184 14.1031 6.0145C13.8204 7.7565 12.8931 9.83517 10.5644 11.4445C10.5518 11.5698 10.5511 11.6965 10.5538 11.8232L10.5604 12.0125C10.5711 12.3038 10.5818 12.5952 10.5004 12.8778C10.3738 13.3178 9.92244 13.6078 9.50044 13.8158L9.29377 13.9138L9.0271 14.0312C8.52844 14.2432 7.8551 14.4605 7.4331 14.0378C7.17977 13.7852 7.07577 13.4145 6.9911 13.0458L6.95977 12.9078C6.92395 12.7337 6.87945 12.5615 6.82644 12.3918C6.7931 12.2941 6.7571 12.1952 6.71844 12.0952C6.67588 12.1474 6.63071 12.1975 6.5831 12.2452C6.3531 12.4752 6.00977 12.6358 5.7271 12.7485C5.41844 12.8705 5.0691 12.9772 4.74577 13.0652L4.57977 13.1092L4.26177 13.1885L3.97377 13.2552L3.6291 13.3285L3.41377 13.3705C3.30638 13.3904 3.19576 13.3839 3.09145 13.3515C2.98715 13.3191 2.89229 13.2618 2.81506 13.1845C2.73783 13.1073 2.68055 13.0125 2.64815 12.9082C2.61576 12.8039 2.60922 12.6932 2.6291 12.5858L2.68644 12.2985L2.7891 11.8332L2.87177 11.4932L2.93444 11.2532C3.02244 10.9305 3.1291 10.5812 3.25177 10.2732C3.36377 9.98984 3.52444 9.64651 3.75444 9.41651L3.80777 9.36517L3.7651 9.34784C3.65115 9.30456 3.53575 9.26521 3.4191 9.22984L3.23444 9.17317C2.77177 9.03317 2.2771 8.8825 1.96977 8.5745C1.59644 8.20184 1.72244 7.63451 1.90244 7.16251L1.97577 6.97984L2.09377 6.71317L2.19177 6.5065C2.39977 6.08517 2.68977 5.63384 3.12977 5.50717C3.3631 5.44051 3.60577 5.43651 3.84977 5.44317L3.99644 5.44784C4.1871 5.4545 4.3771 5.46184 4.5631 5.44384C6.17244 3.1145 8.2511 2.18717 9.9931 1.9045C10.6919 1.78989 11.403 1.77015 12.1071 1.84584ZM5.56577 10.2958C5.46088 10.2181 5.33547 10.1729 5.20511 10.1658C5.07474 10.1586 4.94516 10.19 4.83244 10.2558L4.7591 10.3052L4.6971 10.3605L4.61377 10.4658C4.44044 10.7165 4.34177 11.0632 4.2651 11.3872L4.1931 11.6992L4.1591 11.8412L4.28644 11.8105L4.5651 11.7465C4.95044 11.6565 5.37777 11.5398 5.64044 11.3032C5.75464 11.189 5.82354 11.0373 5.83433 10.8762C5.84512 10.7151 5.79707 10.5555 5.6991 10.4272L5.64444 10.3645L5.62844 10.3492L5.56577 10.2958ZM10.3544 5.6465C10.2306 5.52267 10.0837 5.42443 9.92191 5.35739C9.76015 5.29035 9.58677 5.25584 9.41167 5.2558C9.23657 5.25577 9.06318 5.29023 8.9014 5.35721C8.73961 5.42419 8.59261 5.52238 8.46877 5.64617C8.34493 5.76996 8.24669 5.91694 8.17966 6.0787C8.11262 6.24046 8.0781 6.41384 8.07807 6.58894C8.07804 6.76404 8.11249 6.93743 8.17947 7.09921C8.24645 7.26099 8.34464 7.408 8.46844 7.53184C8.71845 7.78194 9.05757 7.92248 9.4112 7.92254C9.76483 7.9226 10.104 7.78218 10.3541 7.53217C10.6042 7.28216 10.7447 6.94304 10.7448 6.58941C10.7449 6.23578 10.6044 5.8966 10.3544 5.6465Z" fill="#413735"/>
+</svg>
+<h1>Image</h1>
+</div>
+<svg className=' pt-2' width="17" height="2" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.17847 9.17847L5.17847 5.17847L1.17847 1.17847" stroke="#413735" stroke-width="1.66667" stroke-linecap="square" stroke-linejoin="round"/>
+</svg>
+          </div>
+     </div>
             </div>
                     </div>
                </main>

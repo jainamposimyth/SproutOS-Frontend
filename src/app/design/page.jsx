@@ -72,8 +72,8 @@ export default function DesignPage() {
       <div className="flex flex-col h-screen">
 
       <Navbar />
-       <div className="flex flex-1 overflow-hidden">
-        <div className="w-20 bg-sprout-color-background-dark border-r border-[#3A2F2C]">
+       <div className="flex flex-1 overflow-x-auto">
+        <div className="w-20 h-screen bg-sprout-color-background-dark border-r border-[#3A2F2C]">
         <SidebarTabs
           tabs={tabs}
           activeIndex={activeIndex}

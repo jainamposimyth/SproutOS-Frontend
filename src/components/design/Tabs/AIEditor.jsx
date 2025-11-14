@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 
-
 export default function ElementsSidebar({
   showElementsList,
   setShowElementsList,
@@ -28,7 +27,7 @@ export default function ElementsSidebar({
         animate-slideIn
       "
     >
-      {/* HEADER */}
+     
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-lg font-semibold text-gray-800">Elements</h2>
 
@@ -43,7 +42,7 @@ export default function ElementsSidebar({
         </button>
       </div>
 
-      {/* ELEMENT LIST */}
+
       <div>
         {elements.map((el, idx) => (
           <div
@@ -53,12 +52,12 @@ export default function ElementsSidebar({
               hover:shadow-sm transition
             "
           >
-            {/* Tag Name */}
+ 
             <div className="font-semibold text-gray-900 mb-2 text-sm">
               {el.tagName.toUpperCase()}
             </div>
 
-            {/* TEXT EDIT BOX */}
+           
             <textarea
               value={el.text || ""}
               onChange={(e) => handleEdit(idx, e.target.value)}
@@ -71,12 +70,7 @@ export default function ElementsSidebar({
               rows={3}
             />
 
-            {/* ORIGINAL TEXT (ghost preview) */}
-            {/* {el.text && (
-              <div className="text-xs text-gray-500 italic mt-2">
-                Original: “{el.text}”
-              </div>
-            )} */}
+          
           </div>
         ))}
       </div>

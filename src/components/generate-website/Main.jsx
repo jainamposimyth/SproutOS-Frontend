@@ -26,7 +26,7 @@ export default function App() {
     });
 
   useEffect(() => {
-    console.log("from context", templateContext);
+    console.log("from context", extractedElements);
   }, [templateContext]);
 
 useEffect(() => {
@@ -60,7 +60,8 @@ useEffect(() => {
 }, [templates]);
 
 
- const onUpdateElement = (templateId, index, newValue) => {
+const onUpdateElement = (templateId, index, newValue) => {
+  // Update the state first
   setExtractedElements(prev => {
     const updated = { ...prev };
     if (updated[templateId] && updated[templateId].elements[index]) {
@@ -69,9 +70,9 @@ useEffect(() => {
     return updated;
   });
 
+  // Then update the DOM element
   const container = document.getElementById(`build-container-${templates.indexOf(templateId)}`);
   if (container) {
-    // Get the element data to find the correct selector
     const elementData = extractedElements[templateId]?.elements[index];
     if (!elementData) return;
 
@@ -670,7 +671,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
       [templateId]: extracted
     }));
     
-    setTemplateContext(extracted);
+    
   }
 };
   const handleExtractElements = (templateId, containerIndex) => {
