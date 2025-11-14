@@ -467,13 +467,13 @@ const Hero = () => {
                 >
                     <Background />
                 </ReactFlow>
-                {selectedNode && (
+                {/* {selectedNode && (
                     <SideEditor
                         node={selectedNode}
                         onSave={handleSaveNode}
                         onClose={() => setSelectedNode(null)}
                     />
-                )}
+                )} */}
             </div>
         </div>
     );

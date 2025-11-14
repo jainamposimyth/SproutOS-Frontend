@@ -5,7 +5,9 @@ import React from 'react'
 import { useContent } from '@/context/CreateContext'
 import { useSelectedElement } from '@/context/SelectedElement'
 import { useState } from 'react'
-const Sections = () => {
+const Sections = (
+
+) => {
 
   const { selectedTexts,setSelectedTexts} = useSelectedElement();
         const [ThemeToggle, setThemeToggle] = useState('light')

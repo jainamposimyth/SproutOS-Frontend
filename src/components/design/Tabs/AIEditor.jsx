@@ -1,106 +1,85 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { useContent } from '@/context/CreateContext';
-import { Input } from '@/components/ui/input';
+"use client";
+import React from "react";
 
-const AIEditor = () => {
-  const [formData, setFormData] = useState({});
-  const { templateContents, setTemplateContents } = useContent();
 
-  
-  useEffect(() => {
-    if (templateContents && Object.keys(templateContents).length > 0) {
-      setFormData(templateContents);
-    }
-  }, [templateContents]);
-
-  const handleChange = (sectionKey, field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [sectionKey]: {
-        ...prev[sectionKey],
-        [field]: value,
-      },
-    }));
-
-  
-    setTemplateContents(prev => ({
-      ...prev,
-      [sectionKey]: {
-        ...prev[sectionKey],
-        [field]: value,
-      },
-    }));
-  };
-
-  if (!formData || Object.keys(formData).length === 0) {
-    return (
-      <main className="bg-[#FFFDFA] text-black flex-1 overflow-y-auto h-screen rounded-t-xl flex items-center justify-center">
-        <p className="text-sprout-color-text-weaker">Loading template data...</p>
-      </main>
-    );
+export default function ElementsSidebar({
+  showElementsList,
+  setShowElementsList,
+  activeTemplate,
+  extractedElements,
+  onUpdateElement,   
+}) {
+  if (!showElementsList || !activeTemplate || !extractedElements[activeTemplate]) {
+    return null;
   }
 
+  const elements = extractedElements[activeTemplate].elements;
+
+  const handleEdit = (index, newValue) => {
+    onUpdateElement(activeTemplate, index, newValue);
+  };
+
   return (
-    <main className="bg-[#FFFDFA] text-black flex-1 overflow-y-auto h-screen rounded-t-xl">
-      <div className="h-full w-80 border p-6 overflow-x-auto">
-        <div className="text-xl font-[500] text-sprout-color-text-default">
-          Sections
-        </div>
+    <div
+      className="
+        fixed left-[75px] top-[62px] w-[350px] h-screen
+        bg-white shadow-xl border-r border-gray-200
+        z-[100] overflow-y-auto p-5
+        animate-slideIn
+      "
+    >
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-5">
+        <h2 className="text-lg font-semibold text-gray-800">Elements</h2>
 
-        {Object.entries(formData).map(([sectionKey, sectionValue]) => (
+        <button
+          onClick={() => setShowElementsList(false)}
+          className="
+            text-gray-500 text-2xl leading-none
+            hover:text-gray-700 transition
+          "
+        >
+          ×
+        </button>
+      </div>
+
+      {/* ELEMENT LIST */}
+      <div>
+        {elements.map((el, idx) => (
           <div
-            key={sectionKey}
-            className="border-b border-sprout-color-border-weak pb-4 mb-4"
+            key={idx}
+            className="
+              mb-4 p-4 rounded-lg border border-gray-200 bg-gray-50
+              hover:shadow-sm transition
+            "
           >
-            <div className="text-lg font-semibold text-sprout-color-text-strong mb-2">
-              {sectionKey}
+            {/* Tag Name */}
+            <div className="font-semibold text-gray-900 mb-2 text-sm">
+              {el.tagName.toUpperCase()}
             </div>
 
-            <div className="pt-5 p-2">
-              <div className="text-sprout-color-text-weaker pt-3 mb-2 text-md font-[500]">
-                Heading
-              </div>
-              <Input
-                value={sectionValue.heading || ''}
-                onChange={e =>
-                  handleChange(sectionKey, 'heading', e.target.value)
-                }
-                className="border border-sprout-color-border-weak focus:ring-0 focus-visible:ring-0"
-              />
-            </div>
+            {/* TEXT EDIT BOX */}
+            <textarea
+              value={el.text || ""}
+              onChange={(e) => handleEdit(idx, e.target.value)}
+              placeholder="Edit content..."
+              className="
+                w-full mt-1 p-3 rounded-md text-sm text-gray-700 bg-white border
+                border-gray-300 focus:border-green-500 focus:ring-2
+                focus:ring-green-200 outline-none transition resize-none
+              "
+              rows={3}
+            />
 
-            <div className="pt-5 p-2">
-              <div className="text-sprout-color-text-weaker pt-3 mb-2 text-md font-[500]">
-                Description
+            {/* ORIGINAL TEXT (ghost preview) */}
+            {/* {el.text && (
+              <div className="text-xs text-gray-500 italic mt-2">
+                Original: “{el.text}”
               </div>
-              <Input
-                value={sectionValue.description || ''}
-                onChange={e =>
-                  handleChange(sectionKey, 'description', e.target.value)
-                }
-                className="border border-sprout-color-border-weak focus:ring-0 focus-visible:ring-0"
-              />
-            </div>
-
-   
-            <div className="pt-5 p-2">
-              <div className="text-black pt-3 mb-2 text-md font-[500]">
-                Button
-              </div>
-              <Input
-                value={sectionValue.button || ''}
-                onChange={e =>
-                  handleChange(sectionKey, 'button', e.target.value)
-                }
-                className="border border-sprout-color-border-weak w-full h-12 rounded-md text-center p-3 focus:ring-0 focus-visible:ring-0"
-              />
-            </div>
+            )} */}
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
-};
-
-export default AIEditor;
+}

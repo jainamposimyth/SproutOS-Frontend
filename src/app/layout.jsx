@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SelectedElementProvider } from "@/context/SelectedElement";
 import { ContentProvider } from "@/context/CreateContext";
-
+import { ElementsProvider } from "@/context/ElementsContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,9 +25,15 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ContentProvider>
-        <SelectedElementProvider>
+       
+
+         <ElementsProvider>
+                 <SelectedElementProvider>
         {children}
        </SelectedElementProvider>
+  
+         </ElementsProvider>
+ 
         </ContentProvider>
       
       </body>

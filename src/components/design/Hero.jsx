@@ -8,12 +8,12 @@ import Main from '../generate-website/Main'
 import AIEditor from './Tabs/AIEditor'
 export default function Hero({ activeIndex }) {
   const tabs = [
-    <Sections key="sections" />,
-    <div key="tab2">Tab 2 content here</div>,
-    <PromptBox key="promptBox" />,
-    <StyleGuide key="styleguide" />,
-    <AIEditor key="aieditor" />,
-    <div key="tab6">Tab 6 content here</div>,
+    // <Sections key="sections" />,
+    // <div key="tab2">Tab 2 content here</div>,
+    // <PromptBox key="promptBox" />,
+    // <StyleGuide key="styleguide" />,
+    // <AIEditor key="aieditor" />,
+    // <div key="tab6">Tab 6 content here</div>,
   ]
 
   return (

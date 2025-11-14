@@ -45,12 +45,10 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
         },
         {
             icon: (
-
-                <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.5 3.93738V1.5H14.4993V3.93738M7.99967 1.5V14.4993M5.5623 14.4993H10.4371" stroke="#88827E" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-
-            )
+              )
         },
         {
             icon: (
@@ -70,7 +68,7 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
                     <div
                         onClick={() => setActiveIndex(index)}
                         className={`flex items-center justify-center w-10 h-10 border border-sprout-color-border-dark-weak rounded-md cursor-pointer 
-              ${activeIndex === index
+                         ${activeIndex === index
                                 ? "bg-sprout-color-secondary border-sprout-color-secondary"
                                 : "bg-[#3A2F2C]"
                             }`}
@@ -87,3 +85,4 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
 };
 
 export default SideBar;
+
