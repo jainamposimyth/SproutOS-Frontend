@@ -36,7 +36,7 @@ const Hero = () => {
     </div>
 
 
-    <main className="flex-1 overflow-y-auto p-6 pt-24 md:pt-28 lg:pt-32">
+    <main className="flex-1 overflow-y-auto p-6 pt-52 md:pt-28 lg:pt-32">
           <div className="flex flex-col items-center justify-start">
             <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-center text-neutral-800 dark:text-white px-2 sm:px-4">
               What do you want to Build?
@@ -53,14 +53,14 @@ const Hero = () => {
                 <label
                   htmlFor="description"
                   className="absolute left-3 sm:left-5 md:left-4 top-2 md:top-5 text-sm md:text-base text-sprout-color-text-disabled transition-all 
-      peer-placeholder-shown:opacity-100 
-      peer-focus:opacity-0"
+                  peer-placeholder-shown:opacity-100 
+                  peer-focus:opacity-0"
                 >
                   Describe your project...
                 </label>
               </div>
 
-              <div className="absolute left-8 md:left-4 -bottom-9 md:bottom-3 flex flex-wrap gap-3">
+              <div className="absolute left-16 md:left-4 -bottom-9 md:bottom-3 flex flex-wrap gap-3">
                 <Button className="cursor-pointer bg-sprout-color-background-stronger border border-sprout-color-border-weak hover:bg-sprout-color-background-stronger text-sprout-color-text-weaker text-xs sm:text-sm px-2 sm:px-3 md:px-4 h-8 md:h-10">
                   <svg
                     width="14"

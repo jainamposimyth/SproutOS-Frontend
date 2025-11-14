@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
         Accordion,
@@ -17,8 +18,9 @@ import ReactFlow, {
         Controls,
     } from "reactflow";
     import "reactflow/dist/style.css";
-    import { useParams } from 'next/navigation'
+    import { redirect, useParams } from 'next/navigation'
     import Navbar from "../sitemap/Navbar";
+import { Button } from "../ui/button";
     const PageNode = ({ id, data }) => {
 
         const getSectionName = (section) => {
@@ -109,9 +111,13 @@ export default function Allsitemaps() {
         const [nodes, setNodes, onNodesChange] = useNodesState([])
         const [edges, setEdges, onEdgesChange] = useEdgesState([])
         const [projectName,setProjectName] = useState([])
-
+        const router = useRouter()
         const [sitemap, setSitemap] = useState(null)
-    
+    const DeleteSideMap = async()=>{
+        const response = await axios.delete(`http://localhost:4000/api/delete-sitemap/${id}`)
+        console.log(response.data)
+        router.push('/saved-sitemaps')
+    }
                 useEffect(() => {
                         const fetchSitemap = async () => {
                           try {
@@ -131,7 +137,9 @@ export default function Allsitemaps() {
                 <>
    <div className="flex flex-col h-screen text-white">
             <Navbar projectName={projectName} />
+    <Button className="absolute top-5 right-5 cursor-pointer z-50" onClick={()=>DeleteSideMap()}>Delete</Button>       
             <div className="relative flex min-h-screen">
+
             <ReactFlow
                     nodes={nodes}
                     edges={edges}

@@ -6,7 +6,7 @@ import { useContent } from '@/context/CreateContext'
 import { useSelectedElement } from '@/context/SelectedElement'
 import { useState } from 'react'
 const Sections = () => {
-  const { templateContents } = useContent();
+
   const { selectedTexts,setSelectedTexts} = useSelectedElement();
         const [ThemeToggle, setThemeToggle] = useState('light')
           const [alignment, setAlignment] = useState('left')

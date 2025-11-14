@@ -14,9 +14,7 @@ const AIEditor = () => {
     }
   }, [templateContents]);
 
-  // Handle live update from editor → context → preview
   const handleChange = (sectionKey, field, value) => {
-    // Update local state
     setFormData(prev => ({
       ...prev,
       [sectionKey]: {
@@ -25,7 +23,7 @@ const AIEditor = () => {
       },
     }));
 
-    // Update global context so preview updates live
+  
     setTemplateContents(prev => ({
       ...prev,
       [sectionKey]: {
@@ -59,7 +57,6 @@ const AIEditor = () => {
               {sectionKey}
             </div>
 
-            {/* Heading */}
             <div className="pt-5 p-2">
               <div className="text-sprout-color-text-weaker pt-3 mb-2 text-md font-[500]">
                 Heading
@@ -73,7 +70,6 @@ const AIEditor = () => {
               />
             </div>
 
-            {/* Description */}
             <div className="pt-5 p-2">
               <div className="text-sprout-color-text-weaker pt-3 mb-2 text-md font-[500]">
                 Description
@@ -87,7 +83,7 @@ const AIEditor = () => {
               />
             </div>
 
-            {/* Button */}
+   
             <div className="pt-5 p-2">
               <div className="text-black pt-3 mb-2 text-md font-[500]">
                 Button

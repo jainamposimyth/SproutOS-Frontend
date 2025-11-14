@@ -1,28 +1,31 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react';
 import { useContent } from '@/context/CreateContext';
+import { Button } from '../ui/button';
 
 export default function App() {
-  const [templates, setTemplates] = useState(['website2','website3']); 
+  const [templates, setTemplates] = useState(['website2', 'website3']);
   const loadedTemplatesRef = useRef(new Set());
   const containerRefsRef = useRef({});
   const { setTemplateContents } = useContent();
 
   useEffect(() => {
     const loadAllTemplates = async () => {
+
       for (let i = 0; i < templates.length; i++) {
         const templateId = templates[i];
         const uniqueKey = `${templateId}-${i}`;
-        
+
         if (loadedTemplatesRef.current.has(uniqueKey)) {
           continue;
         }
-        
+
         await new Promise(resolve => setTimeout(resolve, 100));
         await loadTemplate(templateId, i);
         loadedTemplatesRef.current.add(uniqueKey);
       }
     };
+    
 
     loadAllTemplates();
 
@@ -33,31 +36,32 @@ export default function App() {
         if (!templates.includes(templateId)) {
           cleanupTemplate(templateId);
           loadedTemplatesRef.current.delete(key);
+
         }
       });
     };
-  }, [templates.join(',')]); 
+  }, [templates.join(',')]);
 
   const loadTemplate = async (templateId, index) => {
     const containerId = `build-container-${index}`;
-    
+
     let attempts = 0;
     let container = document.getElementById(containerId);
-    
+
     while (!container && attempts < 50) {
       await new Promise(resolve => setTimeout(resolve, 50));
       container = document.getElementById(containerId);
       attempts++;
     }
-    
+
     if (!container) {
       console.error(`Container ${containerId} not found after waiting`);
       return;
     }
-    
+
     containerRefsRef.current[containerId] = container;
     container.innerHTML = '';
-    
+
     const handleClick = () => {
       const content = contentExtractor(container);
       setTemplateContents(prev => ({
@@ -65,27 +69,27 @@ export default function App() {
         [templateId]: content,
       }));
     };
-    
+
     container.addEventListener('click', handleClick);
     containerRefsRef.current[`${containerId}-handler`] = handleClick;
 
     try {
       const response = await fetch(`/templates/${templateId}/index.html`);
       const html = await response.text();
-      
+
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-      
-      
+
       doc.head.querySelectorAll('link[rel="stylesheet"]').forEach(el => {
+
         const href = el.getAttribute('href');
         if (!href) return;
-        
+
         const existingLink = document.head.querySelector(
           `link[data-template="${templateId}"][href*="${href}"]`
         );
         if (existingLink) return;
-        
+
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = `/templates/${templateId}/${href}`;
@@ -94,18 +98,18 @@ export default function App() {
         document.head.appendChild(link);
       });
 
-      
+
       doc.head.querySelectorAll('style').forEach(el => {
         const clone = el.cloneNode(true);
         clone.dataset.template = templateId;
         clone.dataset.templateIndex = index;
         document.head.appendChild(clone);
       });
-      
-      
+
+
       container.innerHTML = doc.body.innerHTML;
-      
-    
+
+
       doc.querySelectorAll('script').forEach(oldScript => {
         const script = document.createElement('script');
         if (oldScript.src) {
@@ -120,10 +124,10 @@ export default function App() {
         document.body.appendChild(script);
       });
 
-      // Make editable after content is loaded
+      // content editable only after it loaded and setTimeOut
       await new Promise(resolve => setTimeout(resolve, 500));
       makeEditable(container, templateId);
-      
+
     } catch (error) {
       console.error(`Failed to load template ${templateId}:`, error);
       container.innerHTML = `<p style="color: red; padding: 20px;">Failed to load template: ${templateId}</p>`;
@@ -136,7 +140,7 @@ export default function App() {
 
     const addedScripts = document.body.querySelectorAll(`[data-template="${templateId}"]`);
     addedScripts.forEach(s => s.remove());
-    
+
 
     Object.keys(containerRefsRef.current).forEach(key => {
       if (key.includes('handler') && key.includes(templateId)) {
@@ -175,10 +179,10 @@ export default function App() {
       buttons: Array.from(new Set(buttons)),
     };
   };
-
-  const makeEditable = (container, templateId) => {
-    if (!container) return;
     
+    const makeEditable = (container, templateId) => {
+    if (!container) return;
+
     container.querySelectorAll('.editable[data-key]').forEach(el => {
       if (el.querySelector('.editable')) return;
       const key = `${templateId}_${el.dataset.key}`;
@@ -200,6 +204,20 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
       <div>
+
+        <div className='flex gap-5 bg-[]'>
+          <Button>
+            Export as Elementor
+          </Button>
+
+          <Button>
+            Export as Gutenberg
+          </Button>
+
+          <Button>
+            Export as React
+          </Button>
+        </div>
         {templates.map((templateId, index) => (
           <div
             key={`${templateId}-${index}`}
@@ -216,7 +234,7 @@ export default function App() {
               style={{
                 padding: '20px',
                 minHeight: '300px',
-     
+
               }}
             ></div>
           </div>

@@ -5,7 +5,7 @@ import Navbar from '../sitemap/Navbar';
 import SideBar from '../sitemap/Sidebar';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-
+import SideEditor from '../sitemap/SideEditor';
 import {
     SelectItem,
     Select,
@@ -244,6 +244,7 @@ const Hero = () => {
             )
         );
         setSelectedNode(null); 
+        
     };
 
     const generateSitemap = async (userPrompt) => {
@@ -317,7 +318,7 @@ const Hero = () => {
 
     useEffect(() => {
         let dataToUse;
-
+            console.log(selectedNode)
         if (generatedData) {
             dataToUse = transformApiData(generatedData);
         } else {

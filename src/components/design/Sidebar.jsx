@@ -64,26 +64,25 @@ const SideBar = ({ activeIndex, setActiveIndex }) => {
     ];
 
     return (
-       <div className="w-20 bg-sprout-color-background-dark h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
-      {tabs.map((tab, index) => (
-        <React.Fragment key={index}>
-          <div
-            onClick={() => setActiveIndex(index)}
-            className={`flex items-center justify-center w-10 h-10 border border-sprout-color-border-dark-weak rounded-md cursor-pointer 
-              ${
-                activeIndex === index
-                  ? "bg-sprout-color-secondary border-sprout-color-secondary"
-                  : "bg-[#3A2F2C]" 
-              }`}
-          >
-            {tab.icon}
-          </div>
-          {index === 1 && (
-            <div className="h-0.5 w-full bg-[#3A2F2C] my-2"></div>
-          )}
-        </React.Fragment>
-      ))}
-    </div>
+        <div className="w-20 bg-sprout-color-background-dark h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
+            {tabs.map((tab, index) => (
+                <React.Fragment key={index}>
+                    <div
+                        onClick={() => setActiveIndex(index)}
+                        className={`flex items-center justify-center w-10 h-10 border border-sprout-color-border-dark-weak rounded-md cursor-pointer 
+              ${activeIndex === index
+                                ? "bg-sprout-color-secondary border-sprout-color-secondary"
+                                : "bg-[#3A2F2C]"
+                            }`}
+                    >
+                        {tab.icon}
+                    </div>
+                    {index === 1 && (
+                        <div className="h-0.5 w-full bg-[#3A2F2C] my-2"></div>
+                    )}
+                </React.Fragment>
+            ))}
+        </div>
     );
 };
 
