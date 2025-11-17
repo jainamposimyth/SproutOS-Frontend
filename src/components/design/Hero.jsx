@@ -8,23 +8,15 @@ import Main from '../generate-website/Main'
 import AIEditor from './Tabs/AIEditor'
 export default function Hero({ activeIndex }) {
   const tabs = [
-    // <Sections key="sections" />,
-    // <div key="tab2">Tab 2 content here</div>,
-    // <PromptBox key="promptBox" />,
-    // <StyleGuide key="styleguide" />,
-    // <AIEditor key="aieditor" />,
-    // <div key="tab6">Tab 6 content here</div>,
+   
   ]
 
   return (
     <div className="flex h-screen text-white">
 
-      <main className="flex-1 overflow-auto">
-        {tabs[activeIndex]}
-      </main>
+  
 
-
-      <div className="w-3/4 p-4">
+      <div className="w-full p-4">
         <div className='p-12  text-black'>
           <div className='bg-sprout-color-background-strongest flex justify-between item-start p-3 rounded-md border-sprout-color-border-weak border'>
 

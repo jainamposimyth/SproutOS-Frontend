@@ -4,7 +4,7 @@ import Link from 'next/link'
 const Navbar = ({ projectName }) => {
 
     return (
-        <div className="h-16 fixed bg-sprout-color-background-dark flex items-start pt-3 px-4 border-b border-[#3A2F2C]">
+        <div className="h-16  bg-sprout-color-background-dark flex items-start pt-3 px-4 border-b border-[#3A2F2C]">
             <div className='border-2 cursor-pointer  border-sprout-color-border-dark-weak px-3 py-2 mb-2 rounded-lg'>
                 <svg width="16" height="24" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.85185 16.26C4.42798 16.8141 5.14403 17.0911 6 17.0911C6.85597 17.0911 7.57202 16.8141 8.14815 16.26C8.72428 15.6896 9.01235 14.9482 9.01235 14.0356C9.01235 13.1556 8.72428 12.4385 8.14815 11.8845C7.57202 11.3304 6.85597 11.0534 6 11.0534C5.14403 11.0534 4.42798 11.3304 3.85185 11.8845C3.27572 12.4385 2.98765 13.1556 2.98765 14.0356C2.98765 14.9482 3.27572 15.6896 3.85185 16.26ZM10.2469 18.3378C9.09465 19.4459 7.67901 20 6 20C4.32099 20 2.89712 19.4459 1.7284 18.3378C0.576132 17.2296 0 15.7956 0 14.0356C0 12.2756 0.576132 10.8497 1.7284 9.75782C2.89712 8.66597 4.32099 8.12004 6 8.12004C7.67901 8.12004 9.09465 8.66597 10.2469 9.75782C11.4156 10.8497 12 12.2756 12 14.0356C12 15.7956 11.4156 17.2296 10.2469 18.3378Z" fill="#FFFDF9" />

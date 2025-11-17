@@ -72,19 +72,22 @@ export default function DesignPage() {
       <div className="flex flex-col h-screen">
 
       <Navbar />
-       <div className="flex flex-1 overflow-x-auto">
-        <div className="w-20 h-screen bg-sprout-color-background-dark border-r border-[#3A2F2C]">
-        <SidebarTabs
-          tabs={tabs}
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
-        />
-          </div>
-
-          <div className="flex-1 overflow-auto  ">
-          <Hero activeIndex={activeIndex} />
-          </div>
-        </div>
+     <div className="flex flex-1 overflow-hidden"> 
+    
+        <div className=" flex flex-col bg-sprout-color-background-dark ">
+            <div className="flex-1 overflow-y-auto">
+            <SidebarTabs activeIndex={activeIndex} 
+                    setActiveIndex={setActiveIndex}
+                    tabs={tabs}
+                    />
+            </div>
+      
+    </div>
+    <div className="flex-1 overflow-auto">
+        <Hero activeIndex={activeIndex} />
+    </div>
+</div>
       </div>
   )
 }
+

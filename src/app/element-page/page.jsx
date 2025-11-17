@@ -6,15 +6,14 @@ export default function ElementsPage() {
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [showElementsList, setShowElementsList] = useState(true);
 
-  // Load extracted elements from localStorage or context on component mount
+
   useEffect(() => {
-    // You can load from localStorage, context, or props
     const savedElements = localStorage.getItem('extractedElements');
     if (savedElements) {
       setExtractedElements(JSON.parse(savedElements));
     }
     
-    // Set the first template as active if available
+  
     const templateKeys = Object.keys(extractedElements);
     if (templateKeys.length > 0 && !activeTemplate) {
       setActiveTemplate(templateKeys[0]);

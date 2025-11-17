@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react';
 import { useElements } from '@/context/ElementsContext';
-import ElementsSidebar from '../design/Tabs/AIEditor';
+// import ElementsSidebar from '../design/Tabs/AIEditor';
 import { GoogleGenAI } from "@google/genai";
+
 export default function App() {
   const [templates, setTemplates] = useState(['website2', 'website3']);
   const loadedTemplatesRef = useRef(new Set());
@@ -16,18 +17,24 @@ export default function App() {
   const [imagePromptBox, setImagePromptBox] = useState(false);
   const [imagePrompt, setImagePrompt] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const [extractedElements, setExtractedElements] = useState({});
-  const [activeTemplate, setActiveTemplate] = useState(null);
-  const [showElementsList, setShowElementsList] = useState(false);
-  const { templateContext, setTemplateContext } = useElements();
 
+
+  const {
+    showElementsList,
+    setShowElementsList,
+    activeTemplate,
+    setActiveTemplate,
+    extractedElements,
+    setExtractedElements,
+    onUpdateElement
+  } = useElements();
    const ai = new GoogleGenAI({
       apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY
     });
 
   useEffect(() => {
     console.log("from context", extractedElements);
-  }, [templateContext]);
+  }, [extractedElements]);
 
 useEffect(() => {
   const loadAllTemplates = async () => {
@@ -60,61 +67,31 @@ useEffect(() => {
 }, [templates]);
 
 
-const onUpdateElement = (templateId, index, newValue) => {
-  // Update the state first
-  setExtractedElements(prev => {
-    const updated = { ...prev };
-    if (updated[templateId] && updated[templateId].elements[index]) {
-      updated[templateId].elements[index].text = newValue;
-    }
-    return updated;
-  });
-
-  // Then update the DOM element
-  const container = document.getElementById(`build-container-${templates.indexOf(templateId)}`);
-  if (container) {
-    const elementData = extractedElements[templateId]?.elements[index];
-    if (!elementData) return;
-
-    let targetElement = null;
-    
-    // Try to find element by data-key first
-    if (elementData.attributes?.dataKey) {
-      targetElement = container.querySelector(`[data-key="${elementData.attributes.dataKey}"]`);
-    }
-    
-    // If not found, try data-store and data-field
-    if (!targetElement && elementData.attributes?.dataStore && elementData.attributes?.dataField) {
-      targetElement = container.querySelector(
-        `[data-store="${elementData.attributes.dataStore}"][data-field="${elementData.attributes.dataField}"]`
-      );
-    }
-    
-    // Fallback: try to find by index or text content
-    if (!targetElement) {
-      const allEditableElements = container.querySelectorAll('.editable[data-key], .editable[data-store][data-field]');
-      if (allEditableElements[index]) {
-        targetElement = allEditableElements[index];
+// In your main App component, add this useEffect for debugging:
+useEffect(() => {
+  const handleDOMUpdate = (event) => {
+    console.log('DOM updated for template:', event.detail.templateId);
+    // Optionally refresh the extracted elements
+    if (activeTemplate === event.detail.templateId) {
+      const containerIndex = templates.findIndex(t => t === activeTemplate);
+      if (containerIndex !== -1) {
+        const extracted = extractTemplateElements(activeTemplate, containerIndex);
+        if (extracted) {
+          setExtractedElements(prev => ({
+            ...prev,
+            [activeTemplate]: extracted
+          }));
+        }
       }
     }
+  };
 
-    if (targetElement && targetElement.tagName !== 'IMG') {
-      targetElement.innerText = newValue;
-      
-      // Save to localStorage
-      if (targetElement.dataset.key) {
-        const key = `${templateId}_${targetElement.dataset.key}`;
-        localStorage.setItem(key, newValue);
-      } else if (targetElement.dataset.store && targetElement.dataset.field) {
-        const storeId = targetElement.dataset.store;
-        const fieldName = targetElement.dataset.field;
-        const key = `${templateId}_${storeId}.${fieldName}`;
-        localStorage.setItem(key, newValue);
-      }
-    }
-  }
-};
-
+  window.addEventListener('domUpdated', handleDOMUpdate);
+  
+  return () => {
+    window.removeEventListener('domUpdated', handleDOMUpdate);
+  };
+}, [activeTemplate, templates]);
 
   const loadTemplate = async (templateId, index) => {
     const containerId = `build-container-${index}`;
@@ -929,13 +906,13 @@ const handleTemplateClick = (templateId, containerIndex) => {
         </div>
       )}
 
- <ElementsSidebar
+ {/* <ElementsSidebar
   showElementsList={showElementsList}
   setShowElementsList={setShowElementsList}
   activeTemplate={activeTemplate}
   extractedElements={extractedElements}
   onUpdateElement={onUpdateElement}
-/>
+/> */}
 
       {/* Style Controls */}
       {selectedElement && (
