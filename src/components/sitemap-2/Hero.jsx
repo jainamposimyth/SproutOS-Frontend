@@ -236,6 +236,7 @@ const Hero = () => {
     const [isSaving, setIsSaving] = useState(false)
     const router = useRouter()
     const [projectName, setProjectName] = useState('Project Name')
+    const [sectionNames,setSectionNames] = useState([])
     
     const handleSaveNode = (updatedData) => {
         setNodes((nds) =>
@@ -265,6 +266,14 @@ const Hero = () => {
                 );
 
                 console.log(allSectionNames);
+                setSectionNames(allSectionNames)
+
+const response = await axios.post('http://localhost:4000/api/save/all-sections',{
+         sectionNames: allSectionNames,        // Use computed value
+    projectName: apiData.projectName   
+})
+console.log("Response from all-sections API:", response.data);
+
 
             setProjectName(apiData.projectName)
             setShowPromptInput(false);
@@ -275,6 +284,7 @@ const Hero = () => {
             setIsGenerating(false);
         }
     };
+
 
 
     const regenerate = () => {

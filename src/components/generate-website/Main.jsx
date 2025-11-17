@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useElements } from '@/context/ElementsContext';
 // import ElementsSidebar from '../design/Tabs/AIEditor';
 import { GoogleGenAI } from "@google/genai";
-
+import axios from 'axios';
 export default function App() {
   const [templates, setTemplates] = useState(['website2', 'website3']);
   const loadedTemplatesRef = useRef(new Set());
@@ -18,6 +18,16 @@ export default function App() {
   const [imagePrompt, setImagePrompt] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
 
+  
+//   useEffect(async()=>{
+//     const response = await axios.get("http://localhost:4000/api/get-pages",{
+// params:{
+//   projectName:"Barber Shop Website"
+// }
+//     })
+//     console.log(response.data)
+
+//   },[])
 
   const {
     showElementsList,

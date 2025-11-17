@@ -24,7 +24,7 @@ export default function ElementsSidebar({
       className="
         fixed left-[75px] top-[62px] w-[350px] h-screen
         bg-white shadow-xl border-r border-gray-200
-        z-[100] overflow-y-auto p-5
+        z-100 overflow-y-auto p-5
         animate-slideIn
       "
     >

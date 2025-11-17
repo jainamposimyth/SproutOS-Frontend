@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-
+import { Button } from '../ui/button'
 const Navbar = ({ projectName }) => {
 
     return (
@@ -15,7 +15,7 @@ const Navbar = ({ projectName }) => {
                 </svg>
 
             </div>
-            <div className="inline-block h-8 w-0.5 ml-3 mt-0.5  bg-sprout-color-border-dark-weak">
+            <div className="flex justify-between h-8 w-full ml-3 mt-0.5  ">
                 <div className="pl-5 pt-1 flex gap-2 ">
                     <div>
                         <svg className="mt-0.5" width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,6 +31,55 @@ const Navbar = ({ projectName }) => {
                     </div>
 
                     <span className="whitespace-nowrap text-md mt-0.5">{projectName}</span>
+
+                </div>
+                <div className="text-white flex gap-4">
+                    <Button className="border border-sprout-color-border-dark-weak hover:bg-sprout-color-text-default cursor-pointer bg-sprout-color-text-default">Share</Button>
+       <Button className="flex items-center gap-3 px-3 py-2 bg-sprout-color-primary hover:bg-sprout-color-primary cursor-pointer rounded-md">
+
+  <div className="flex items-center gap-2">
+
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M16 3L10.8946 14H6.09919L8.2358 9.44114H8.13993C6.37725 11.9631 3.74729 13.6232 0 14V9.50421C0 9.50421 2.39724 9.34816 3.80649 7.71517H0V3.00009H4.27809V6.87818L4.37411 6.87775L6.12229 3.00009H9.35769V6.85359L9.45372 6.85342L11.2675 3H16Z"
+        fill="#FFFDF9"
+      />
+    </svg>
+
+    {/* Chevron */}
+    <svg
+      width="9"
+      height="6"
+      viewBox="0 0 11 7"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="mt-[1px]"
+    >
+      <path
+        d="M1.17847 1.17871L5.17847 5.17871L9.17847 1.17871"
+        stroke="#FFFDF9"
+        strokeWidth="1.66667"
+        strokeLinecap="square"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </div>
+
+  {/* Divider */}
+  <div className="h-6 w-px bg-[#ED530F]"></div>
+
+  {/* Export Text */}
+  <span className="text-white font-medium text-md">Export</span>
+</Button>
+
 
                 </div>
                

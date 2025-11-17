@@ -10,22 +10,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+
 import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 const StyleGuide = () => {
      const selectedColor = "#004AEC";
 const [selectedTextColor, setSelectedTextColor] = useState("#000000");
 const [selectedBgColor, setSelectedBgColor] = useState("#FFFFFF");
 
   return (
-    <main className="bg-[#FFFDFA]  text-black flex-1  rounded-t-xl">
-      <div className='h-full w-80 border p-6  '>
+<main className="bg-[#FFFDFA] text-black flex-1 rounded-t-xl">
+  <div className="flex flex-row min-h-screen">
+  <div className="w-[350px] border-r p-6 flex flex-col gap-6">
         <div className='text-xl font-[500] text-sprout-color-text-default'>
-          Section
+          Style guide
         </div>
         <div className='flex flex-col pt-2 gap-3'>
              <Select>
-              <SelectTrigger className="w-[270px] p-3 mt-4 border border-sprout-color-border-weak ">
+              <SelectTrigger className="w-[300px] p-3 mt-4 border border-sprout-color-border-weak ">
                 <SelectValue placeholder="Concept - 1" />
               </SelectTrigger>
             </Select>
@@ -48,7 +51,7 @@ const [selectedBgColor, setSelectedBgColor] = useState("#FFFFFF");
           <Tabs defaultValue="colors" className="bg-none border-none">
       <TabsList>
           <TabsTrigger className=" cursor-pointer bg-sprout-color-secondary-lightest rounded-md text-sprout-color-secondary border border-sprout-color-secondary  p-3" value="colors">Colors</TabsTrigger>
-          <TabsTrigger className="cursor-pointer bg-transparent shdadow-none rounded-md text-sprout-color-text-disabled ml-3 p-2" value="typography">Typography</TabsTrigger>
+          <TabsTrigger className="cursor-pointer bg-transparent shdadow-none rounded-md text-sprout-color-text-disabled ml-3 p-2" value="typography"  >Typography</TabsTrigger>
           <TabsTrigger className="cursor-pointer bg-transparent shdadow-none rounded-md text-sprout-color-text-disabled ml-3 p-2" value="effects">Effects</TabsTrigger>
       </TabsList>
       <TabsContent value="colors" className="border-none">
@@ -108,7 +111,9 @@ const [selectedBgColor, setSelectedBgColor] = useState("#FFFFFF");
 
         </div>
       </TabsContent>
-      <TabsContent value="typography">
+      <TabsContent value="typography" >
+
+
         <div className='mt-4'>
  <div className='text-md font-[500] text-sprout-color-text-default'>
            Heading
@@ -224,6 +229,133 @@ const [selectedBgColor, setSelectedBgColor] = useState("#FFFFFF");
                 </div>
             </div>
       </div>
+  
+        <div className="flex-1 p-6 w-[550px] overflow-hidden border-r"> 
+            <div className='text-xl font-[500] text-sprout-color-text-default'>
+          Component Example
+        </div>
+           <div className='inline-block h-[1px] mt-1 w-full bg-[#D7D5D2]'></div>
+            <div className='text-md font-[500] pt-5 text-sprout-color-text-default'>
+       Color Palette
+        </div>
+       <div className="pt-4 grid grid-cols-2 gap-6">
+  <div className="relative">
+    <div className="w-[196px] h-[80px] bg-[#004AEC] rounded-md"></div>
+    <div className="absolute top-7 left-12 text-white font-medium">
+      Foreground
+    </div>
+    <div className="pl-2 pt-2">Primary</div>
+  </div>
+
+  <div className="relative">
+    <div className="w-[196px] h-[80px] border border-sprout-color-border-weak rounded-md"></div>
+    <div className="absolute top-7 left-12 text-black font-medium">
+      Foreground
+    </div>
+    <div className="pl-2 pt-2">Secondary</div>
+  </div>
+
+  <div className="relative">
+    <div className="w-[196px] h-[80px] border border-sprout-color-border-weak rounded-md"></div>
+    <div className="absolute top-7 left-12 text-black font-medium">
+      Foreground
+    </div>
+    <div className="pl-2 pt-2">Primary</div>
+  </div>
+
+  <div className="relative">
+    <div className="w-[196px] h-[80px] border border-sprout-color-border-weak rounded-md"></div>
+    <div className="absolute top-7 left-12 text-black font-medium">
+      Foreground
+    </div>
+    <div className="pl-2 pt-2">Secondary</div>
+  </div>
+</div>
+           <div className='inline-block h-[1px] mt-1 w-full bg-[#D7D5D2]'></div>
+<div className="">
+     <div className='text-lg font-[500] pt-5 text-sprout-color-text-default'>
+       Buttons
+        </div>
+        <div className=" gap-4 flex p-3"> 
+           <Button className="bg-[#004AEC] hover:bg-[#004AEC] cursor-pointer p-4 px-7 py-5 font-semibold">Primary</Button> 
+              <Button className="text-black  bg-white border hover:bg-white cursor-pointer p-4 px-7 py-5 font-semibold">Secondary</Button> 
+              <Button variant="ghost" className="font-semibold">Ghost</Button>
+                       <Button variant="link" className="underline font-semibold">Link</Button>
+        </div>
+</div>
+
+<div className="pt-4 mb-3">
+<Input
+  placeholder="Enter your email"
+  className="
+    bg-[#F6F6F6]
+  px-5 py-4
+    border border-[#7878784D]
+    focus:outline-none 
+    focus:ring-0 
+    focus:ring-offset-0 
+    focus:border-none 
+    hover:border-none 
+    focus-visible:ring-0
+  "
+/>
+
+</div>
+<div className='inline-block h-[1px] mt-4 w-full bg-[#D7D5D2]'></div>
+<div>
+   <div className='text-xl font-[500] pt-5 text-sprout-color-text-default'>
+         Cards & Images
+        </div>
+        <div className="grid grid-cols-3 gap-4 pt-6">
+          <div>
+            <img src="/frame3.png" className="h-full"/>
+          </div>
+       <div className="p-1 border flex flex-col items-center">
+  <img src="/frame4.png" className="w-44" />
+
+  <div className=" p-2 w-44 text-center">
+    <div className="text-sm whitespace-nowrap">
+      Ethereal Summit Vista
+    </div>
+
+    <p className="text-xs font-light">
+      The tranquil vista of twilight paints the sky with hues of amber, rose, and lavender.
+    </p>
+  </div>
+</div>
+
+<div className="p-1 relative border flex flex-col items-center">
+
+<div className="absolute top-5 left-4 bg-[#F6F6F6] p-2">
+  <svg className="" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_645_2793)">
+<path d="M6.50776 3.90285C6.93508 2.65233 8.66294 2.61445 9.16958 3.78923L9.21245 3.90356L9.78912 5.58998C9.92128 5.97674 10.1348 6.33065 10.4154 6.62786C10.696 6.92506 11.037 7.15864 11.4155 7.31284L11.5706 7.37072L13.257 7.94668C14.5075 8.374 14.5454 10.1019 13.3713 10.6085L13.257 10.6514L11.5706 11.228C11.1837 11.3601 10.8296 11.5736 10.5323 11.8542C10.235 12.1348 10.0013 12.4759 9.847 12.8544L9.78912 13.0088L9.21317 14.6959C8.78585 15.9464 7.05798 15.9843 6.55206 14.8102L6.50776 14.6959L5.9318 13.0095C5.79973 12.6226 5.58621 12.2686 5.30564 11.9712C5.02507 11.6739 4.68399 11.4402 4.30541 11.2859L4.15106 11.228L2.46464 10.6521C1.21341 10.2248 1.17553 8.4969 2.35031 7.99098L2.46464 7.94668L4.15106 7.37072C4.53782 7.23856 4.89173 7.025 5.18894 6.74444C5.48614 6.46388 5.71972 6.12284 5.87392 5.74433L5.9318 5.58998L6.50776 3.90285ZM13.5771 1.43896C13.7108 1.43896 13.8418 1.47646 13.9553 1.5472C14.0687 1.61794 14.16 1.71908 14.2188 1.83913L14.2531 1.92274L14.5032 2.6559L15.2371 2.906C15.3711 2.95152 15.4885 3.03578 15.5746 3.14812C15.6606 3.26045 15.7113 3.39579 15.7204 3.537C15.7294 3.6782 15.6963 3.81891 15.6253 3.94128C15.5543 4.06366 15.4485 4.1622 15.3214 4.22441L15.2371 4.25871L14.5039 4.50881L14.2538 5.24269C14.2082 5.37663 14.1239 5.49401 14.0115 5.57997C13.8992 5.66593 13.7638 5.7166 13.6226 5.72555C13.4814 5.73451 13.3407 5.70134 13.2184 5.63027C13.0961 5.55919 12.9976 5.4534 12.9354 5.3263L12.9011 5.24269L12.651 4.50953L11.9172 4.25943C11.7832 4.21391 11.6657 4.12965 11.5797 4.01731C11.4937 3.90498 11.4429 3.76964 11.4339 3.62843C11.4249 3.48723 11.458 3.34652 11.529 3.22415C11.6 3.10177 11.7057 3.00323 11.8328 2.94102L11.9172 2.90672L12.6503 2.65662L12.9004 1.92274C12.9486 1.78155 13.0398 1.65899 13.1611 1.57223C13.2825 1.48548 13.4279 1.43888 13.5771 1.43896Z" fill="#88827E"/>
+</g>
+<defs>
+<clipPath id="clip0_645_2793">
+<rect width="17.15" height="17.15" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
+</div>
+ <div className=" -ml-2 absolute bottom-0 left-0  text-center">
+    <div className="text-sm whitespace-nowrap">
+      Ethereal Summit Vista
+    </div>
+
+    <p className="text-xs font-light p-2">
+      The tranquil vista of twilight paints the sky with hues of amber, rose, and lavender.
+    </p>
+  </div>
+</div>
+
+
+        </div>
+</div>
+      </div>
+      
+          </div>
     </main>
   )
 }
@@ -267,7 +399,7 @@ const TextColorItem = ({ color, isSelected }) => {
   return (
     <div className="flex mb-4 mt-3 items-center gap-3">
       
-      {/* LEFT CIRCLE */}
+     
       <div
         className={`w-6 h-6 mt-1 rounded-full ${
           isSelected

@@ -16,11 +16,11 @@ const Sections = () => {
 
   const currentElements = activeTemplate ? extractedElements[activeTemplate]?.elements || [] : [];
 
-  useEffect(() => {
-    console.log('Current Elements:', currentElements);
-    console.log('Active Template:', activeTemplate);
-    console.log('Extracted Elements:', extractedElements);
-  }, [currentElements, activeTemplate, extractedElements]);
+  // useEffect(() => {
+  //   console.log('Current Elements:', currentElements);
+  //   console.log('Active Template:', activeTemplate);
+  //   console.log('Extracted Elements:', extractedElements);
+  // }, [currentElements, activeTemplate, extractedElements]);
 
   const sectionElements = currentElements.filter(element => {
     if (!element) return false;

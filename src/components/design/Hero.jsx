@@ -26,7 +26,7 @@ export default function Hero({ activeIndex }) {
                 <path d="M6 14.6667V8H10V14.6667" stroke="#88827E" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
 
-              <div className='text-sprout-color-text-disabledfont-md font-[500]'>Home</div>
+              <div className='text-sprout-color-text-disabled font-md font-medium'>Home</div>
             </div>
             <div className='border border-sprout-color-secondary bg-white rounded-sm'>
               <svg width="22" height="22" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
