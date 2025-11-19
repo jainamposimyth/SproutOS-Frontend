@@ -5,6 +5,8 @@ import Navbar from '../sitemap/Navbar';
 import SideBar from '../sitemap/Sidebar';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from '../ui/input';
 import SortableAccordionItem from '../SortableAccordionItem';
 import {
     DndContext,
@@ -38,6 +40,70 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+
+export const sections = [
+  "Navbar",
+  "Header",
+  "Mega Menu",
+  "Mobile App Menu",
+  "Hero",
+  "About Us",
+  "Why Choose Us",
+  "Services",
+  "Features",
+  "Metrics",
+  "Gallery",
+  "Portfolio",
+  "Blog",
+  "Pricing Table",
+  "Team",
+  "Testimonial",
+  "Company Logo",
+  "Contact Form",
+  "FAQ",
+  "Location",
+  "CTA",
+  "Breadcrumbs",
+  "Footer",
+  "404",
+  "Coming Soon",
+  "Under Maintenance",
+].map((name) => ({
+  label: name,
+  svg: (
+    <svg width="70" height="70" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_d_786_16423)">
+        <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9" />
+        <path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9" />
+        <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB" />
+        <circle cx="7" cy="6" r="2" fill="#ECE9DF" />
+        <circle cx="13" cy="6" r="2" fill="#ECE9DF" />
+        <circle cx="19" cy="6" r="2" fill="#ECE9DF" />
+        <g filter="url(#filter1_d_786_16423)">
+          <rect y="10" width="57" height="14" rx="2" fill="#E7FFE7" />
+          <rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343" />
+          <rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA" />
+          <rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
+          <rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
+        </g>
+      </g>
+
+      <defs>
+        <filter id="filter0_d_786_16423" x="0" y="0" width="57" height="56">
+          <feOffset dy="3"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.84 0 0 0 0 0.82 0 0 0 0 0.78 0 0 0 1 0"/>
+          <feBlend in="SourceGraphic"/>
+        </filter>
+
+        <filter id="filter1_d_786_16423" x="0" y="10" width="57" height="17">
+          <feOffset dy="3"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0.18 0 0 0 0 0.63 0 0 0 0 0.26 0 0 0 1 0"/>
+          <feBlend in="SourceGraphic"/>
+        </filter>
+      </defs>
+    </svg>
+  ),
+}));
 
 
 console.log({
@@ -213,16 +279,21 @@ const handleAddSection = () => {
 
                                                     </Tooltip>
                                                  <button
-                                                    className="absolute right-1 top-0.5 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer pointer-events-auto"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        e.preventDefault();
-                                                        handleAddSectionAfter(section.id);
-                                                    }}
-                                                    aria-label={`Add section after ${section.name}`}
-                                                    title={`Add section after ${section.name}`}
+                                                className="absolute right-1 top-0.5 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer pointer-events-auto"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    e.preventDefault();
+                                                    // open side panel immediately (no prompt)
+                                                    if (data?.onOpenSection) {
+                                                    data.onOpenSection(section);
+                                                    } else {
+                                                    console.warn('onOpenSection handler not provided on node data');
+                                                    }
+                                                }}
+                                                aria-label={`Open editor for ${section.name}`}
+                                                title={`Open editor for ${section.name}`}
                                                 >
-                                                    <span className="inline-block text-sm leading-none">＋</span>
+                                                <span className="inline-block text-sm leading-none">＋</span>
                                                 </button>
                                                 </AccordionTrigger>
                                                 <AccordionContent asChild={true}
@@ -467,7 +538,15 @@ const Hero = () => {
         }
 
         if (dataToUse.pages) {
-            setNodes(dataToUse.pages);
+           const pagesWithHandler = dataToUse.pages.map(page => ({
+              ...page,
+              data: {
+                  ...page.data,
+                  onOpenSection: setSidePanelSection
+              }
+          }));
+          setNodes(pagesWithHandler);
+          
             setEdges(dataToUse.edges || []);
         }
     }, [generatedData, setNodes, setEdges]);
@@ -609,21 +688,236 @@ const Hero = () => {
                     <Background />
                 </ReactFlow>
                 {sidePanelSection && (
-                    <aside className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl z-50 p-4">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold">{sidePanelSection.name}</h3>
+                         <aside className="fixed left-20 top-4 bottom-0 w-80 bg-sprout-color-background-weaker shadow-xl rounded-r-2xl z-50 p-4 overflow-y-auto">
+                        <div className="flex items-center text- justify-between mb-4">
+                           <h3 className='text-sprout-color-text-default font-medium pt-3 text-xl pl-2'>Add Component</h3>
                             <button
                                 onClick={() => setSidePanelSection(null)}
-                                className="text-2xl leading-none p-1"
-                                aria-label="Close side panel"
+                                className="text-2xl leading-none p-1 text-black"
+                                aria-label="Close side panel "
                             >
                                 ×
                             </button>
                         </div>
-                        <div className="text-sm text-gray-700">
-                            <p className="mb-3">{sidePanelSection.description || "No description available."}</p>
-                            {/* Add editing fields or a real SideEditor component here */}
+                        <div className='pt-5 flex gap-3 '>
+                              <div className='bg-sprout-color-background-weaker border border-sprout-color-border-weak text-sprout-color-text-weakest   flex w-56 md:w-56 rounded-md'>
+                <div className='pl-4 pt-0.5'>
+
+                    
+<svg className='mt-2' width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#6F6765" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.9986 13.9991L11.0986 11.0991" stroke="#6F6765" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
+                </div>
+                <Input type="email" placeholder="Search" className=" placeholder:pt-1 border-none focus-visible:ring-0 focus-visible:ring-offset-0 w-36  focus:outline-none placeholder:text-sprout-color-text-weakest placeholder:text-md" />
+            </div>
+            <div className='p-2 rounded-md bg-sprout-color-background-weaker border border-sprout-color-border-weak text-sprout-color-text-weakest '>
+
+            <svg className='mt-0.5' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.1663 8.00009H5.92967M3.02234 8.00009H1.83301M3.02234 8.00009C3.02234 7.61464 3.17546 7.24498 3.44801 6.97243C3.72057 6.69987 4.09023 6.54676 4.47567 6.54676C4.86112 6.54676 5.23078 6.69987 5.50334 6.97243C5.77589 7.24498 5.92901 7.61464 5.92901 8.00009C5.92901 8.38554 5.77589 8.7552 5.50334 9.02775C5.23078 9.3003 4.86112 9.45342 4.47567 9.45342C4.09023 9.45342 3.72057 9.3003 3.44801 9.02775C3.17546 8.7552 3.02234 8.38554 3.02234 8.00009ZM14.1663 12.4048H10.3343M10.3343 12.4048C10.3343 12.7903 10.1809 13.1604 9.90824 13.433C9.63562 13.7056 9.26588 13.8588 8.88034 13.8588C8.49489 13.8588 8.12523 13.705 7.85268 13.4324C7.58013 13.1599 7.42701 12.7902 7.42701 12.4048M10.3343 12.4048C10.3343 12.0192 10.1809 11.6498 9.90824 11.3772C9.63562 11.1046 9.26588 10.9514 8.88034 10.9514C8.49489 10.9514 8.12523 11.1045 7.85268 11.3771C7.58013 11.6496 7.42701 12.0193 7.42701 12.4048M7.42701 12.4048H1.83301M14.1663 3.59542H12.0963M9.18901 3.59542H1.83301M9.18901 3.59542C9.18901 3.20998 9.34213 2.84031 9.61468 2.56776C9.88723 2.29521 10.2569 2.14209 10.6423 2.14209C10.8332 2.14209 11.0222 2.17968 11.1985 2.25272C11.3748 2.32576 11.535 2.43281 11.67 2.56776C11.805 2.70272 11.912 2.86293 11.985 3.03926C12.0581 3.21558 12.0957 3.40457 12.0957 3.59542C12.0957 3.78628 12.0581 3.97526 11.985 4.15159C11.912 4.32792 11.805 4.48813 11.67 4.62308C11.535 4.75804 11.3748 4.86509 11.1985 4.93813C11.0222 5.01116 10.8332 5.04876 10.6423 5.04876C10.2569 5.04876 9.88723 4.89564 9.61468 4.62308C9.34213 4.35053 9.18901 3.98087 9.18901 3.59542Z" stroke="black" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
+
+            </div>
+
+            
+
                         </div>
+                           <div className='inline-block h-[1px] mt-8 w-full  bg-sprout-color-border-weak'></div>
+                       <div>
+    <Tabs defaultValue="all" className="w-[550px]  p-4  " >
+  <TabsList className="p-2 pt-4 pb-4 gap-2 bg-sprout-color-background-weaker border border-sprout-color-border-weak ">
+    <TabsTrigger asChild={true}
+      value="all"
+      className="
+        px-4 py-3 rounded-md border transition-colors
+        data-[state=active]:border-sprout-color-secondary
+        data-[state=active]:text-sprout-color-secondary
+        data-[state=active]:bg-sprout-color-secondary-lightest
+      "
+    >
+      All
+    </TabsTrigger>
+
+    <TabsTrigger
+      value="global"
+      className="
+        px-4 py-3 rounded-md border transition-colors
+        data-[state=active]:border-sprout-color-secondary
+        data-[state=active]:text-sprout-color-secondary
+        data-[state=active]:bg-sprout-color-secondary-lightest
+      "
+    >
+      Global
+    </TabsTrigger>
+
+    <TabsTrigger
+      value="saved"
+      className="
+        px-4 py-3 rounded-md border transition-colors
+        data-[state=active]:border-sprout-color-secondary
+        data-[state=active]:text-sprout-color-secondary
+        data-[state=active]:bg-sprout-color-secondary-lightest
+      "
+    >
+      Saved
+    </TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="all">Content All</TabsContent>
+  <TabsContent value="global">Content Global</TabsContent>
+  <TabsContent value="saved">Content Saved</TabsContent>
+</Tabs>
+
+
+                       </div>
+                       <div className='-mt-5'>
+                        <div className='text-sprout-color-text-disabled'>
+                            Global Sections
+                        </div>
+                      <div className="grid grid-cols-2 gap-4 p-3">
+
+
+  <div className='border border-sprout-color-border-weak rounded-md w-[130px] h-[130px]'>
+    <div className='border-b p-2 bg-sprout-color-background-strongest pl-7'>
+      
+   
+<svg width="70" height="70" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_786_16423)">
+<path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9" shape-rendering="crispEdges"/>
+<path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9" shape-rendering="crispEdges"/>
+<path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB"/>
+<circle cx="7" cy="6" r="2" fill="#ECE9DF"/>
+<circle cx="13" cy="6" r="2" fill="#ECE9DF"/>
+<circle cx="19" cy="6" r="2" fill="#ECE9DF"/>
+<g filter="url(#filter1_d_786_16423)">
+<rect y="10" width="57" height="14" rx="2" fill="#E7FFE7"/>
+<rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343"/>
+<rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA"/>
+<rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+<rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_786_16423" x="0" y="0" width="57" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.843137 0 0 0 0 0.827451 0 0 0 0 0.788235 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape"/>
+</filter>
+<filter id="filter1_d_786_16423" x="0" y="10" width="57" height="17" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.180392 0 0 0 0 0.639216 0 0 0 0 0.262745 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape"/>
+</filter>
+</defs>
+</svg>
+
+    </div>
+    <div className='text-sprout-color-text-default font-semibold p-2 pl-4 pt-1'>
+      Navbar
+    </div>
+  </div>
+
+
+  <div className='border border-sprout-color-border-weak rounded-md w-[140px] h-[130px]'>
+    <div className='border-b p-2 bg-sprout-color-background-strongest pl-7'>
+    <svg width="70" height="70" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_786_16423)">
+<path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9" shape-rendering="crispEdges"/>
+<path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9" shape-rendering="crispEdges"/>
+<path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB"/>
+<circle cx="7" cy="6" r="2" fill="#ECE9DF"/>
+<circle cx="13" cy="6" r="2" fill="#ECE9DF"/>
+<circle cx="19" cy="6" r="2" fill="#ECE9DF"/>
+<g filter="url(#filter1_d_786_16423)">
+<rect y="10" width="57" height="14" rx="2" fill="#E7FFE7"/>
+<rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343"/>
+<rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA"/>
+<rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+<rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_786_16423" x="0" y="0" width="57" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.843137 0 0 0 0 0.827451 0 0 0 0 0.788235 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape"/>
+</filter>
+<filter id="filter1_d_786_16423" x="0" y="10" width="57" height="17" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.180392 0 0 0 0 0.639216 0 0 0 0 0.262745 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape"/>
+</filter>
+</defs>
+</svg>
+    </div>
+    <div className='text-sprout-color-text-default font-semibold p-2 pl-4 pt-1'>
+      Navbar
+    </div>
+  </div>
+
+</div>
+
+                       </div>
+                       <div className='pt-3'>
+                         <div className='text-sprout-color-text-disabled'>
+                          Categories
+                        </div>
+      <div className="grid grid-cols-2 gap-4 p-3">
+
+  {sections.map((name, i) => (
+    <div
+      key={i}
+      className="border border-sprout-color-border-weak rounded-md w-[130px] h-[130px]"
+    >
+      <div className="border-b p-2 bg-sprout-color-background-strongest pl-7">
+        
+        {/* SVG */}
+        <svg width="70" height="70" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g filter="url(#filter0_d_786_16423)">
+            <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9"/>
+            <path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9"/>
+            <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB"/>
+            <circle cx="7" cy="6" r="2" fill="#ECE9DF"/>
+            <circle cx="13" cy="6" r="2" fill="#ECE9DF"/>
+            <circle cx="19" cy="6" r="2" fill="#ECE9DF"/>
+            <g filter="url(#filter1_d_786_16423)">
+              <rect y="10" width="57" height="14" rx="2" fill="#E7FFE7"/>
+              <rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343"/>
+              <rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA"/>
+              <rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+              <rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <div className="whitespace-nowrap text-sprout-color-text-default font-semibold p-2 pl-4 pt-1">
+        {name}
+      </div>
+    </div>
+  ))}
+
+</div>
+
+                       </div>
                     </aside>
                 )}
                 {/* {selectedNode && (
