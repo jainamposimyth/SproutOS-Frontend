@@ -59,6 +59,35 @@ console.log({
 const PageNode = ({ id, data }) => {
     const [sections, setSections] = useState(data.sections);
     const [hoverIdx, setHoverIdx] = useState(1);
+const handleAddSection = () => {
+       const name = window.prompt('New section name')?.trim();
+       if (!name) return;
+       const description = window.prompt('Section description') || '';
+       const newSection = {
+           id: `${id}-section-${Date.now()}`,
+           name,
+           description
+       };
+       setSections(prev => [...prev, newSection]);
+   };
+
+   const handleAddSectionAfter = (afterSectionId) => {
+     const name = window.prompt('New section name')?.trim();
+     if (!name) return;
+     const description = window.prompt('Section description') || '';
+     const newSection = {
+         id: `${id}-section-${Date.now()}`,
+         name,
+         description
+     };
+     setSections(prev => {
+         const idx = prev.findIndex(s => s.id === afterSectionId);
+         if (idx === -1) return [...prev, newSection];
+         const copy = [...prev];
+         copy.splice(idx + 1, 0, newSection);
+         return copy;
+     });
+ };
 
  
     useEffect(() => {
@@ -126,6 +155,15 @@ const PageNode = ({ id, data }) => {
             </div>
 
             <div className="flex flex-col gap-2 nodrag">
+            <div className="flex justify-end mb-1">
+                   {/* <button
+                       onClick={handleAddSection}
+                       className="text-xs px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
+                       aria-label="Add section"
+                   >
+                       Add section
+                   </button> */}
+               </div>
                 <DndContext
                     collisionDetection={closestCenter}
                     onDragEnd={handleDragEnd}
@@ -188,7 +226,8 @@ const PageNode = ({ id, data }) => {
                                                        onClick={(e) => {
                                                            e.stopPropagation();
                                                            e.preventDefault();
-                                                           setSidePanelSection(section);
+                                                         
+                                                           handleAddSectionAfter(section.id)
                                                        }}
                                                        role="button"
                                                        aria-label={`Open editor for ${section.name}`}
