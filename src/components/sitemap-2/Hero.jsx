@@ -1,11 +1,21 @@
 'use client';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import Navbar from '../sitemap/Navbar';
 import SideBar from '../sitemap/Sidebar';
 import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
-import SideEditor from '../sitemap/SideEditor';
+import SortableAccordionItem from '../SortableAccordionItem';
+import {
+    DndContext,
+    closestCenter,
+} from "@dnd-kit/core";
+import {
+    arrayMove,
+    SortableContext,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+// import SideEditor from '../sitemap/SideEditor';
 import {
     SelectItem,
     Select,
@@ -24,22 +34,72 @@ import ReactFlow, {
     useNodesState,
     useEdgesState,
     Background,
-    Controls,
+
 } from "reactflow";
 import "reactflow/dist/style.css";
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+
+
+console.log({
+    Navbar,
+    SideBar,
+    SortableAccordionItem,
+    Select,
+    SelectItem,
+    SelectContent,
+    SelectTrigger,
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+    ReactFlow
+});
 
 
 const PageNode = ({ id, data }) => {
+    const [sections, setSections] = useState(data.sections);
+    const [hoverIdx, setHoverIdx] = useState(1);
 
-    const getSectionName = (section) => {
-        if (typeof section === 'string') {
-            return section;
+ 
+    useEffect(() => {
+        console.log('Page sections:', sections);
+        sections.forEach((section, index) => {
+            if (!section.id) {
+                console.warn(`Section at index ${index} has no ID:`, section);
+            }
+        });
+    }, [sections]);
+
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) {
+            return;
         }
-        if (section && typeof section === 'object') {
-            return section.name || section.title || section.id || 'Section';
-        }
-        return 'Section';
+
+        console.log('Drag - Active:', active.id, 'Over:', over.id);
+
+        setSections((items) => {
+            const oldIndex = items.findIndex((item) => item.id === active.id);
+            const newIndex = items.findIndex((item) => item.id === over.id);
+
+            if (oldIndex === -1 || newIndex === -1) {
+                console.warn('Could not find items for drag operation');
+                return items;
+            }
+
+            const newItems = arrayMove(items, oldIndex, newIndex);
+            console.log('New section order:', newItems.map(item => item.name));
+            return newItems;
+        });
     };
+    
+
+
+    const sectionsWithIds = sections.map((section, index) => ({
+        ...section,
+        id: section.id || `${id}-section-${index}`
+    }));
 
     return (
         <div className="relative bg-white border rounded-xl shadow-sm p-3 w-32">
@@ -50,64 +110,120 @@ const PageNode = ({ id, data }) => {
 
             <div className="w-full">
                 <div className="flex gap-1">
-
                     <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="3" cy="3" r="3" fill="#D7D3C9" />
                     </svg>
-
-
                     <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="3" cy="3" r="3" fill="#D7D3C9" />
                     </svg>
-
-
                     <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="3" cy="3" r="3" fill="#D7D3C9" />
                     </svg>
-
                 </div>
-                <h3 className="font-semibold  text-sm mb-2 mt-3 text-center bg-sprout-color-secondary-lightest text-black p-0.5  rounded-md" >
+                <h3 className="font-semibold text-sm mb-2 mt-3 text-center bg-sprout-color-secondary-lightest text-black p-0.5 rounded-md">
                     {data.title}
                 </h3>
             </div>
 
-            <div className="flex flex-col gap-2">
-                {data.sections?.map((section, idx) => (
-                    <Accordion type="single" collapsible key={idx} className="w-full">
-                        <AccordionItem
-                            value={`item-${idx}`}
-                            className={`
-                            border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-hidden
-                            data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
-                            `}
-                        >
-                            <AccordionTrigger
-                                className="flex items-center justify-between w-full px-2 py-1.5 text-xs font-medium text-gray-800 
-                                 hover:bg-sprout-color-success-lightestrounded-md no-underline hover:no-underline focus:no-underline"
-                                style={{
-                                    minWidth: "140px",
-                                    maxWidth: "180px",
-                                }}
+            <div className="flex flex-col gap-2 nodrag">
+                <DndContext
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
+                >
+                    <SortableContext
+                        items={sectionsWithIds.map(s => s.id)}
+                        strategy={verticalListSortingStrategy}
+                    >
+                        {sectionsWithIds.map((section) => (
+                            <SortableAccordionItem
+                                key={section.id}
+                                id={section.id}
+                                className="ml-0"
                             >
-                                <span className="truncate">{getSectionName(section)}</span>
-                            </AccordionTrigger>
+                                {({ dragAttributes, dragListeners }) => (
+                                    <div>
+                                        <Accordion type="single" collapsible className="w-full">
+                                            <AccordionItem
+                                                value={`item-${section.id}`}
+                                                className="
+                                                data-[state=open]:bg-sprout-color-success-lightest
+                                        data-[state=open]:border-sprout-color-success
+                                       border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-visible
+                                       data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
+                                                "
+                                            >
+                                                <AccordionTrigger
+                                                    className="[&>svg]:hidden 
+                                                flex items-center justify-between w-full px-2 py-1.5 text-xs 
+                                                font-medium text-gray-800 hover:no-underline group relative
+                                                data-[state=open]:bg-sprout-color-success-lightest
+                                                data-[state=open]:border-sprout-color-success
+                                            "
+                                                    style={{ minWidth: "140px", maxWidth: "180px" }}
+                                                >
 
-                            <AccordionContent
-                                className="px-2 py-1 text-[10px] text-gray-700 bg-[#] border-b border-sprout-color-success leading-snug"
-                            >
-                                {section && typeof section === "object" && section.description
-                                    ? section.description
-                                    : "No description available."}
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                                                    <span className="truncate ml-2 flex-1 text-left">
+                                                        {section.name}
+                                                    </span>
 
-                ))}
+                                                    <Tooltip >
+                                                        <TooltipTrigger asChild={true}>
+                                                            <span
+                                                                className="cursor-grab active:cursor-grabbing absolute left-1  top-1.5 text-gray-500 text-[12px] flex-shrink-0 hover:text-gray-700 opacity-0 group-hover:opacity-100 text-md transition-opacity"
+                                                                {...dragAttributes}
+                                                                {...dragListeners}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    e.preventDefault();
+                                                                }}
+                                                            >
+                                                                ⠿
+                                                            </span>
+
+                                                        </TooltipTrigger>
+
+                                                    </Tooltip>
+                                                  <span
+                                                       className="absolute left-20 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer  pointer-events-auto"
+                                                       onClick={(e) => {
+                                                           e.stopPropagation();
+                                                           e.preventDefault();
+                                                           setSidePanelSection(section);
+                                                       }}
+                                                       role="button"
+                                                       aria-label={`Open editor for ${section.name}`}
+                                                   >
+                                                       <span className="inline-block text-sm leading-none">+</span>
+                                                   </span>
+                                                </AccordionTrigger>
+
+                                                <AccordionContent asChild={true}
+                                                    className="
+                                                        px-2
+                                                        py-1
+                                                        text-[10px]
+                                                        text-gray-700
+                                                        leading-snug
+                                                        border-b
+                                                        border-sprout-color-success
+                                                        bg-white
+                                                        data-[state=open]:!bg-sprout-color-success-lightest
+  "
+                                                >
+                                                    {section && typeof section === "object" && section.description
+                                                        ? section.description
+                                                        : "No description available."}
+                                                </AccordionContent>
+
+                                            </AccordionItem>
+                                        </Accordion>
+                                    </div>
+                                )}
+                            </SortableAccordionItem>
+                        ))}
+                    </SortableContext>
+                </DndContext>
             </div>
-
-
-
-
         </div>
     );
 };
@@ -122,28 +238,22 @@ const transformApiData = (apiData) => {
     const transformedPages = [];
     const edges = [];
 
-    // Position configuration
     const homePosition = { x: 500, y: 50 };
     const rowGap = 200;
     const colGap = 300;
 
-    // Find or create homepage
     let homePageIndex = pages.findIndex(page =>
         page.name.toLowerCase() === 'home' || page.name.toLowerCase() === 'homepage'
     );
 
-    // If no homepage found, use first page as main card
     if (homePageIndex === -1) homePageIndex = 0;
 
-    // Transform pages
     pages.forEach((page, index) => {
         let position;
 
         if (index === homePageIndex) {
-            // Main card (Home) at top center
             position = homePosition;
         } else {
-            // Other pages in rows below
             const adjustedIndex = index > homePageIndex ? index - 1 : index;
             const row = Math.floor(adjustedIndex / 3) + 1;
             const col = adjustedIndex % 3;
@@ -153,19 +263,22 @@ const transformApiData = (apiData) => {
             };
         }
 
+
+        const sectionsWithIds = page.sections ? page.sections.map((section, sectionIndex) => ({
+            id: `${page.id}-section-${sectionIndex}`,
+            name: section.name || section.title || "Untitled Section",
+            description: section.description || ""
+        })) : [];
+
         transformedPages.push({
             id: page.id,
             type: "pageNode",
             position: position,
             data: {
                 title: page.name,
-                sections: page.sections ? page.sections.map(section => ({
-                    name: section.name || section.title || "Untitled Section",
-                    description: section.description || ""
-                })) : []
+                sections: sectionsWithIds
             }
         });
-
 
         if (index !== homePageIndex) {
             edges.push({
@@ -191,32 +304,27 @@ const defaultData = {
             id: "1",
             title: "Homepage",
             position: { x: 500, y: 50 },
-            sections: ["Navbar", "Hero", "Footer", "Careers"],
+            sections: [
+                { id: "1-section-0", name: "Navbar" },
+                { id: "1-section-1", name: "Hero" },
+                { id: "1-section-2", name: "Footer" },
+                { id: "1-section-3", name: "Careers" }
+            ],
         },
         {
             id: "2",
             title: "About Us",
             position: { x: 300, y: 250 },
-            sections: ["Header", "Content", "Footer"],
+            sections: [
+                { id: "2-section-0", name: "Header" },
+                { id: "2-section-1", name: "Content" },
+                { id: "2-section-2", name: "Footer" }
+            ],
         },
-        {
-            id: "3",
-            title: "Services",
-            position: { x: 500, y: 250 },
-            sections: ["Header", "Features", "Footer"],
-        },
-        {
-            id: "4",
-            title: "Contact",
-            position: { x: 700, y: 250 },
-            sections: ["Header", "Form", "Footer"],
-        },
+
     ],
     edges: [
-
         { id: "e1-2", source: "1", sourceHandle: "1-b", target: "2", targetHandle: "2-t", type: "smoothstep" },
-        { id: "e1-3", source: "1", sourceHandle: "1-b", target: "3", targetHandle: "3-t", type: "smoothstep" },
-        { id: "e1-4", source: "1", sourceHandle: "1-b", target: "4", targetHandle: "4-t", type: "smoothstep" },
 
     ]
 };
@@ -236,17 +344,8 @@ const Hero = () => {
     const [isSaving, setIsSaving] = useState(false)
     const router = useRouter()
     const [projectName, setProjectName] = useState('Project Name')
-    const [sectionNames,setSectionNames] = useState([])
-    
-    const handleSaveNode = (updatedData) => {
-        setNodes((nds) =>
-            nds.map((node) =>
-                node.id === updatedData.id ? { ...node, data: updatedData.data } : node
-            )
-        );
-        setSelectedNode(null); 
-        
-    };
+    const [sectionNames, setSectionNames] = useState([])
+    const [sidePanelSection, setSidePanelSection] = useState(null)
 
     const generateSitemap = async (userPrompt) => {
         setIsGenerating(true);
@@ -263,16 +362,16 @@ const Hero = () => {
             setGeneratedData(apiData);
             const allSectionNames = apiData.pages.flatMap(page =>
                 page.sections.map(section => section.name)
-                );
+            );
 
-                console.log(allSectionNames);
-                setSectionNames(allSectionNames)
+            console.log(allSectionNames);
+            setSectionNames(allSectionNames)
 
-const response = await axios.post('http://localhost:4000/api/save/all-sections',{
-         sectionNames: allSectionNames,        // Use computed value
-    projectName: apiData.projectName   
-})
-console.log("Response from all-sections API:", response.data);
+            const response = await axios.post('http://localhost:4000/api/save/all-sections', {
+                sectionNames: allSectionNames,        // Use computed value
+                projectName: apiData.projectName
+            })
+            console.log("Response from all-sections API:", response.data);
 
 
             setProjectName(apiData.projectName)
@@ -288,7 +387,6 @@ console.log("Response from all-sections API:", response.data);
 
 
     const regenerate = () => {
-
         setGeneratedData(null);
         setPrompt("");
         setShowPromptInput(true);
@@ -318,7 +416,6 @@ console.log("Response from all-sections API:", response.data);
         }
     };
 
-
     const handleSubmitPrompt = (e) => {
         e.preventDefault();
         if (prompt.trim()) {
@@ -328,7 +425,7 @@ console.log("Response from all-sections API:", response.data);
 
     useEffect(() => {
         let dataToUse;
-            console.log(selectedNode)
+        console.log(selectedNode)
         if (generatedData) {
             dataToUse = transformApiData(generatedData);
         } else {
@@ -376,7 +473,7 @@ console.log("Response from all-sections API:", response.data);
                                         peer-placeholder-shown:opacity-100
                                         peer-focus:opacity-0 peer-focus:hidden
                                         pointer-events-none"
-                                                    >
+                                    >
                                         A compelling hero section with a catchy tagline, a brief description of the agency, and a call-to-action button.
                                     </label>
                                 )}
@@ -454,7 +551,7 @@ console.log("Response from all-sections API:", response.data);
                     >
                         Regenerate
                     </Button>
-                       
+
                     <Button
                         onClick={() => {
                             setIsSaving(true);
@@ -477,6 +574,24 @@ console.log("Response from all-sections API:", response.data);
                 >
                     <Background />
                 </ReactFlow>
+                {sidePanelSection && (
+                    <aside className="fixed right-0 top-0 h-full w-96 bg-white shadow-xl z-50 p-4">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-semibold">{sidePanelSection.name}</h3>
+                            <button
+                                onClick={() => setSidePanelSection(null)}
+                                className="text-2xl leading-none p-1"
+                                aria-label="Close side panel"
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div className="text-sm text-gray-700">
+                            <p className="mb-3">{sidePanelSection.description || "No description available."}</p>
+                            {/* Add editing fields or a real SideEditor component here */}
+                        </div>
+                    </aside>
+                )}
                 {/* {selectedNode && (
                     <SideEditor
                         node={selectedNode}

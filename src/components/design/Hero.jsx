@@ -12,7 +12,7 @@ export default function Hero({ activeIndex }) {
   ]
 
   return (
-    <div className="flex h-screen text-white">
+<div className="flex min-h-screen overflow-y-auto text-white">
 
   
 

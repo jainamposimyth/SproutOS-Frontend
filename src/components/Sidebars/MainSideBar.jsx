@@ -7,13 +7,11 @@ export function SidebarTabs({ tabs, activeIndex, setActiveIndex }) {
       value={String(activeIndex)}
       onValueChange={(v) => setActiveIndex(Number(v))}
       orientation="vertical"
-      className="h-full"
+  className="h-full flex" 
     >
    
       <div className="flex h-full">
-        
-        
-        <div className="w-20 bg-sprout-color-background-dark h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
+     <div className="w-20 bg-sprout-color-background-dark h-full flex flex-col p-4 pt-6 text-white border-r border-[#3A2F2C] gap-4 items-start">
           
           <TabsList className="flex flex-col gap-6 mt-22 bg-transparent p-0">
             {tabs.map((tab, index) => (
@@ -37,10 +35,14 @@ export function SidebarTabs({ tabs, activeIndex, setActiveIndex }) {
             ))}
           </TabsList>
         </div>
-
-        <div className="flex-1 bg-white   ">
+        <div className="flex-1 bg-white min-h-0">
           {tabs.map((tab, index) => (
-            <TabsContent key={index} value={String(index)} className="h-full">
+   <TabsContent
+  key={index}
+  value={String(index)}
+  className="overflow-y-auto h-full min-h-0"
+>
+
               {tab.content ?? (
                 <div className="text-gray-600">No content provided.</div>
               )}
