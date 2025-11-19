@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useElements } from '@/context/ElementsContext';
 // import ElementsSidebar from '../design/Tabs/AIEditor';
 import { GoogleGenAI } from "@google/genai";
-import axios from 'axios';
+
 export default function App() {
   const [templates, setTemplates] = useState(['website2', 'website3']);
   const loadedTemplatesRef = useRef(new Set());
@@ -19,15 +19,7 @@ export default function App() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   
-//   useEffect(async()=>{
-//     const response = await axios.get("http://localhost:4000/api/get-pages",{
-// params:{
-//   projectName:"Barber Shop Website"
-// }
-//     })
-//     console.log(response.data)
 
-//   },[])
 
   const {
     showElementsList,
@@ -36,7 +28,7 @@ export default function App() {
     setActiveTemplate,
     extractedElements,
     setExtractedElements,
-    onUpdateElement
+   
   } = useElements();
    const ai = new GoogleGenAI({
       apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY
@@ -77,7 +69,7 @@ useEffect(() => {
 }, [templates]);
 
 
-// In your main App component, add this useEffect for debugging:
+
 useEffect(() => {
   const handleDOMUpdate = (event) => {
     console.log('DOM updated for template:', event.detail.templateId);
@@ -173,7 +165,7 @@ useEffect(() => {
       await new Promise(resolve => setTimeout(resolve, 500));
       makeEditable(container, templateId);
       
-      // Removed auto-extraction - elements will be extracted only on click
+   
 
     } catch (error) {
       console.error(`Failed to load template ${templateId}:`, error);
@@ -197,7 +189,7 @@ useEffect(() => {
 
   const applyTailwindAsInlineStyles = (element, className) => {
     const classes = className.split(' ');
-    const tailwindToInlineStyle = {
+    const tailwindToInlineStyle = { 
       'text-red-500': { color: '#ef4444' },
       'text-red-200': { color: '#fecaca' },
       'text-red-300': { color: '#fca5a1' },
@@ -258,6 +250,7 @@ useEffect(() => {
       }
 
       if (el.tagName !== 'IMG') {
+
         el.setAttribute('contentEditable', 'true');
         el.addEventListener('input', () => localStorage.setItem(key, el.innerText));
 
@@ -272,7 +265,9 @@ useEffect(() => {
           window.__selectedText = selectedText;
           window.__selectedRange = selection.getRangeAt(0).cloneRange();
         });
-      } else {
+      
+      }
+       else {
         el.style.cursor = 'pointer';
         el.addEventListener('dblclick', () => {
           const AskUseAi = confirm("Do you want to use AI to generate image?");
@@ -1015,7 +1010,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
               borderBottom: '1px solid #eee',
               flexWrap: 'wrap'
             }}>
-              <button
+              {/* <button
                 onClick={() => handleExtractElements(templateId, index)}
                 style={{
                   padding: '8px 16px',
@@ -1073,7 +1068,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
                 }}
               >
                 Export as React
-              </button>
+              </button> */}
             </div>
 
             {/* Template Container */}

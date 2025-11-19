@@ -156,13 +156,7 @@ const handleAddSection = () => {
 
             <div className="flex flex-col gap-2 nodrag">
             <div className="flex justify-end mb-1">
-                   {/* <button
-                       onClick={handleAddSection}
-                       className="text-xs px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"
-                       aria-label="Add section"
-                   >
-                       Add section
-                   </button> */}
+                
                </div>
                 <DndContext
                     collisionDetection={closestCenter}
@@ -184,20 +178,17 @@ const handleAddSection = () => {
                                             <AccordionItem
                                                 value={`item-${section.id}`}
                                                 className="
-                                                data-[state=open]:bg-sprout-color-success-lightest
-                                        data-[state=open]:border-sprout-color-success
-                                       border border-sprout-color-border-weak rounded-md bg-white shadow-sm overflow-visible
-                                       data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
+                                               
+                                        
                                                 "
                                             >
                                                 <AccordionTrigger
                                                     className="[&>svg]:hidden 
-                                                flex items-center justify-between w-full px-2 py-1.5 text-xs 
+                                                flex items-center justify-between w-full  px-2 py-1.5 text-xs 
                                                 font-medium text-gray-800 hover:no-underline group relative
-                                                data-[state=open]:bg-sprout-color-success-lightest
-                                                data-[state=open]:border-sprout-color-success
+                                              border
                                             "
-                                                    style={{ minWidth: "140px", maxWidth: "180px" }}
+                                                    style={{ minWidth: "140", maxWidth: "180px" }}
                                                 >
 
                                                     <span className="truncate ml-2 flex-1 text-left">
@@ -221,21 +212,19 @@ const handleAddSection = () => {
                                                         </TooltipTrigger>
 
                                                     </Tooltip>
-                                                  <span
-                                                       className="absolute left-20 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer  pointer-events-auto"
-                                                       onClick={(e) => {
-                                                           e.stopPropagation();
-                                                           e.preventDefault();
-                                                         
-                                                           handleAddSectionAfter(section.id)
-                                                       }}
-                                                       role="button"
-                                                       aria-label={`Open editor for ${section.name}`}
-                                                   >
-                                                       <span className="inline-block text-sm leading-none">+</span>
-                                                   </span>
+                                                 <button
+                                                    className="absolute right-1 top-0.5 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer pointer-events-auto"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        e.preventDefault();
+                                                        handleAddSectionAfter(section.id);
+                                                    }}
+                                                    aria-label={`Add section after ${section.name}`}
+                                                    title={`Add section after ${section.name}`}
+                                                >
+                                                    <span className="inline-block text-sm leading-none">＋</span>
+                                                </button>
                                                 </AccordionTrigger>
-
                                                 <AccordionContent asChild={true}
                                                     className="
                                                         px-2
@@ -247,7 +236,13 @@ const handleAddSection = () => {
                                                         border-sprout-color-success
                                                         bg-white
                                                         data-[state=open]:!bg-sprout-color-success-lightest
-  "
+  
+                                                    data-[state=open]:bg-sprout-color-success-lightest
+                                                      data-[state=open]:bg-sprout-color-success-lightest
+                                                        data-[state=open]:border-sprout-color-success
+                                                    border border-sprout-color-border-weak rounded-md bg-white shadow-sm 
+                                                    data-[state=open]:bg-sprout-color-success-lightest data-[state=open]:border-sprout-color-success
+                                                        "
                                                 >
                                                     {section && typeof section === "object" && section.description
                                                         ? section.description
