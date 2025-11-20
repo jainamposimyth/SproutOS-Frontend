@@ -3,6 +3,7 @@ import "./globals.css";
 import { SelectedElementProvider } from "@/context/SelectedElement";
 import { ContentProvider } from "@/context/CreateContext";
 import { ElementsProvider } from "@/context/ElementsContext";
+import { BoxProvider } from "@/context/BoxContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,7 +26,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ContentProvider>
-       
+       <BoxProvider>
 
          <ElementsProvider>
                  <SelectedElementProvider>
@@ -33,7 +34,7 @@ export default function RootLayout({ children }) {
        </SelectedElementProvider>
   
          </ElementsProvider>
- 
+        </BoxProvider>
         </ContentProvider>
       
       </body>
