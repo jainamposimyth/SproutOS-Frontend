@@ -81,8 +81,7 @@ const Temp = () => {
      const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('all');
 
-  // define a small set of "global" sections (adjust as needed)
-  const globalSet = new Set(['Navbar', 'Footer', 'Hero', 'Header', 'Contact Form']);
+  const globalSet = new Set(['Navbar', 'Footer']);
 
   const match = (label) => label.toLowerCase().includes(searchQuery.trim().toLowerCase());
 
