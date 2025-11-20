@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from '../ui/input';
 import SortableAccordionItem from '../SortableAccordionItem';
-
+import { createPortal } from 'react-dom';
 import {
     DndContext,
     closestCenter,
@@ -44,74 +44,74 @@ import { Tooltip, TooltipTrigger } from '../ui/tooltip';
 import SideEditor from '../sitemap/SideEditor';
 
 export const sections = [
-                    "Navbar",
-                    "Header",
-                    "Mega Menu",
-                    "Mobile App Menu",
-                    "Hero",
-                    "About Us",
-                    "Why Choose Us",
-                    "Services",
-                    "Features",
-                    "Metrics",
-                    "Gallery",
-                    "Portfolio",
-                    "Blog",
-                    "Pricing Table",
-                    "Team",
-                    "Testimonial",
-                    "Company Logo",
-                    "Contact Form",
-                    "FAQ",
-                    "Location",
-                    "CTA",
-                    "Breadcrumbs",
-                    "Footer",
-                    "404",
-                    "Coming Soon",
-                    "Under Maintenance",
-                ].map((name) => ({
-                    label: name,
-                    svg: (
-                        <svg width="57" height="56" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_d_786_16423)">
-                                <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9" shapeRendering="crispEdges" />
-                                <path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9" shapeRendering="crispEdges" />
-                                <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB" />
-                                <circle cx="7" cy="6" r="2" fill="#ECE9DF" />
-                                <circle cx="13" cy="6" r="2" fill="#ECE9DF" />
-                                <circle cx="19" cy="6" r="2" fill="#ECE9DF" />
-                                <g filter="url(#filter1_d_786_16423)">
-                                    <rect y="10" width="57" height="14" rx="2" fill="#E7FFE7" />
-                                    <rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343" />
-                                    <rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA" />
-                                    <rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
-                                    <rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
-                                </g>
-                            </g>
-                            <defs>
-                                <filter id="filter0_d_786_16423" x="0" y="0" width="57" height="56" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dy="3" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0.843137 0 0 0 0 0.827451 0 0 0 0 0.788235 0 0 0 1 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape" />
-                                </filter>
-                                <filter id="filter1_d_786_16423" x="0" y="10" width="57" height="17" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dy="3" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0.180392 0 0 0 0 0.639216 0 0 0 0 0.262745 0 0 0 1 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape" />
-                                </filter>
-                            </defs>
-                        </svg>
-                    ),
-                }));
+    "Navbar",
+    "Header",
+    "Mega Menu",
+    "Mobile App Menu",
+    "Hero",
+    "About Us",
+    "Why Choose Us",
+    "Services",
+    "Features",
+    "Metrics",
+    "Gallery",
+    "Portfolio",
+    "Blog",
+    "Pricing Table",
+    "Team",
+    "Testimonial",
+    "Company Logo",
+    "Contact Form",
+    "FAQ",
+    "Location",
+    "CTA",
+    "Breadcrumbs",
+    "Footer",
+    "404",
+    "Coming Soon",
+    "Under Maintenance",
+].map((name) => ({
+    label: name,
+    svg: (
+        <svg width="57" height="56" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_786_16423)">
+                <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V48C55 50.2091 53.2091 52 51 52H6C3.79086 52 2 50.2091 2 48V5Z" fill="#FFFDF9" shapeRendering="crispEdges" />
+                <path d="M51 0.5C53.4853 0.5 55.5 2.51472 55.5 5V48C55.5 50.4853 53.4853 52.5 51 52.5H6C3.51472 52.5 1.5 50.4853 1.5 48V5C1.5 2.51472 3.51472 0.5 6 0.5H51Z" stroke="#D7D3C9" shapeRendering="crispEdges" />
+                <path d="M2 5C2 2.79086 3.79086 1 6 1H51C53.2091 1 55 2.79086 55 5V11H2V5Z" fill="#F5F3EB" />
+                <circle cx="7" cy="6" r="2" fill="#ECE9DF" />
+                <circle cx="13" cy="6" r="2" fill="#ECE9DF" />
+                <circle cx="19" cy="6" r="2" fill="#ECE9DF" />
+                <g filter="url(#filter1_d_786_16423)">
+                    <rect y="10" width="57" height="14" rx="2" fill="#E7FFE7" />
+                    <rect x="0.5" y="10.5" width="56" height="13" rx="1.5" stroke="#2EA343" />
+                    <rect x="5" y="15" width="11" height="4" rx="1" fill="#A7EAAA" />
+                    <rect x="39" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
+                    <rect x="47" y="15" width="5" height="4" rx="1" fill="#A7EAAA" />
+                </g>
+            </g>
+            <defs>
+                <filter id="filter0_d_786_16423" x="0" y="0" width="57" height="56" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="3" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.843137 0 0 0 0 0.827451 0 0 0 0 0.788235 0 0 0 1 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape" />
+                </filter>
+                <filter id="filter1_d_786_16423" x="0" y="10" width="57" height="17" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="3" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0.180392 0 0 0 0 0.639216 0 0 0 0 0.262745 0 0 0 1 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_786_16423" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_786_16423" result="shape" />
+                </filter>
+            </defs>
+        </svg>
+    ),
+}));
 
 
 
@@ -122,7 +122,9 @@ const PageNode = ({ id, data }) => {
     useEffect(() => {
         setSections(data.sections || []);
     }, [data.sections]);
+    
 
+ 
     const handleDragEnd = (event) => {
         const { active, over } = event;
         if (!over || active.id === over.id) return;
@@ -134,7 +136,6 @@ const PageNode = ({ id, data }) => {
 
             const newItems = arrayMove(items, oldIndex, newIndex);
 
-            // notify parent/node owner about order change when available
             if (typeof data?.onSectionsChange === 'function') {
                 try {
                     data.onSectionsChange(newItems);
@@ -210,9 +211,10 @@ const PageNode = ({ id, data }) => {
                                                     className=""
                                                 >
                                                     <AccordionTrigger
+
                                                         className={
                                                             `[&>svg]:hidden flex items-center justify-between w-full  px-2 py-1.5 text-xs 
-                                                        font-medium text-gray-800 hover:no-underline group relative border ` +
+                                                        font-medium text-gray-800 hover:no-underline group relative border mb-2 ` +
                                                             (isGlobal
                                                                 ? " bg-sprout-color-success-lightest text-sprout-color-text-default border-sprout-color-success"
                                                                 : "")
@@ -220,7 +222,7 @@ const PageNode = ({ id, data }) => {
                                                         style={{ minWidth: "140", maxWidth: "180px" }}
                                                     >
 
-                                                        <span className="truncate ml-2 flex-1 text-left">
+                                                        <span className="truncate ml-2 flex-1 text-left" >
                                                             {section.name}
                                                         </span>
 
@@ -242,7 +244,7 @@ const PageNode = ({ id, data }) => {
 
                                                         </Tooltip>
                                                         <button
-                                                            className="absolute right-1 top-0.5 z-30 text-gray-600 rounded-md p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150 cursor-pointer pointer-events-auto"
+                                                            className="absolute -bottom-3 right-2 z-30 text-gray-600 rounded-md  opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none group-hover:pointer-events-auto p-1 mt-1 bg-[#6E5AFF] text-white"
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 e.preventDefault();
@@ -406,19 +408,41 @@ const Hero = () => {
     const [sidePanelSection, setSidePanelSection] = useState(null)
 
 
-  const handleInsertPaletteSection = (paletteItem) => {
-    if (!sidePanelSection || !sidePanelSection.pageId) return;
-    const { pageId, afterSectionId } = sidePanelSection;
+    const handleInsertPaletteSection = (paletteItem) => {
+        if (!sidePanelSection || !sidePanelSection.pageId) return;
+        const { pageId, afterSectionId } = sidePanelSection;
 
-    setNodes((prev) =>
-        prev.map((node) => {
-            if (node.id !== pageId) return node;
-            const existing = Array.isArray(node.data.sections) ? [...node.data.sections] : [];
+        setNodes((prev) =>
+            prev.map((node) => {
+                if (node.id !== pageId) return node;
+                const existing = Array.isArray(node.data.sections) ? [...node.data.sections] : [];
 
-            // toggle: if a section with same name exists on this page, remove it
-            const existingIndex = existing.findIndex((s) => s.name === paletteItem.label);
-            if (existingIndex !== -1) {
-                existing.splice(existingIndex, 1);
+                // toggle: if a section with same name exists on this page, remove it
+                const existingIndex = existing.findIndex((s) => s.name === paletteItem.label);
+                if (existingIndex !== -1) {
+                    existing.splice(existingIndex, 1);
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            sections: existing,
+                            globalSections: Array.from(globalSet), // Keep globalSections updated
+                        },
+                    };
+                }
+
+                // otherwise insert new section after afterSectionId (or at end)
+                const newSection = {
+                    id: `${node.id}-section-${Date.now()}`,
+                    name: paletteItem.label,
+                    description: paletteItem.description || "",
+                };
+                const idx = existing.findIndex((s) => s.id === afterSectionId);
+                if (idx === -1) {
+                    existing.push(newSection);
+                } else {
+                    existing.splice(idx + 1, 0, newSection);
+                }
                 return {
                     ...node,
                     data: {
@@ -427,33 +451,11 @@ const Hero = () => {
                         globalSections: Array.from(globalSet), // Keep globalSections updated
                     },
                 };
-            }
-
-            // otherwise insert new section after afterSectionId (or at end)
-            const newSection = {
-                id: `${node.id}-section-${Date.now()}`,
-                name: paletteItem.label,
-                description: paletteItem.description || "",
-            };
-            const idx = existing.findIndex((s) => s.id === afterSectionId);
-            if (idx === -1) {
-                existing.push(newSection);
-            } else {
-                existing.splice(idx + 1, 0, newSection);
-            }
-            return {
-                ...node,
-                data: {
-                    ...node.data,
-                    sections: existing,
-                    globalSections: Array.from(globalSet), // Keep globalSections updated
-                },
-            };
-        })
-    );
-    // close side panel after insertion/toggle
-    setSidePanelSection(null);
-};
+            })
+        );
+        // close side panel after insertion/toggle
+        setSidePanelSection(null);
+    };
 
     const generateSitemap = async (userPrompt) => {
         setIsGenerating(true);
@@ -502,28 +504,49 @@ const Hero = () => {
         setNodes([]);
         setEdges([]);
     };
-    const saveSiteMap = async () => {
-        try {
-            const response = await axios.post('http://localhost:4000/api/save-sitemap', {
-                projectName,
-                nodes,
-                edges,
-                prompt,
-                language,
-            });
-            setIsSaving(false)
-            if (response.status === 200) {
-                alert('Sitemap has been saved!');
+  const saveSiteMap = async () => {
+      setIsSaving(true);
+      try {
+          
+          const nodesToSave = nodes.map((n) => {
+              const data = n.data || {};
+              const sections = Array.isArray(data.sections)
+                  ? data.sections.map((s) => ({ ...s, isGlobal: globalLabels.includes(s.name) }))
+                  : [];
+              return {
+                  ...n,
+                  data: {
+                      ...data,
+                      sections,
+                   
+                      globalSections: Array.from(globalSet),
+                  },
+              };
+          });
 
-            } else {
-                alert('Failed to save sitemap.');
-            }
-        } catch (error) {
-            console.error('Error saving sitemap:', error);
-            alert('Something went wrong while saving the sitemap.');
-        }
-    };
+          const payload = {
+              projectName,
+              nodes: nodesToSave,
+              edges,
+              prompt,
+              language,
+              globalLabels, 
+          };
 
+          const response = await axios.post('http://localhost:4000/api/save-sitemap', payload);
+
+          if (response.status === 200) {
+              alert('Sitemap has been saved!');
+          } else {
+              alert('Failed to save sitemap.');
+          }
+      } catch (error) {
+          console.error('Error saving sitemap:', error);
+          alert('Something went wrong while saving the sitemap.');
+      } finally {
+          setIsSaving(false);
+      }
+  };
     const handleSubmitPrompt = (e) => {
         e.preventDefault();
         if (prompt.trim()) {
@@ -532,8 +555,8 @@ const Hero = () => {
     };
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTab, setActiveTab] = useState('all');
-  const [isOpen, setIsOpen] = useState(false);
-   const [globalLabels, setGlobalLabels] = useState(['Navbar', 'Footer']);
+    const [isOpen, setIsOpen] = useState(false);
+    const [globalLabels, setGlobalLabels] = useState(['Navbar', 'Footer']);
     const globalSet = new Set(globalLabels);
 
     const toggleGlobal = (label) => {
@@ -561,7 +584,7 @@ const Hero = () => {
     };
     const handleSaveNode = (updated) => {
         if (!updated) return;
-        // Support either a full node object or { id, data } shape
+      
         const id = updated.id || updated.node?.id;
         const nodePatch = updated.node ? updated.node : updated;
         if (!id) return;
@@ -586,7 +609,7 @@ const Hero = () => {
                 data: {
                     ...page.data,
                     onOpenSection: setSidePanelSection,
-                    // pass global sections list into each node so PageNode can highlight them
+                  
                     globalSections: Array.from(globalSet),
                     onSectionsChange: (newSections) => {
                         setNodes(prev => prev.map(n => n.id === page.id ? { ...n, data: { ...n.data, sections: newSections } } : n));
@@ -597,23 +620,23 @@ const Hero = () => {
 
             setEdges(dataToUse.edges || []);
         }
-   }, [generatedData, setNodes, setEdges, globalLabels]);
+    }, [generatedData, setNodes, setEdges, globalLabels]);
 
-        useEffect(() => {
+    useEffect(() => {
 
-                setNodes((prev) =>
-                    prev.map((node) => ({
-                        ...node,
-                        data: {
-                            ...node.data,
-                            globalSections: Array.from(globalSet),
-                        }
-                    }))
-                );
-            }, [globalLabels, setNodes]);
-     if (showPromptInput) {
+        setNodes((prev) =>
+            prev.map((node) => ({
+                ...node,
+                data: {
+                    ...node.data,
+                    globalSections: Array.from(globalSet),
+                }
+            }))
+        );
+    }, [globalLabels, setNodes]);
+    if (showPromptInput) {
         return (
-            <div className="flex flex-col h-screen text-white">
+            <div className="flex flex-col  h-screen text-white">
                 <Navbar projectName={projectName} />
                 <div className="flex min-h-screen">
                     <SideBar />
@@ -747,8 +770,9 @@ const Hero = () => {
                 >
                     <Background />
                 </ReactFlow>
-                {sidePanelSection && (
-                    <aside className="fixed left-20 top-4 bottom-0 w-80 bg-sprout-color-background-weaker shadow-xl roundedR-2xl z-50 p-4 overflow-y-auto">
+                {sidePanelSection && createPortal (
+            (
+                        <aside className="fixed left-20 top-16 bottom-0 w-80 bg-sprout-color-background-weaker shadow-xl roundedR-2xl z-50 p-4 overflow-y-auto">
                         <div className="flex items-center text- justify-between mb-4">
                             <h3 className='text-sprout-color-text-default font-medium pt-3 text-xl pl-2'>Add Component</h3>
                             <button
@@ -822,42 +846,50 @@ const Hero = () => {
 
 
                                 <TabsContent value="global">
-                                                               <div className='pt-5 p-3 pl-10 relative'>
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="text-sprout-color-secondary-lighter border border-text-sprout-color-secondary-lighter bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest flex items-center gap-2 px-4 py-2 rounded"
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fillRule="evenodd" clipRule="evenodd" d="M7.33906 2.05071C7.51432 1.87566 7.75188 1.77734 7.99957 1.77734C8.24726 1.77734 8.48482 1.87566 8.66007 2.05071L10.4235 3.81296C10.5103 3.89977 10.5792 4.00284 10.6262 4.11628C10.6733 4.22972 10.6975 4.35132 10.6975 4.47412C10.6975 4.59692 10.6733 4.71851 10.6262 4.83196C10.5792 4.9454 10.5103 5.04847 10.4235 5.13528L8.66007 6.89753C8.48482 7.07258 8.24726 7.17089 7.99957 7.17089C7.75188 7.17089 7.51432 7.07258 7.33906 6.89753L5.57565 5.13528C5.48879 5.04847 5.41989 4.9454 5.37289 4.83196C5.32588 4.71851 5.30168 4.59692 5.30168 4.47412C5.30168 4.35132 5.32588 4.22972 5.37289 4.11628C5.41989 4.00284 5.48879 3.89977 5.57565 3.81296L7.33906 2.05071ZM10.8634 5.57584C10.9502 5.48898 11.0533 5.42008 11.1667 5.37306C11.2801 5.32605 11.4017 5.30186 11.5245 5.30186C11.6473 5.30186 11.7689 5.32605 11.8823 5.37306C11.9958 5.42008 12.0989 5.48898 12.1857 5.57584L13.9478 7.3381C14.0347 7.4249 14.1036 7.52797 14.1506 7.64142C14.1976 7.75486 14.2218 7.87646 14.2218 7.99925C14.2218 8.12205 14.1976 8.24365 14.1506 8.35709C14.1036 8.47054 14.0347 8.57361 13.9478 8.66041L12.1857 10.4227C12.0989 10.5095 11.9958 10.5784 11.8823 10.6254C11.7689 10.6725 11.6473 10.6967 11.5245 10.6967C11.4017 10.6967 11.2801 10.6725 11.1667 10.6254C11.0533 10.5784 10.9502 10.5095 10.8634 10.4227L9.10123 8.66041C9.01438 8.57361 8.94548 8.47054 8.89847 8.35709C8.85146 8.24365 8.82726 8.12205 8.82726 7.99925C8.82726 7.87646 8.85146 7.75486 8.89847 7.64142C8.94548 7.52797 9.01438 7.4249 9.10123 7.3381L10.8634 5.57584ZM3.81348 5.57584C3.90028 5.48898 4.00335 5.42008 4.11679 5.37306C4.23022 5.32605 4.35181 5.30186 4.47461 5.30186C4.5974 5.30186 4.71899 5.32605 4.83243 5.37306C4.94587 5.42008 5.04893 5.48898 5.13573 5.57584L6.8979 7.3381C6.98476 7.4249 7.05366 7.52797 7.10067 7.64142C7.14768 7.75486 7.17187 7.87646 7.17187 7.99925C7.17187 8.12205 7.14768 8.24365 7.10067 8.35709C7.05366 8.47054 6.98476 8.57361 6.8979 8.66041L5.13573 10.4227C5.04893 10.5095 4.94587 10.5784 4.83243 10.6254C4.71899 10.6725 4.5974 10.6967 4.47461 10.6967C4.35181 10.6967 4.23022 10.6725 4.11679 10.6254C4.00335 10.5784 3.90028 10.5095 3.81348 10.4227L2.05131 8.66041C1.96446 8.57361 1.89556 8.47054 1.84855 8.35709C1.80154 8.24365 1.77734 8.12205 1.77734 7.99925C1.77734 7.87646 1.80154 7.75486 1.84855 7.64142C1.89556 7.52797 1.96446 7.4249 2.05131 7.3381L3.81348 5.57584ZM7.33844 9.10098C7.42524 9.01412 7.52831 8.94521 7.64174 8.8982C7.75518 8.85119 7.87677 8.82699 7.99957 8.82699C8.12236 8.82699 8.24395 8.85119 8.35739 8.8982C8.47083 8.94521 8.57389 9.01412 8.66069 9.10098L10.4229 10.8632C10.5981 11.0385 10.6965 11.2762 10.6965 11.5241C10.6965 11.7719 10.5981 12.0096 10.4229 12.1849L8.66069 13.9478C8.57389 14.0347 8.47083 14.1036 8.35739 14.1506C8.24395 14.1976 8.12236 14.2218 7.99957 14.2218C7.87677 14.2218 7.75518 14.1976 7.64174 14.1506C7.52831 14.1036 7.42524 14.0347 7.33844 13.9478L5.57627 12.1849C5.40124 12.0097 5.30293 11.7721 5.30293 11.5244C5.30293 11.2767 5.40124 11.0391 5.57627 10.8639L7.33844 9.10098Z" fill="#2EA343"/>
-        </svg>
-        Add Global Section
-      </button>
-      
-      {isOpen && (
-  <div className="absolute top-full left-3 mt-2 bg-white border border-gray-200 rounded-md shadow-lg min-w-[220px] z-10">
-        <div className="py-2 grid gap-1">
-          {sections.map((s) => {
-            const isG = globalLabels.includes(s.label);
-            return (
-              <button
-                key={s.label}
-                type="button"
-                onClick={() => toggleGlobal(s.label)}
-                className={
-                  "w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-50 " +
-                  (isG ? "bg-sprout-color-success-lightest border-l-2 border-sprout-color-success" : "border-none")
-                }
-              >
-                <span className="w-8 h-8 flex items-center justify-center">{s.svg}</span>
-                <span className="flex-1 text-sm text-sprout-color-text-default">{s.label}</span>
-                <span className="text-xs text-sprout-color-text-weakest pr-2">{isG ? "Global" : "Add"}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-      )}
-    </div>
+                                    <div className='pt-5 p-3 pl-10 relative'>
+                                        <button
+                                            onClick={() => setIsOpen(!isOpen)}
+                                            className="text-sprout-color-secondary-lighter border border-sprout-color-secondary-lighter bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest flex items-center gap-2 px-4 py-2 rounded-md"
+                                        >
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fillRule="evenodd" clipRule="evenodd" d="M7.33906 2.05071C7.51432 1.87566 7.75188 1.77734 7.99957 1.77734C8.24726 1.77734 8.48482 1.87566 8.66007 2.05071L10.4235 3.81296C10.5103 3.89977 10.5792 4.00284 10.6262 4.11628C10.6733 4.22972 10.6975 4.35132 10.6975 4.47412C10.6975 4.59692 10.6733 4.71851 10.6262 4.83196C10.5792 4.9454 10.5103 5.04847 10.4235 5.13528L8.66007 6.89753C8.48482 7.07258 8.24726 7.17089 7.99957 7.17089C7.75188 7.17089 7.51432 7.07258 7.33906 6.89753L5.57565 5.13528C5.48879 5.04847 5.41989 4.9454 5.37289 4.83196C5.32588 4.71851 5.30168 4.59692 5.30168 4.47412C5.30168 4.35132 5.32588 4.22972 5.37289 4.11628C5.41989 4.00284 5.48879 3.89977 5.57565 3.81296L7.33906 2.05071ZM10.8634 5.57584C10.9502 5.48898 11.0533 5.42008 11.1667 5.37306C11.2801 5.32605 11.4017 5.30186 11.5245 5.30186C11.6473 5.30186 11.7689 5.32605 11.8823 5.37306C11.9958 5.42008 12.0989 5.48898 12.1857 5.57584L13.9478 7.3381C14.0347 7.4249 14.1036 7.52797 14.1506 7.64142C14.1976 7.75486 14.2218 7.87646 14.2218 7.99925C14.2218 8.12205 14.1976 8.24365 14.1506 8.35709C14.1036 8.47054 14.0347 8.57361 13.9478 8.66041L12.1857 10.4227C12.0989 10.5095 11.9958 10.5784 11.8823 10.6254C11.7689 10.6725 11.6473 10.6967 11.5245 10.6967C11.4017 10.6967 11.2801 10.6725 11.1667 10.6254C11.0533 10.5784 10.9502 10.5095 10.8634 10.4227L9.10123 8.66041C9.01438 8.57361 8.94548 8.47054 8.89847 8.35709C8.85146 8.24365 8.82726 8.12205 8.82726 7.99925C8.82726 7.87646 8.85146 7.75486 8.89847 7.64142C8.94548 7.52797 9.01438 7.4249 9.10123 7.3381L10.8634 5.57584ZM3.81348 5.57584C3.90028 5.48898 4.00335 5.42008 4.11679 5.37306C4.23022 5.32605 4.35181 5.30186 4.47461 5.30186C4.5974 5.30186 4.71899 5.32605 4.83243 5.37306C4.94587 5.42008 5.04893 5.48898 5.13573 5.57584L6.8979 7.3381C6.98476 7.4249 7.05366 7.52797 7.10067 7.64142C7.14768 7.75486 7.17187 7.87646 7.17187 7.99925C7.17187 8.12205 7.14768 8.24365 7.10067 8.35709C7.05366 8.47054 6.98476 8.57361 6.8979 8.66041L5.13573 10.4227C5.04893 10.5095 4.94587 10.5784 4.83243 10.6254C4.71899 10.6725 4.5974 10.6967 4.47461 10.6967C4.35181 10.6967 4.23022 10.6725 4.11679 10.6254C4.00335 10.5784 3.90028 10.5095 3.81348 10.4227L2.05131 8.66041C1.96446 8.57361 1.89556 8.47054 1.84855 8.35709C1.80154 8.24365 1.77734 8.12205 1.77734 7.99925C1.77734 7.87646 1.80154 7.75486 1.84855 7.64142C1.89556 7.52797 1.96446 7.4249 2.05131 7.3381L3.81348 5.57584ZM7.33844 9.10098C7.42524 9.01412 7.52831 8.94521 7.64174 8.8982C7.75518 8.85119 7.87677 8.82699 7.99957 8.82699C8.12236 8.82699 8.24395 8.85119 8.35739 8.8982C8.47083 8.94521 8.57389 9.01412 8.66069 9.10098L10.4229 10.8632C10.5981 11.0385 10.6965 11.2762 10.6965 11.5241C10.6965 11.7719 10.5981 12.0096 10.4229 12.1849L8.66069 13.9478C8.57389 14.0347 8.47083 14.1036 8.35739 14.1506C8.24395 14.1976 8.12236 14.2218 7.99957 14.2218C7.87677 14.2218 7.75518 14.1976 7.64174 14.1506C7.52831 14.1036 7.42524 14.0347 7.33844 13.9478L5.57627 12.1849C5.40124 12.0097 5.30293 11.7721 5.30293 11.5244C5.30293 11.2767 5.40124 11.0391 5.57627 10.8639L7.33844 9.10098Z" fill="#2EA343" />
+                                            </svg>
+                                            Add Global Section
+                                        </button>
+
+                                        {isOpen && (
+                                            <div className="absolute top-full left-3 mt-2 bg-white border border-gray-200 rounded-md shadow-lg min-w-[220px] z-10">
+                                                <div className="py-2 grid gap-1">
+                                                    {sections.map((s) => {
+                                                        const isG = globalLabels.includes(s.label);
+                                                        return (
+                                                            <button
+                                                                key={s.label}
+                                                                type="button"
+                                                                onClick={() => 
+                                                               {
+                                                                 toggleGlobal(s.label)
+                                                               setTimeout(() => {
+                                                                    setIsOpen(!isOpen);
+                                                                    }, 1000);
+                                                               }
+                                                                
+                                                                }
+                                                                className={
+                                                                    "w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-gray-50 " +
+                                                                    (isG ? "bg-sprout-color-success-lightest border-l-2 border-sprout-color-success" : "border-none")
+                                                                }
+                                                            >
+                                                                <span className="w-8 h-8 flex items-center justify-center">{s.svg}</span>
+                                                                <span className="flex-1 text-sm text-sprout-color-text-default">{s.label}</span>
+                                                                <span className="text-xs text-sprout-color-text-weakest pr-2">{isG ? "Global" : "Add"}</span>
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <div className='mt-5'>
                                         <div className='text-sprout-color-text-disabled'>
@@ -920,12 +952,12 @@ const Hero = () => {
 
 
                                         </div>
-             
+
 
                                     </div></TabsContent>
                                 <TabsContent value="all">   <div className='pt-3'>
                                     <div className='text-sprout-color-text-disabled'>
-                                        Categories
+                                       Sections
                                     </div>
                                     <div className="grid grid-cols-2 p-3 pt-5 gap-6 w-[260px] h-[150px]">
 
@@ -959,41 +991,16 @@ const Hero = () => {
 
                         </div>
 
-                        {/* <div className='pt-3'>
-                                              <div className='text-sprout-color-text-disabled'>
-                                                  Categories
-                                              </div>
-                                              <div className="grid grid-cols-2 gap-4 p-3">
-                  
-                                                  {sections.map((s, i) => (
-                  
-                                                      <button
-                                                          key={i}
-                                                          type="button"
-                                                          onClick={() => handleInsertPaletteSection(s)}
-                                                          className="text-left border border-sprout-color-border-weak rounded-md w-[130px] h-[130px] p-0 overflow-hidden"
-                                                      >
-                                                          <div className="border-b p-2 bg-sprout-color-background-strongest pl-7">
-                                                              {s.svg}
-                                                          </div>
-                                                          <div className="whitespace-nowrap text-sprout-color-text-default font-semibold p-2 pl-4 pt-1">
-                                                              {s.label}
-                                                          </div>
-                                                      </button>
-                                                  ))}
-                  
-                                              </div>
-                  
-                                          </div> */}
-                    </aside>
+                       </aside>
+            ), document.body
                 )}
-                {/* {selectedNode && (
-                    <SideEditor
-                        node={selectedNode}
-                        onSave={handleSaveNode}
-                        onClose={() => setSelectedNode(null)}
-                    />
-                )} */}
+                                            {/* {selectedNode && (
+                                                <SideEditor
+                                                    node={selectedNode}
+                                                    onSave={handleSaveNode}
+                                                    onClose={() => setSelectedNode(null)}
+                                                />
+                                            )} */}
             </div>
         </div>
     );
