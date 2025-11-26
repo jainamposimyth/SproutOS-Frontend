@@ -13,7 +13,7 @@ const Navbar = () => {
                     <path d="M9.41699 5.38739H10.703V5.89664H9.41699V7.16979H8.90259V5.89664H7.61658V5.38739H8.90259V4.11424H9.41699V5.38739Z" fill="#FFFDF9" />
                 </svg>
 
-             
+
 
             </div>
             <div className='bg-sprout-color-border-dark-weak   ml-20 md:ml-38 flex w-56 md:w-96 rounded-md'>

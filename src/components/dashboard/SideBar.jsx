@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from "react";
 
-import {ChevronsUpDown} from 'lucide-react'
+import { ChevronsUpDown } from 'lucide-react'
 const SideBar = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [secondActiveIndex, setSecondActiveIndex] = useState(null)
     const [ThirdActiveIndex, setThirdActiveIndex] = useState(null)
-      const [isOpen, setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
 
     const options = [
         {
@@ -87,8 +87,8 @@ const SideBar = () => {
 
                 <svg className="mt-0.5" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
-                      stroke={isActive ? "#FFFDF9" : "#88827E"}
-                    d="M15.75 6.75V13.5C15.75 14.7426 14.7426 15.75 13.5 15.75H7.5M15.75 6.75H2.25M15.75 6.75V4.5C15.75 3.25736 14.7426 2.25 13.5 2.25H4.5C3.25736 2.25 2.25 3.25736 2.25 4.5V6.75M15.75 6.75H7.5M7.5 15.75H4.5C3.25736 15.75 2.25 14.7426 2.25 13.5V6.75M7.5 15.75V6.75M2.25 6.75H7.5" strokeWidth="1.5" />
+                        stroke={isActive ? "#FFFDF9" : "#88827E"}
+                        d="M15.75 6.75V13.5C15.75 14.7426 14.7426 15.75 13.5 15.75H7.5M15.75 6.75H2.25M15.75 6.75V4.5C15.75 3.25736 14.7426 2.25 13.5 2.25H4.5C3.25736 2.25 2.25 3.25736 2.25 4.5V6.75M15.75 6.75H7.5M7.5 15.75H4.5C3.25736 15.75 2.25 14.7426 2.25 13.5V6.75M7.5 15.75V6.75M2.25 6.75H7.5" strokeWidth="1.5" />
                 </svg>
 
             ),
@@ -99,22 +99,22 @@ const SideBar = () => {
             icon: (isActive) => (
 
                 <svg className="mt-0.5" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.25 7.5L14.6647 5.793C14.7791 5.73588 14.9061 5.70891 15.0337 5.71466C15.1614 5.72041 15.2855 5.75869 15.3942 5.82585C15.5029 5.89302 15.5927 5.98686 15.6549 6.09845C15.7172 6.21005 15.7499 6.33571 15.75 6.4635V11.5365C15.7499 11.6643 15.7172 11.79 15.6549 11.9015C15.5927 12.0131 15.5029 12.107 15.3942 12.1741C15.2855 12.2413 15.1614 12.2796 15.0337 12.2853C14.9061 12.2911 14.7791 12.2641 14.6647 12.207L11.25 10.5V7.5ZM2.25 6C2.25 5.60218 2.40804 5.22064 2.68934 4.93934C2.97064 4.65804 3.35218 4.5 3.75 4.5H9.75C10.1478 4.5 10.5294 4.65804 10.8107 4.93934C11.092 5.22064 11.25 5.60218 11.25 6V12C11.25 12.3978 11.092 12.7794 10.8107 13.0607C10.5294 13.342 10.1478 13.5 9.75 13.5H3.75C3.35218 13.5 2.97064 13.342 2.68934 13.0607C2.40804 12.7794 2.25 12.3978 2.25 12V6Z"   stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M11.25 7.5L14.6647 5.793C14.7791 5.73588 14.9061 5.70891 15.0337 5.71466C15.1614 5.72041 15.2855 5.75869 15.3942 5.82585C15.5029 5.89302 15.5927 5.98686 15.6549 6.09845C15.7172 6.21005 15.7499 6.33571 15.75 6.4635V11.5365C15.7499 11.6643 15.7172 11.79 15.6549 11.9015C15.5927 12.0131 15.5029 12.107 15.3942 12.1741C15.2855 12.2413 15.1614 12.2796 15.0337 12.2853C14.9061 12.2911 14.7791 12.2641 14.6647 12.207L11.25 10.5V7.5ZM2.25 6C2.25 5.60218 2.40804 5.22064 2.68934 4.93934C2.97064 4.65804 3.35218 4.5 3.75 4.5H9.75C10.1478 4.5 10.5294 4.65804 10.8107 4.93934C11.092 5.22064 11.25 5.60218 11.25 6V12C11.25 12.3978 11.092 12.7794 10.8107 13.0607C10.5294 13.342 10.1478 13.5 9.75 13.5H3.75C3.35218 13.5 2.97064 13.342 2.68934 13.0607C2.40804 12.7794 2.25 12.3978 2.25 12V6Z" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
 
             ),
         },
 
     ];
-      const options3 = [
+    const options3 = [
         {
             title: "Billing",
             icon: (isActive) => (
 
-                
-<svg className="mt-0.5" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M5.88889 13.1572C6.39749 13.782 7.096 14.2238 7.87844 14.4157C9.64711 14.8738 11.3878 14.0688 11.7666 12.619C12.1453 11.1677 10.7764 9.58567 9.00856 9.12678C7.24067 8.66789 5.871 7.08667 6.24978 5.63611C6.62856 4.18556 8.36844 3.38133 10.1371 3.83944C10.9009 4.023 11.5916 4.45622 12.1111 5.07767M9.09411 14.544V16M9.09411 2V3.71111" stroke="#88827E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
+
+                <svg className="mt-0.5" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.88889 13.1572C6.39749 13.782 7.096 14.2238 7.87844 14.4157C9.64711 14.8738 11.3878 14.0688 11.7666 12.619C12.1453 11.1677 10.7764 9.58567 9.00856 9.12678C7.24067 8.66789 5.871 7.08667 6.24978 5.63611C6.62856 4.18556 8.36844 3.38133 10.1371 3.83944C10.9009 4.023 11.5916 4.45622 12.1111 5.07767M9.09411 14.544V16M9.09411 2V3.71111" stroke="#88827E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
 
 
             ),
@@ -124,17 +124,17 @@ const SideBar = () => {
             title: "Settings",
             icon: (isActive) => (
 
-<svg className="mt-0.5" width="24"  height="24"  viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3 15.75V10.5"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M3 7.5V2.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M9 15.75V9"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M9 6V2.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M15 15.75V12"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M15 9V2.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M0.75 10.5H5.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M6.75 6H11.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M12.75 12H17.25"        stroke={isActive ? "#FFFDF9" : "#88827E"}  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
+                <svg className="mt-0.5" width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 15.75V10.5" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M3 7.5V2.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M9 15.75V9" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M9 6V2.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M15 15.75V12" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M15 9V2.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M0.75 10.5H5.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M6.75 6H11.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12.75 12H17.25" stroke={isActive ? "#FFFDF9" : "#88827E"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
 
 
             ),
@@ -142,20 +142,21 @@ const SideBar = () => {
 
     ];
     return (
-    <div className="w-60 bg-sprout-color-background-dark h-full flex flex-col p-4 text-white border-r border-[#3A2F2C]">
-    
-<div className="border flex gap-2 cursor-pointer rounded-md border-sprout-color-border-dark-weak  p-3 mb-3">
-<img src="./j-icon.png" alt="" width={32} height={32}/>
-<span className="text-[#FFFDF9] pt-0.5">Jainam.posimyth</span>
-<span className="text-[#FFFDF9] pt-0.5"><ChevronsUpDown strokeWidth={1}/></span>
-</div>
+        <div className="w-60 bg-sprout-color-background-dark h-full flex flex-col p-4 text-white border-r border-[#3A2F2C]">
+
+            <div className="border flex gap-2 cursor-pointer rounded-md border-sprout-color-border-dark-weak  p-3 mb-3">
+                <img src="./j-icon.png" alt="" width={32} height={32} />
+                <span className="text-[#FFFDF9] pt-0.5">Jainam.posimyth</span>
+                <span className="text-[#FFFDF9] pt-0.5"><ChevronsUpDown strokeWidth={1} /></span>
+            </div>
             {options.map((item, index) => (
                 <div
                     key={index}
-                    onClick={() => {setActiveIndex(index)
+                    onClick={() => {
+                        setActiveIndex(index)
                         setSecondActiveIndex(null)
                         setThirdActiveIndex(null)
-                       }   }
+                    }}
                     className={`flex gap-2 pl-3 mb-3 p-2 rounded-md cursor-pointer transition
             ${activeIndex === index
                             ? "bg-[#413735] border border-sprout-color-border-dark-weak "
@@ -179,11 +180,11 @@ const SideBar = () => {
             {options2.map((item, index) => (
                 <div
                     key={index}
-                    onClick={() =>
-                        { setSecondActiveIndex(index)
-                            setActiveIndex(null)
-                            setThirdActiveIndex(null)
-                        }}
+                    onClick={() => {
+                        setSecondActiveIndex(index)
+                        setActiveIndex(null)
+                        setThirdActiveIndex(null)
+                    }}
                     className={`flex gap-2 pl-3  p-2 mt-3 rounded-md cursor-pointer transition
             ${secondActiveIndex === index
                             ? "bg-[#413735] border border-sprout-color-border-dark-weak "
@@ -201,15 +202,15 @@ const SideBar = () => {
 
 
             ))}
-             <div className="w-52 mt-3 -ml-2 h-0.5 bg-sprout-color-border-dark-weak "></div>
-  {options3.map((item, index) => (
+            <div className="w-52 mt-3 -ml-2 h-0.5 bg-sprout-color-border-dark-weak "></div>
+            {options3.map((item, index) => (
                 <div
                     key={index}
-                    onClick={() =>
-                        { setThirdActiveIndex(index)
-                            setActiveIndex(null)
-                            setSecondActiveIndex(null)
-                        }}
+                    onClick={() => {
+                        setThirdActiveIndex(index)
+                        setActiveIndex(null)
+                        setSecondActiveIndex(null)
+                    }}
                     className={`flex gap-2 pl-3  p-2 mt-3 rounded-md cursor-pointer transition
             ${ThirdActiveIndex === index
                             ? "bg-[#413735] border border-sprout-color-border-dark-weak "

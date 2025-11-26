@@ -6,12 +6,14 @@ import { Input } from '../ui/input';
 
 export default function SideEditor({ node, onSave, onClose }) {
   const [title, setTitle] = useState(node.data.title || '');
+
   const [sections, setSections] = useState(
     node.data.sections?.map(s => ({
       name: s.name || s,
       description: s.description || '',
     })) || []
   );
+  
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   const handleSectionChange = (index, key, value) => {

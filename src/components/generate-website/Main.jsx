@@ -298,11 +298,14 @@ useEffect(() => {
             el.src = url;
             localStorage.setItem(key, url);
           }
+          else{
+            console.log("url not found")
+          }
         });
       }
     });
 
-    // Handle data-store elements
+   
     container.querySelectorAll('.editable[data-store][data-field]').forEach(el => {
       if (el.querySelector('.editable')) return;
       const storeId = el.dataset.store;
@@ -526,54 +529,70 @@ useEffect(() => {
     setUserPrompt('');
   };
 
-  const getTemplateEdits = (templateId, containerIndex) => {
-    const container = document.getElementById(`build-container-${containerIndex}`);
-    if (!container) return { edits: {}, styles: {}, dataStoreEdits: {}, dataStoreStyles: {} };
+const getTemplateEdits = (templateId, containerIndex) => {
+  const container = document.getElementById(`build-container-${containerIndex}`);
+  if (!container) return { edits: {}, styles: {}, dataStoreEdits: {}, dataStoreStyles: {}, theme: {} };
 
-    const edits = {};
-    const styles = {};
-    const dataStoreEdits = {};
-    const dataStoreStyles = {};
+  const edits = {};
+  const styles = {};
+  const dataStoreEdits = {};
+  const dataStoreStyles = {};
 
-    container.querySelectorAll('.editable[data-key]').forEach(el => {
-      if (el.querySelector('.editable')) return;
-      const key = el.dataset.key;
-      if (!key) return;
+  // Get current theme data
+  const themeData = JSON.parse(localStorage.getItem(`${templateId}_theme_data`) || '{}');
+  const currentTheme = localStorage.getItem(`${templateId}_theme`) || 'light';
 
-      if (el.tagName === 'IMG') {
-        edits[key] = el.src;
-      } else {
-        edits[key] = el.innerText.trim();
-      }
+  container.querySelectorAll('.editable[data-key]').forEach(el => {
+    if (el.querySelector('.editable')) return;
+    const key = el.dataset.key;
+    if (!key) return;
 
-      styles[key] = el.className.trim();
-    });
+    if (el.tagName === 'IMG') {
+      edits[key] = el.src;
+    } else {
+      edits[key] = el.innerText.trim();
+    }
 
-    container.querySelectorAll('.editable[data-store][data-field]').forEach(el => {
-      if (el.querySelector('.editable')) return;
-      const storeId = el.dataset.store;
-      const fieldName = el.dataset.field;
+    styles[key] = el.className.trim();
+  });
 
-      if (!storeId || !fieldName) return;
+  container.querySelectorAll('.editable[data-store][data-field]').forEach(el => {
+    if (el.querySelector('.editable')) return;
+    const storeId = el.dataset.store;
+    const fieldName = el.dataset.field;
 
-      if (!dataStoreEdits[storeId]) {
-        dataStoreEdits[storeId] = {};
-      }
-      if (!dataStoreStyles[storeId]) {
-        dataStoreStyles[storeId] = {};
-      }
+    if (!storeId || !fieldName) return;
 
-      if (el.tagName === 'IMG') {
-        dataStoreEdits[storeId][fieldName] = el.src;
-      } else {
-        dataStoreEdits[storeId][fieldName] = el.innerText.trim();
-      }
+    if (!dataStoreEdits[storeId]) {
+      dataStoreEdits[storeId] = {};
+    }
+    if (!dataStoreStyles[storeId]) {
+      dataStoreStyles[storeId] = {};
+    }
 
-      dataStoreStyles[storeId][fieldName] = el.className.trim();
-    });
+    if (el.tagName === 'IMG') {
+      dataStoreEdits[storeId][fieldName] = el.src;
+    } else {
+      dataStoreEdits[storeId][fieldName] = el.innerText.trim();
+    }
 
-    return { edits, styles, dataStoreEdits, dataStoreStyles };
+    dataStoreStyles[storeId][fieldName] = el.className.trim();
+  });
+
+
+
+  return { 
+    edits, 
+    styles, 
+    dataStoreEdits, 
+    dataStoreStyles, 
+    theme: {
+      current: currentTheme,
+      data: themeData
+    },
+    containerClasses: Array.from(container.classList)
   };
+};
 
   const extractTemplateElements = (templateId, containerIndex) => {
     const container = document.getElementById(`build-container-${containerIndex}`);
@@ -589,7 +608,6 @@ useEffect(() => {
       }
     };
 
-    // Extract all editable elements
     const editableElements = container.querySelectorAll('.editable[data-key], .editable[data-store][data-field]');
     
     editableElements.forEach((el, index) => {
@@ -602,7 +620,7 @@ useEffect(() => {
         attributes: {}
       };
 
-      // Extract data attributes
+    
       if (el.dataset.key) {
         elementData.attributes.dataKey = el.dataset.key;
       }
@@ -613,13 +631,13 @@ useEffect(() => {
         elementData.attributes.dataField = el.dataset.field;
       }
 
-      // Extract specific attributes based on element type
+     
       if (el.tagName === 'IMG') {
         elementData.attributes.src = el.src || null;
         elementData.attributes.alt = el.alt || null;
       }
 
-      // Add inline styles if any
+      
       if (el.style.cssText) {
         elementData.inlineStyles = el.style.cssText;
       }
@@ -627,7 +645,7 @@ useEffect(() => {
       extracted.elements.push(elementData);
     });
 
-    // Count statistics
+   
     extracted.stats.totalElements = extracted.elements.length;
     
     // Count by type
@@ -656,29 +674,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
     
   }
 };
-  const handleExtractElements = (templateId, containerIndex) => {
-    const extracted = extractTemplateElements(templateId, containerIndex);
-    
-    if (extracted) {
-      setExtractedElements(prev => ({
-        ...prev,
-        [templateId]: extracted
-      }));
-     console.log(`Extracted elements from ${templateId}:`, extracted);
 
- 
-      const dataStr = JSON.stringify(extracted, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${templateId}-elements.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-
-      alert(`Extracted ${extracted.stats.totalElements} elements from ${templateId}. Check console and downloads.`);
-    }
-  };
 
   const downloadGutenbergTemplate = async (templateId, index) => {
     const { edits, styles } = getTemplateEdits(templateId, index);
@@ -733,27 +729,33 @@ const handleTemplateClick = (templateId, containerIndex) => {
     }
   };
 
-  const downloadJSX = async (templateId, index) => {
-    const { edits, styles } = getTemplateEdits(templateId, index);
-      const template = 'website12'
-    try {
-      const response = await fetch("http://localhost:3001/api/send-jsx", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ edits, styles, template }),
-      });
+const downloadJSX = async ( index) => {
+  const { edits, styles, theme, containerClasses } = getTemplateEdits(index);
+  const templateId = 'website12'
+  try {
+    const response = await fetch("http://localhost:3001/api/send-jsx", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        edits, 
+        styles, 
+        template: templateId,
+        theme: theme,
+        containerClasses: containerClasses 
+      }),
+    });
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${templateId}-template.jsx`;
-      a.click();
-    } catch (error) {
-      console.error("JSX export failed:", error);
-      alert("Export failed. Please ensure the backend server is running.");
-    }
-  };
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${templateId}-template.jsx`;
+    a.click();
+  } catch (error) {
+    console.error("JSX export failed:", error);
+    alert("Export failed. Please ensure the backend server is running.");
+  }
+};
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
@@ -1023,7 +1025,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
                 }}
               >
                 Extract Elements
-              </button>
+              </button> */}
 
               <button
                 onClick={() => downloadGutenbergTemplate(templateId, index)}
@@ -1068,7 +1070,7 @@ const handleTemplateClick = (templateId, containerIndex) => {
                 }}
               >
                 Export as React
-              </button> */}
+              </button>
             </div>
 
             {/* Template Container */}

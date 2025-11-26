@@ -4,15 +4,22 @@ import { SelectedElementProvider } from "@/context/SelectedElement";
 import { ContentProvider } from "@/context/CreateContext";
 import { ElementsProvider } from "@/context/ElementsContext";
 import { BoxProvider } from "@/context/BoxContext";
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { ImageBoxProvider } from "@/context/ImageBox";
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
 
 export const metadata = {
   title: "Create Next App",
@@ -23,20 +30,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${GeistSans.variable} ${GeistMono.variable}`}
       >
         <ContentProvider>
-       <BoxProvider>
+          <BoxProvider>
 
-         <ElementsProvider>
-                 <SelectedElementProvider>
-        {children}
-       </SelectedElementProvider>
-  
-         </ElementsProvider>
-        </BoxProvider>
+            <ElementsProvider>
+              <SelectedElementProvider>
+                <ImageBoxProvider>
+                  {children}
+                </ImageBoxProvider>
+              </SelectedElementProvider>
+
+            </ElementsProvider>
+          </BoxProvider>
         </ContentProvider>
-      
+
       </body>
     </html>
   );
