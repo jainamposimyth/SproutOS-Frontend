@@ -21,8 +21,6 @@ const AddSections = () => {
                             <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="#6F6765" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M13.9986 13.9991L11.0986 11.0991" stroke="#6F6765" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-
-
                     </div>
                     <Input
                         type="text"
@@ -62,22 +60,22 @@ const AddSections = () => {
                     <div className='border border-sprout-color-border-weak rounded-md w-[120px] h-[120px]'>
                         <div className='bg-sprout-color-background-strongest'>
                             <img className='ml-5' width={70} height={70} src="/sectionThumbnail.png" alt="" srcset="" />
-                           
+
                         </div>
                         <h1 className='text-sprout-color-text-default font-[500] ml-6 mt-1'>Navbar</h1>
                     </div>
                     <div className='border border-sprout-color-border-weak rounded-md w-[120px] h-[120px]'>
                         <div className='bg-sprout-color-background-strongest'>
-   <img className='ml-5' width={70} height={70} src="/sectionThumbnail.png" alt="" srcset="" />
-   
+                            <img className='ml-5' width={70} height={70} src="/sectionThumbnail.png" alt="" srcset="" />
+
                         </div>
-                          <h1 className='text-sprout-color-text-default font-[500] ml-6 mt-1'>Navbar</h1>
+                        <h1 className='text-sprout-color-text-default font-[500] ml-6 mt-1'>Navbar</h1>
                     </div>
                     <div className='border border-sprout-color-border-weak rounded-md w-[120px] h-[120px]'>
                         <div className='bg-sprout-color-background-strongest'>
-          <img className='ml-5' width={70} height={70} src="/sectionThumbnail.png" alt="" srcset="" />
+                            <img className='ml-5' width={70} height={70} src="/sectionThumbnail.png" alt="" srcset="" />
                         </div>
-                          <h1 className='text-sprout-color-text-default font-[500] ml-6 mt-1'>Navbar</h1>
+                        <h1 className='text-sprout-color-text-default font-[500] ml-6 mt-1'>Navbar</h1>
                     </div>
                 </div>
             </div>

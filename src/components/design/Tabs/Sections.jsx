@@ -10,26 +10,34 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useElements } from '@/context/ElementsContext'
-import {useImageBox } from '@/context/ImageBox'
+import { useImageBox } from '@/context/ImageBox'
+import {useSelection} from '@/context/SelectionContext'
+import { useIconTab } from '@/context/IconTabContext'
 const Sections = () => {
   const {
     activeTemplate,
     extractedElements,
     updateElementAndDOM
   } = useElements();
-
-  const [selectedElement, setSelectedElement] = useState(null);
+  const { iconBoxOpen, setIconBoxOpen } = useIconTab()
+  const [selectedContainer, setSelectedContainer] = useState(null);
+  const { selectedElement, selectElement } = useSelection()
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [selectedColor, setSelectedColor] = useState('#413735');
-  const [currentTheme, setCurrentTheme] = useState('light'); 
+  const [currentTheme, setCurrentTheme] = useState('light');
   const [selectedImage, setSelectedImage] = useState(null);
   const [showImagePanel, setShowImagePanel] = useState(false);
-  const{allImages,setAllImages}=useImageBox()
-  const {imageBoxOpen,setImageBoxOpen}=useImageBox()
-  const currentElements = activeTemplate ? extractedElements[activeTemplate]?.elements || [] : [];
+  const { allImages, setAllImages } = useImageBox()
+  const [selectedColorScheme, setSelectedColorScheme] = useState('Scheme_1');
+  const [selectedAlignment, setSelectedAlignment] = useState('left')
+  const { imageBoxOpen, setImageBoxOpen } = useImageBox()
   const [openImageBox, setOpenImageBox] = useState(false)
+  const templates = ['website2', 'website3'];
+  const currentElements = activeTemplate ? extractedElements[activeTemplate]?.elements || [] : [];
+
+
   const imageElements = currentElements.filter(element => {
-      
+
     if (!element) return false;
 
     const tagName = element.tagName?.toLowerCase() || '';
@@ -51,75 +59,22 @@ const Sections = () => {
     );
   });
 
-  // const handleImageTabClick = () => {
-  //   setShowImagePanel(!showImagePanel);
-  //   setShowColorPicker(false);
-  // };
 
-  // const handleImageClick = (imageElement) => {
-  //   setSelectedImage(imageElement);
-  // };
-
-  // const updateImageSource = (element, newSrc) => {
-  //   if (!element || !activeTemplate) return;
-
-  //   const elementIndex = getElementIndex(element);
-  //   if (elementIndex === -1) return;
-
-
-  //   const container = document.getElementById(`build-container-${templates.findIndex(t => t === activeTemplate)}`);
-  //   if (!container) return;
-
-  //   let domElement = null;
-
- 
-  //   if (element.attributes?.dataKey) {
-  //     domElement = container.querySelector(`[data-key="${element.attributes.dataKey}"]`);
-  //   } else if (element.attributes?.dataStore && element.attributes?.dataField) {
-  //     domElement = container.querySelector(`[data-store="${element.attributes.dataStore}"][data-field="${element.attributes.dataField}"]`);
-  //   }
-
-  //   if (domElement && domElement.tagName.toLowerCase() === 'img') {
-  //     domElement.src = newSrc;
-
-
-  //     if (element.attributes?.dataKey) {
-  //       const key = `${activeTemplate}_${element.attributes.dataKey}`;
-  //       localStorage.setItem(key + '_src', newSrc);
-  //     } else if (element.attributes?.dataStore && element.attributes?.dataField) {
-  //       const key = `${activeTemplate}_${element.attributes.dataStore}.${element.attributes.dataField}`;
-  //       localStorage.setItem(key + '_src', newSrc);
-  //     }
-
-  //     updateElementAndDOM(activeTemplate, elementIndex, {
-  //       attributes: {
-  //         ...element.attributes,
-  //         src: newSrc
-  //       }
-  //     });
-
-  
-  //     window.dispatchEvent(new CustomEvent('domUpdated', {
-  //       detail: { templateId: activeTemplate }
-  //     }));
-  //   }
-  // };
-
-  // const handleImageUpload = (event, imageElement) => {
-  //   const file = event.target.files[0];
-  //   if (file && imageElement) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       updateImageSource(imageElement, e.target.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
-  const handleImageClick = ()=>{
-setAllImages(imageElements)
+  const handleImageClick = () => {
+    setAllImages(imageElements)
     setImageBoxOpen(!imageBoxOpen)
   }
+  const handleContainerClick = (containerIndex) => {
+  setSelectedContainer(containerIndex);
+  
+  setShowColorPicker(false);
+  
+  // Load saved container alignment
+  const containerKey = `container_${containerIndex}_alignment`;
+  const savedAlignment = localStorage.getItem(containerKey) || 'left';
+  setSelectedAlignment(savedAlignment);
+};
+
 
 
   const getElementIndex = (element) => {
@@ -166,6 +121,308 @@ setAllImages(imageElements)
     }
   };
 
+
+
+  const colorSchemes = {
+    'Scheme_1': {
+      bg: 'bg-gradient-to-br from-blue-50 to-indigo-100',
+      text: 'text-gray-800',
+      name: 'Blue Gradient'
+    },
+    'Red': {
+      bg: 'bg-gradient-to-br from-red-50 to-pink-100',
+      text: 'text-gray-800',
+      name: 'Red Theme'
+    },
+    'Green': {
+      bg: 'bg-gradient-to-br from-green-50 to-emerald-100',
+      text: 'text-gray-800',
+      name: 'Green Theme'
+    },
+    'Yellow': {
+      bg: 'bg-gradient-to-br from-yellow-50 to-amber-100',
+      text: 'text-gray-800',
+      name: 'Yellow Theme'
+    },
+    'Blue': {
+      bg: 'bg-gradient-to-br from-blue-50 to-cyan-100',
+      text: 'text-gray-800',
+      name: 'Blue Theme'
+    }
+  };
+const handleContainerAlignmentChange = (alignment) => {
+  if (selectedContainer === null || !activeTemplate) {
+    console.log('No container selected or no active template');
+    return;
+  }
+
+  console.log('Changing container alignment for:', selectedContainer);
+
+  setSelectedAlignment(alignment);
+  const container = document.getElementById(`build-container-${selectedContainer}`);
+
+  if (!container) {
+    console.log('Container not found');
+    return;
+  }
+
+  // Apply alignment only to main content sections, not buttons or form elements
+  const contentSections = container.querySelectorAll(`
+    h1, h2, h3, h4, h5, h6, 
+    p, span, 
+    .hero, .title, .heading, .description, .subtitle, .text, .content, .caption,
+    [class*="title"], [class*="heading"], [class*="description"], [class*="content"]
+  `);
+  
+  // Exclude buttons and form elements
+  const excludedElements = container.querySelectorAll(`
+    button, .btn, [class*="button"], 
+    input, textarea, select, 
+    form, .form, [class*="form"]
+  `);
+
+  contentSections.forEach(element => {
+    // Skip if element is a button or form element
+    const isExcluded = Array.from(excludedElements).some(excluded => 
+      excluded.contains(element) || element.contains(excluded)
+    );
+    
+    if (!isExcluded) {
+      const currentClasses = element.className.split(' ').filter(Boolean);
+
+      // Remove existing alignment classes
+      const alignmentClassesToRemove = [
+        'text-left', 'text-center', 'text-right', 'text-justify',
+        'justify-start', 'justify-center', 'justify-end'
+      ];
+
+      const filteredClasses = currentClasses.filter(cls =>
+        !alignmentClassesToRemove.some(alignmentClass => cls === alignmentClass)
+      );
+
+      // Add the new alignment class
+      filteredClasses.push(`text-${alignment}`);
+
+      const finalClasses = filteredClasses.join(' ').trim();
+      element.className = finalClasses;
+      element.style.textAlign = alignment;
+    }
+  });
+
+  console.log('Applied container alignment to content sections:', alignment);
+
+  // Save container alignment
+  const containerKey = `container_${selectedContainer}_alignment`;
+  localStorage.setItem(containerKey, alignment);
+
+  // Dispatch update event
+  window.dispatchEvent(new CustomEvent('domUpdated', {
+    detail: {
+      templateId: activeTemplate,
+      containerId: selectedContainer
+    }
+  }));
+};
+const handleElementAlignmentChange = (alignment) => {
+  // This is your existing handleAlignmentChange function - just rename it
+  if (!selectedElement || !activeTemplate) {
+    console.log('No element selected or no active template');
+    return;
+  }
+
+  console.log('Changing alignment for:', selectedElement);
+
+  // Skip fallback elements as they don't exist in DOM
+  if (selectedElement.id === 'fallback-title' || selectedElement.id === 'fallback-description') {
+    console.log('Cannot align fallback elements');
+    return;
+  }
+
+  setSelectedAlignment(alignment);
+  const containerIndex = templates.findIndex(t => t === activeTemplate);
+  const container = document.getElementById(`build-container-${containerIndex}`);
+
+  if (!container) {
+    console.log('Container not found');
+    return;
+  }
+
+  let domElement = null;
+
+  // Simplified element finding - try data attributes first
+  if (selectedElement.attributes?.dataKey) {
+    domElement = container.querySelector(`[data-key="${selectedElement.attributes.dataKey}"]`);
+    console.log('Found by data-key:', domElement);
+  }
+
+  if (!domElement && selectedElement.attributes?.dataStore && selectedElement.attributes?.dataField) {
+    domElement = container.querySelector(`[data-store="${selectedElement.attributes.dataStore}"][data-field="${selectedElement.attributes.dataField}"]`);
+    console.log('Found by data-store/data-field:', domElement);
+  }
+
+  if (!domElement) {
+    console.log('DOM element not found for:', selectedElement);
+    // Try a more direct approach - look for elements with similar text
+    const allElements = container.querySelectorAll('*');
+    for (let el of allElements) {
+      if (el.textContent?.trim() === selectedElement.text?.trim()) {
+        domElement = el;
+        console.log('Found by text content:', domElement);
+        break;
+      }
+    }
+  }
+
+  if (!domElement) {
+    console.log('Final: DOM element not found');
+    return;
+  }
+
+  // Apply alignment classes
+  const currentClasses = domElement.className.split(' ').filter(Boolean);
+
+  // Remove existing alignment classes
+  const alignmentClassesToRemove = [
+    'text-left', 'text-center', 'text-right', 'text-justify',
+    'justify-start', 'justify-center', 'justify-end'
+  ];
+
+  const filteredClasses = currentClasses.filter(cls =>
+    !alignmentClassesToRemove.some(alignmentClass => cls === alignmentClass)
+  );
+
+  // Add the new alignment class
+  filteredClasses.push(`text-${alignment}`);
+
+  const finalClasses = filteredClasses.join(' ').trim();
+  domElement.className = finalClasses;
+  domElement.style.textAlign = alignment;
+
+  console.log('Applied alignment:', alignment, 'Classes:', finalClasses);
+
+  const elementKey = selectedElement.attributes?.dataKey ||
+    (selectedElement.attributes?.dataStore && selectedElement.attributes?.dataField ?
+      `${selectedElement.attributes.dataStore}.${selectedElement.attributes.dataField}` :
+      `element_${selectedElement.id}`);
+
+  localStorage.setItem(`${activeTemplate}_${elementKey}_alignment`, alignment);
+  localStorage.setItem(`${activeTemplate}_${elementKey}_class`, finalClasses);
+
+  // Update element in context if it's not a fallback
+  const elementIndex = getElementIndex(selectedElement);
+  if (elementIndex !== -1) {
+    updateElementAndDOM(activeTemplate, elementIndex, {
+      ...selectedElement,
+      className: finalClasses,
+      attributes: {
+        ...selectedElement.attributes,
+        style: `${selectedElement.attributes?.style || ''}; text-align: ${alignment};`
+      }
+    });
+  }
+
+  // Dispatch update event
+  window.dispatchEvent(new CustomEvent('domUpdated', {
+    detail: {
+      templateId: activeTemplate,
+      elementId: selectedElement.id
+    }
+  }));
+};
+const handleAlignmentChange = (alignment) => {
+  if (selectedContainer !== null) {
+    // Handle container alignment
+    handleContainerAlignmentChange(alignment);
+  } else if (selectedElement && activeTemplate) {
+    // Handle element alignment (your existing code)
+    handleElementAlignmentChange(alignment);
+  }
+};
+// Add this useEffect to listen for container selection
+useEffect(() => {
+  const handleContainerSelected = (event) => {
+    const { containerIndex, templateId } = event.detail;
+    setSelectedContainer(containerIndex);
+    setSelectedElement(null);
+    setShowColorPicker(false);
+    
+    // Load saved container alignment
+    const containerKey = `container_${containerIndex}_alignment`;
+    const savedAlignment = localStorage.getItem(containerKey) || 'left';
+    setSelectedAlignment(savedAlignment);
+  };
+
+  window.addEventListener('containerSelected', handleContainerSelected);
+  
+  return () => {
+    window.removeEventListener('containerSelected', handleContainerSelected);
+  };
+}, []);
+
+
+
+  useEffect(() => {
+    if (activeTemplate) {
+      // Load saved theme
+      const savedTheme = localStorage.getItem(`${activeTemplate}_theme`) || 'light';
+      setCurrentTheme(savedTheme);
+
+      // Load saved color scheme
+      const savedColorScheme = localStorage.getItem(`${activeTemplate}_color_scheme`) || 'Scheme_1';
+      setSelectedColorScheme(savedColorScheme);
+
+      const containerIndex = templates.findIndex(t => t === activeTemplate);
+      const container = document.getElementById(`build-container-${containerIndex}`);
+
+      if (container) {
+        // Apply theme
+        if (savedTheme === 'dark') {
+          container.classList.add('dark', 'bg-black');
+          container.classList.remove('bg-white');
+        }
+
+        // Apply color scheme
+        const scheme = colorSchemes[savedColorScheme];
+        if (scheme) {
+          scheme.bg.split(' ').forEach(className => {
+            container.classList.add(className);
+          });
+        }
+      }
+    }
+  }, [activeTemplate]);
+  const handleColorSchemeChange = (schemeName) => {
+    if (!activeTemplate) return;
+
+    setSelectedColorScheme(schemeName);
+
+    // Get the template container
+    const containerIndex = templates.findIndex(t => t === activeTemplate);
+    const container = document.getElementById(`build-container-${containerIndex}`);
+
+    if (!container) return;
+
+    // Remove all existing color scheme classes
+    Object.values(colorSchemes).forEach(scheme => {
+      container.classList.remove(...scheme.bg.split(' '));
+    });
+
+    // Add the new color scheme classes
+    const newScheme = colorSchemes[schemeName];
+    if (newScheme) {
+      newScheme.bg.split(' ').forEach(className => {
+        container.classList.add(className);
+      });
+    }
+
+    // Save to localStorage
+    localStorage.setItem(`${activeTemplate}_color_scheme`, schemeName);
+
+    // Dispatch update event
+    window.dispatchEvent(new CustomEvent('domUpdated', {
+      detail: { templateId: activeTemplate }
+    }));
+  };
 
   const sectionElements = currentElements.filter(element => {
     if (!element) return false;
@@ -250,31 +507,76 @@ setAllImages(imageElements)
   const fallbackTitle = "Hero Section Title";
   const fallbackDescription = "A compelling hero section with a catchy tagline, a brief description, and a call-to-action button.";
 
+const handleElementClick = (element, type) => {
+  console.log('Element clicked:', element, 'Type:', type);
 
+  // Use the global selectElement function instead of setSelectedElement
+  selectElement({
+    ...element,
+    elementType: type
+  }, 'sidebar');
 
-  const handleElementClick = (element, type) => {
-    setSelectedElement({ ...element, elementType: type });
+  // Load saved alignment with better key
+  const elementKey = element.attributes?.dataKey ||
+    (element.attributes?.dataStore && element.attributes?.dataField ?
+      `${element.attributes.dataStore}.${element.attributes.dataField}` :
+      `element_${element.id}`);
+
+  const savedAlignment = localStorage.getItem(`${activeTemplate}_${elementKey}_alignment`) || 'left';
+  setSelectedAlignment(savedAlignment);
+
+  // Show color picker for text elements
+  if (type === 'title' || type === 'description') {
     setShowColorPicker(true);
+  }
+};
 
-  
-    if (element.attributes?.style) {
-      const colorMatch = element.attributes.style.match(/color:\s*(#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|rgb\(\d+,\s*\d+,\s*\d+\)|rgba\(\d+,\s*\d+,\s*\d+,\s*[\d.]+\))/);
-      if (colorMatch) {
-        setSelectedColor(colorMatch[1]);
-      } else {
-      const classColorMatch = element.className?.match(/text-\[(#.*?)\]/);
-        if (classColorMatch) {
-          setSelectedColor(classColorMatch[1]);
-        }
-      }
-    }
-  };
+const AlignmentButtons = () => (
+  <div className='border flex border-sprout-color-border-weak rounded-md p-1'>
+    <Button
+      className={`border ${selectedAlignment === 'left'
+          ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+          : 'text-sprout-color-text-disabled bg-white hover:bg-white'
+        }`}
+      onClick={() => handleAlignmentChange('left')}
+    >
+      <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd" clipRule="evenodd" d="M2.5 1.03906C2.66576 1.03906 2.82473 1.10491 2.94194 1.22212C3.05915 1.33933 3.125 1.4983 3.125 1.66406V18.3307C3.125 18.4965 3.05915 18.6555 2.94194 18.7727C2.82473 18.8899 2.66576 18.9557 2.5 18.9557C2.33424 18.9557 2.17527 18.8899 2.05806 18.7727C1.94085 18.6555 1.875 18.4965 1.875 18.3307V1.66406C1.875 1.4983 1.94085 1.33933 2.05806 1.22212C2.17527 1.10491 2.33424 1.03906 2.5 1.03906ZM7.89 3.53906H15.4433C15.81 3.53906 16.1267 3.53906 16.385 3.5624C16.66 3.5874 16.9317 3.6424 17.1875 3.7899C17.4725 3.9549 17.7092 4.19156 17.8742 4.47656C18.0217 4.7324 18.0767 5.00406 18.1017 5.27823C18.125 5.53823 18.125 5.85406 18.125 6.21989V6.27406C18.125 6.64073 18.125 6.95739 18.1017 7.21573C18.0767 7.49073 18.0217 7.76239 17.8742 8.01823C17.7095 8.30345 17.4727 8.54028 17.1875 8.7049C16.9317 8.8524 16.66 8.90739 16.3858 8.93239C16.1258 8.95573 15.81 8.95573 15.4442 8.95573H7.88917C7.5225 8.95573 7.20583 8.95573 6.9475 8.93239C6.6725 8.90739 6.40083 8.8524 6.145 8.7049C5.85978 8.54028 5.62295 8.30345 5.45833 8.01823C5.31083 7.76239 5.25583 7.49073 5.23083 7.21656C5.2075 6.95656 5.2075 6.64073 5.2075 6.2749V6.22073C5.2075 5.85406 5.2075 5.5374 5.23083 5.27906C5.25583 5.00406 5.31083 4.7324 5.45833 4.47656C5.62295 4.19134 5.85978 3.95451 6.145 3.7899C6.40083 3.6424 6.6725 3.5874 6.94667 3.5624C7.20667 3.53906 7.5225 3.53906 7.88833 3.53906H7.89ZM7.06083 4.80739C6.87333 4.82406 6.805 4.85323 6.77083 4.8724C6.67562 4.9273 6.59658 5.00635 6.54167 5.10156C6.5225 5.1349 6.49333 5.20406 6.47667 5.39156C6.45917 5.5874 6.45833 5.84656 6.45833 6.2474C6.45833 6.64823 6.45833 6.9074 6.47667 7.10323C6.49333 7.29073 6.5225 7.35906 6.54167 7.39323C6.59658 7.48844 6.67562 7.56748 6.77083 7.62239C6.80417 7.64156 6.87333 7.67073 7.06083 7.68739C7.25667 7.70489 7.51583 7.70573 7.91667 7.70573H15.4167C15.8175 7.70573 16.0767 7.70573 16.2725 7.68739C16.46 7.67073 16.5283 7.64156 16.5625 7.62239C16.6574 7.56737 16.7362 7.48833 16.7908 7.39323C16.8108 7.35989 16.8392 7.29073 16.8567 7.10323C16.8742 6.9074 16.875 6.64823 16.875 6.2474C16.875 5.84656 16.875 5.5874 16.8567 5.39156C16.84 5.20406 16.8108 5.13573 16.7908 5.10156C16.7362 5.00646 16.6574 4.92742 16.5625 4.8724C16.5292 4.85323 16.46 4.82406 16.2725 4.80739C15.9876 4.78984 15.7021 4.78373 15.4167 4.78906H7.91667C7.51583 4.78906 7.25667 4.78906 7.06083 4.80739ZM7.89 11.0391H12.9433C13.31 11.0391 13.6267 11.0391 13.885 11.0624C14.16 11.0874 14.4317 11.1424 14.6875 11.2899C14.9725 11.4549 15.2092 11.6916 15.3742 11.9766C15.5217 12.2324 15.5767 12.5041 15.6017 12.7782C15.625 13.0382 15.625 13.3541 15.625 13.7199V13.7741C15.625 14.1407 15.625 14.4574 15.6017 14.7157C15.5767 14.9907 15.5217 15.2624 15.3742 15.5182C17.7095 15.8034 17.4727 16.0402 17.1875 16.2049C16.9317 16.3524 16.66 16.4074 16.3858 16.4324C16.1258 16.4557 15.81 16.4557 15.4442 16.4557H7.88917C7.5225 16.4557 7.20583 16.4557 6.9475 16.4324C6.6725 16.4074 6.40083 16.3524 6.145 16.2049C5.85978 16.0403 5.62295 15.8034 5.45833 15.5182C5.31083 15.2624 5.25583 14.9907 5.23083 14.7166C5.2075 14.4566 5.2075 14.1407 5.2075 13.7749V13.7207C5.2075 13.3541 5.2075 13.0374 5.23083 12.7791C5.25583 12.5041 5.31083 12.2324 5.45833 11.9766C5.62295 11.6913 5.85978 11.4545 6.145 11.2899C6.40083 11.1424 6.6725 11.0874 6.94667 11.0624C7.20667 11.0391 7.5225 11.0391 7.88833 11.0391H7.89ZM7.06083 12.3074C6.87333 12.3241 6.805 12.3532 6.77083 12.3732C6.67573 12.4279 6.59669 12.5067 6.54167 12.6016C6.5225 12.6349 6.49333 12.7041 6.47667 12.8916C6.45912 13.1765 6.453 13.462 6.45833 13.7474C6.45833 14.1482 6.45833 14.4074 6.47667 14.6032C6.49333 14.7907 6.5225 14.8591 6.54167 14.8932C6.59669 14.9881 6.67573 15.0669 6.77083 15.1216C6.80417 15.1416 6.87333 15.1699 7.06083 15.1874C7.25667 15.2049 7.51583 15.2057 7.91667 15.2057H12.9167C13.3175 15.2057 13.5767 15.2057 13.7725 15.1874C13.96 15.1707 14.0283 15.1416 14.0625 15.1216C14.1573 15.0668 14.236 14.988 14.2908 14.8932C14.3108 14.8599 14.3392 14.7907 14.3567 14.6032C14.3742 14.4074 14.375 14.1482 14.375 13.7474C14.375 13.3466 14.375 13.0874 14.3567 12.8916C14.34 12.7041 14.3108 12.6357 14.2908 12.6016C14.236 12.5068 14.1573 12.428 14.0625 12.3732C14.0292 12.3532 13.96 12.3241 13.7725 12.3074C13.4876 12.2898 13.2021 12.2837 12.9167 12.2891H7.91667C7.51583 12.2891 7.25667 12.2891 7.06083 12.3074Z" fill={selectedAlignment === 'left' ? "#695BE8" : "#88827E"} />
+      </svg>
+    </Button>
+    <Button
+      className={`border ${selectedAlignment === 'center'
+          ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+          : 'text-sprout-color-text-disabled bg-white hover:bg-white'
+        }`}
+      onClick={() => handleAlignmentChange('center')}
+    >
+      <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 1.66406V4.16406M10 18.3307V15.8307M10 11.6641V8.33073" stroke={selectedAlignment === 'center' ? "#695BE8" : "#88827E"} strokeWidth="1.2" strokeLinecap="round" />
+        <path d="M4.16406 6.2474C4.16406 5.46823 4.16406 5.07906 4.33156 4.78906C4.44127 4.59905 4.59905 4.44127 4.78906 4.33156C5.07906 4.16406 5.46823 4.16406 6.2474 4.16406H13.7474C14.5266 4.16406 14.9157 4.16406 15.2057 4.33156C15.3957 4.44127 15.5535 4.59905 15.6632 4.78906C15.8307 5.07906 15.8307 5.46823 15.8307 6.2474C15.8307 7.02656 15.8307 7.41573 15.6632 7.70573C15.5535 7.89574 15.3957 8.05352 15.2057 8.16323C14.9157 8.33073 14.5266 8.33073 13.7474 8.33073H6.2474C5.46823 8.33073 5.07906 8.33073 4.78906 8.16323C4.59905 8.05352 4.44127 7.89574 4.33156 7.70573C4.16406 7.41573 4.16406 7.02656 4.16406 6.2474ZM5.83073 13.7474C5.83073 12.9682 5.83073 12.5791 5.99823 12.2891C6.10794 12.0991 6.26572 11.9413 6.45573 11.8316C6.74573 11.6641 7.1349 11.6641 7.91406 11.6641H12.0807C12.8599 11.6641 13.2491 11.6641 13.5391 11.8316C13.7291 11.9413 13.8869 12.0991 13.9966 12.2891C14.1641 12.5791 14.1641 12.9682 14.1641 13.7474C14.1641 14.5266 14.1641 14.9157 13.9966 15.2057C13.8869 15.3957 13.7291 15.5535 13.5391 15.6632C13.2491 15.8307 12.8599 15.8307 12.0807 15.8307H7.91406C7.1349 15.8307 6.74573 15.8307 6.45573 15.6632C6.26572 15.5535 6.10794 15.3957 5.99823 15.2057C5.83073 14.9157 5.83073 14.5266 5.83073 13.7474Z" stroke={selectedAlignment === 'center' ? "#695BE8" : "#88827E"} strokeWidth="1.2" />
+      </svg>
+    </Button>
+    <Button
+      className={`border ${selectedAlignment === 'right'
+          ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary'
+          : 'text-sprout-color-text-disabled bg-white hover:bg-white'
+        }`}
+      onClick={() => handleAlignmentChange('right')}
+    >
+      <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd" clipRule="evenodd" d="M17.5 1.03906C17.3342 1.03906 17.1753 1.10491 17.0581 1.22212C16.9408 1.33933 16.875 1.4983 16.875 1.66406V18.3307C16.875 18.4965 16.9408 18.6555 17.0581 18.7727C17.1753 18.8899 17.3342 18.9557 17.5 18.9557C17.6658 18.9557 17.8247 18.8899 17.9419 18.7727C18.0592 18.6555 18.125 18.4965 18.125 18.3307V1.66406C18.125 1.4983 18.0592 1.33933 17.9419 1.22212C17.8247 1.10491 17.6658 1.03906 17.5 1.03906ZM12.11 3.53906H4.55667C4.19 3.53906 3.87333 3.53906 3.615 3.5624C3.34 3.5874 3.06833 3.6424 2.8125 3.7899C2.5275 3.9549 2.29083 4.19156 2.12583 4.47656C1.97833 4.7324 1.92333 5.00406 1.89833 5.27823C1.875 5.53823 1.875 5.85406 1.875 6.21989V6.27406C1.875 6.64073 1.875 6.95739 1.89833 7.21573C1.92333 7.49073 1.97833 7.76239 2.12583 8.01823C2.29045 8.30345 2.52728 8.54028 2.8125 8.7049C3.06833 8.8524 3.34 8.90739 3.61417 8.93239C3.87417 8.95573 4.19 8.95573 4.55583 8.95573H12.1108C12.4775 8.95573 12.7942 8.95573 13.0525 8.93239C13.3275 8.90739 13.5992 8.8524 13.855 8.7049C14.1402 8.54028 14.3771 8.30345 14.5417 8.01823C14.6892 7.76239 14.7442 7.49073 14.7692 7.21656C14.7925 6.95656 14.7925 6.64073 14.7925 6.2749V6.22073C14.7925 5.85406 14.7925 5.5374 14.7692 5.27906C14.7442 5.00406 14.6892 4.7324 14.5417 4.47656C14.3771 4.19134 14.1402 3.95451 13.855 3.7899C13.5992 3.6424 13.3275 3.5874 13.0533 3.5624C12.7933 3.53906 12.4775 3.53906 12.1117 3.53906H12.11ZM12.9392 4.80739C13.1267 4.82406 13.195 4.85323 13.2292 4.8724C13.3244 4.9273 13.4034 5.00635 13.4583 5.10156C13.4775 5.1349 13.5067 5.20406 13.5233 5.39156C13.5408 5.5874 13.5417 5.84656 13.5417 6.2474C13.5417 6.64823 13.5417 6.9074 13.5233 7.10323C13.5067 7.29073 13.4775 7.35906 13.4583 7.39323C13.4034 7.48844 13.3244 7.56748 13.2292 7.62239C13.1958 7.64156 13.1267 7.67073 12.9392 7.68739C12.7433 7.70489 12.4842 7.70573 12.0833 7.70573H4.58333C4.1825 7.70573 3.92333 7.70573 3.7275 7.68739C3.54 7.67073 3.47167 7.64156 3.4375 7.62239C3.3426 7.56737 3.26385 7.48833 3.20917 7.39323C3.18917 7.35989 3.16083 7.29073 3.14333 7.10323C3.12583 6.9074 3.125 6.64823 3.125 6.2474C3.125 5.84656 3.125 5.5874 3.14333 5.39156C3.16 5.20406 3.18917 5.13573 3.20917 5.10156C3.26385 5.00646 3.3426 4.92742 3.4375 4.8724C3.47083 4.85323 3.54 4.82406 3.7275 4.80739C4.01242 4.78984 4.29793 4.78373 4.58333 4.78906H12.0833C12.4842 4.78906 12.7433 4.78906 12.9392 4.80739ZM12.11 11.0391H7.05667C6.69 11.0391 6.37333 11.0391 6.115 11.0624C5.84 11.0874 5.56833 11.1424 5.3125 11.2899C5.0275 11.4549 4.79083 11.6916 4.62583 11.9766C4.47833 12.2324 4.42333 12.5041 4.39833 12.7782C4.375 13.0382 4.375 13.3541 4.375 13.7199V13.7741C4.375 14.1407 4.375 14.4574 4.39833 14.7157C4.42333 14.9907 4.47833 15.2624 4.62583 15.5182C4.79048 15.8034 5.02731 16.0402 5.3125 16.2049C5.56833 16.3524 5.84 16.4074 6.11417 16.4324C6.37417 16.4557 6.69 16.4557 7.05583 16.4557H12.1108C12.4775 16.4557 12.7942 16.4557 13.0525 16.4324C13.3275 16.4074 13.5992 16.3524 13.855 16.2049C14.1402 16.0403 14.3771 15.8034 14.5417 15.5182C14.6892 15.2624 14.7442 14.9907 14.7692 14.7166C14.7925 14.4566 14.7925 14.1407 14.7925 13.7749V13.7207C14.7925 13.3541 14.7925 13.0374 14.7692 12.7791C14.7442 12.5041 14.6892 12.2324 14.5417 11.9766C14.3771 11.6913 14.1402 11.4545 13.855 11.2899C13.5992 11.1424 13.3275 11.0874 13.0533 11.0624C12.7933 11.0391 12.4775 11.0391 12.1117 11.0391H12.11ZM12.9392 12.3074C13.1267 12.3241 13.195 12.3532 13.2292 12.3732C13.3243 12.4279 13.4033 12.5067 13.4583 12.6016C13.4775 12.6349 13.5067 12.7041 13.5233 12.8916C13.5409 13.1765 13.547 13.462 13.5417 13.7474C13.5417 14.1482 13.5417 14.4074 13.5233 14.6032C13.5067 14.7907 13.4775 14.8591 13.4583 14.8932C13.4033 14.9881 13.3243 15.0669 13.2292 15.1216C13.1958 15.1416 13.1267 15.1699 12.9392 15.1874C12.7433 15.2049 12.4842 15.2057 12.0833 15.2057H7.08333C6.6825 15.2057 6.42333 15.2057 6.2275 15.1874C6.04 15.1707 5.97167 15.1416 5.9375 15.1216C5.8427 15.0668 5.76396 14.988 5.70917 14.8932C5.68917 14.8599 5.66083 14.7907 5.64333 14.6032C5.62583 14.4074 5.625 14.1482 5.625 13.7474C5.625 13.3466 5.625 13.0874 5.64333 12.8916C5.66 12.7041 5.68917 12.6357 5.70917 12.6016C5.76396 12.5068 5.8427 12.428 5.9375 12.3732C5.97083 12.3532 6.04 12.3241 6.2275 12.3074C6.51242 12.2898 6.79793 12.2837 7.08333 12.2891H12.0833C12.4842 12.2891 12.7433 12.2891 12.9392 12.3074Z" fill={selectedAlignment === 'right' ? "#695BE8" : "#88827E"} />
+      </svg>
+    </Button>
+  </div>
+);
 
-  const isElementSelected = (element, type) => {
-    return selectedElement &&
-      selectedElement.id === element.id &&
-      selectedElement.elementType === type;
-  };
+
+
+const isElementSelected = (element, type) => {
+  return selectedElement &&
+    selectedElement.id === element.id &&
+    selectedElement.elementType === type;
+};
 
   const getInputBorderColor = (element, type) => {
     if (isElementSelected(element, type)) {
@@ -289,6 +591,21 @@ setAllImages(imageElements)
     }
     return 'text-black';
   };
+
+
+  // Add this useEffect to sync alignment when selected element changes
+useEffect(() => {
+  if (selectedElement && activeTemplate) {
+    // Load saved alignment when element is selected
+    const elementKey = selectedElement.attributes?.dataKey ||
+      (selectedElement.attributes?.dataStore && selectedElement.attributes?.dataField ?
+        `${selectedElement.attributes.dataStore}.${selectedElement.attributes.dataField}` :
+        `element_${selectedElement.id}`);
+    
+    const savedAlignment = localStorage.getItem(`${activeTemplate}_${elementKey}_alignment`) || 'left';
+    setSelectedAlignment(savedAlignment);
+  }
+}, [selectedElement, activeTemplate]);
 
   const updateElementColor = (element, color) => {
     if (!element || !activeTemplate) return;
@@ -319,7 +636,7 @@ setAllImages(imageElements)
         !cls.startsWith('text-white')
       );
 
-      
+
       const tailwindColor = colorToTailwind[color] || `text-[${color}]`;
       filteredClasses.push(tailwindColor);
 
@@ -328,7 +645,7 @@ setAllImages(imageElements)
 
       domElement.style.color = color;
 
-      
+
       if (element.attributes?.dataKey) {
         const key = `${activeTemplate}_${element.attributes.dataKey}`;
         localStorage.setItem(key + '_class', updatedClasses);
@@ -337,12 +654,11 @@ setAllImages(imageElements)
         localStorage.setItem(key + '_class', updatedClasses);
       }
 
-      // Trigger DOM update event
       window.dispatchEvent(new CustomEvent('domUpdated', {
         detail: { templateId: activeTemplate }
       }));
 
-      // Update the context
+
       updateElementAndDOM(activeTemplate, elementIndex, {
         attributes: {
           ...element.attributes,
@@ -371,13 +687,21 @@ setAllImages(imageElements)
 
     setCurrentTheme(theme);
 
-    // Get the template container
     const containerIndex = templates.findIndex(t => t === activeTemplate);
     const container = document.getElementById(`build-container-${containerIndex}`);
 
     if (!container) return;
 
-    // Apply theme classes to the container and its children
+
+    container.classList.remove('dark', 'bg-black', 'bg-white');
+
+
+    Object.values(colorSchemes).forEach(scheme => {
+      scheme.bg.split(' ').forEach(className => {
+        container.classList.remove(className);
+      });
+    });
+
     if (theme === 'dark') {
       // Add dark mode classes
       container.classList.add('dark', 'bg-black');
@@ -403,12 +727,13 @@ setAllImages(imageElements)
         }
       });
 
-    } else {
+    }
+    else {
 
       container.classList.remove('dark', 'bg-black');
       container.classList.add('bg-white');
 
-      
+
       const editableElements = container.querySelectorAll('.editable[data-key], .editable[data-store][data-field]');
       editableElements.forEach(el => {
         if (el.classList.contains('text-white') && !el.classList.contains('text-[')) {
@@ -430,18 +755,7 @@ setAllImages(imageElements)
       });
     }
 
-
     localStorage.setItem(`${activeTemplate}_theme`, theme);
-
-
-    const themeData = {
-      theme: theme,
-      containerClasses: Array.from(container.classList),
-      appliedClasses: getAppliedThemeClasses(container, theme),
-      timestamp: new Date().toISOString()
-    };
-    localStorage.setItem(`${activeTemplate}_theme_data`, JSON.stringify(themeData));
-
 
     window.dispatchEvent(new CustomEvent('domUpdated', {
       detail: { templateId: activeTemplate }
@@ -471,7 +785,7 @@ setAllImages(imageElements)
 
     return themeClasses;
   };
-     useEffect(() => {
+  useEffect(() => {
     if (activeTemplate) {
       const savedTheme = localStorage.getItem(`${activeTemplate}_theme`) || 'light';
       setCurrentTheme(savedTheme);
@@ -488,7 +802,7 @@ setAllImages(imageElements)
   }, [activeTemplate]);
 
 
-  const templates = ['website2', 'website3'];
+
 
   return (
     <main className="bg-[#FFFDFA] text-black flex-1 overflow-x-auto rounded-t-xl">
@@ -506,6 +820,19 @@ setAllImages(imageElements)
         </div>
 
         <div className='pt-5 gap-8'>
+
+{/* <div className="pt-5 gap-8 border-t border-red-200 p-4 bg-red-50 rounded">
+  <div className="text-sm text-red-600">
+    <div className="font-bold mb-2">Debug Info:</div>
+    <div><strong>Selected Element:</strong> {selectedElement ? `"${selectedElement.text?.substring(0, 50)}..." (${selectedElement.elementType})` : 'None'}</div>
+    <div><strong>Selected Container:</strong> {selectedContainer !== null ? selectedContainer : 'None'}</div>
+    <div><strong>Element ID:</strong> {selectedElement?.id || 'None'}</div>
+    <div><strong>Active Template:</strong> {activeTemplate || 'None'}</div>
+    <div><strong>Current Alignment:</strong> {selectedAlignment}</div>
+    <div><strong>Has dataKey:</strong> {selectedElement?.attributes?.dataKey ? 'Yes' : 'No'}</div>
+    <div><strong>Is Fallback:</strong> {selectedElement && (selectedElement.id === 'fallback-title' || selectedElement.id === 'fallback-description') ? 'Yes' : 'No'}</div>
+  </div>
+</div> */}
 
           {(titleElements.length > 0 ? titleElements : [{ text: fallbackTitle, id: 'fallback-title' }]).map((element, index) => (
             <div key={`title-${element.id || index}`} className="mb-4">
@@ -573,7 +900,6 @@ setAllImages(imageElements)
 
 
               <div className="mt-4">
-                <div className="text-sprout-color-text-weaker text-sm mb-3">Custom Color</div>
                 <div className="flex items-center gap-3">
                   <input
                     type="color"
@@ -597,6 +923,7 @@ setAllImages(imageElements)
         )}
 
         <div className="pt-5 gap-8">
+
           <div>
             <div className='text-xl font- font-[500] text-sprout-color-text-default'>
               Layout
@@ -629,41 +956,22 @@ setAllImages(imageElements)
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-4 mt-4">
-              <div className="flex justify-between p-2">
-                <div className="text-sprout-color-text-weakest mt-2 font-[500]">
-                  Alignment
-                </div>
-                <div className='border flex  border-sprout-color-border-weak rounded-md p-1'>
-                  <Button className="border border-sprout-color-secondary bg-sprout-color-secondary-lightest hover:bg-sprout-color-secondary-lightest text-sprout-color-secondary" >
+         <div className="flex flex-col gap-4 mt-4">
+  <div className="flex justify-between p-2">
+    <div className="text-sprout-color-text-weakest mt-2 font-[500]">
+      Alignment
+    </div>
+    <AlignmentButtons />
+  </div>
+</div>
 
-                    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M2.5 1.03906C2.66576 1.03906 2.82473 1.10491 2.94194 1.22212C3.05915 1.33933 3.125 1.4983 3.125 1.66406V18.3307C3.125 18.4965 3.05915 18.6555 2.94194 18.7727C2.82473 18.8899 2.66576 18.9557 2.5 18.9557C2.33424 18.9557 2.17527 18.8899 2.05806 18.7727C1.94085 18.6555 1.875 18.4965 1.875 18.3307V1.66406C1.875 1.4983 1.94085 1.33933 2.05806 1.22212C2.17527 1.10491 2.33424 1.03906 2.5 1.03906ZM7.89 3.53906H15.4433C15.81 3.53906 16.1267 3.53906 16.385 3.5624C16.66 3.5874 16.9317 3.6424 17.1875 3.7899C17.4725 3.9549 17.7092 4.19156 17.8742 4.47656C18.0217 4.7324 18.0767 5.00406 18.1017 5.27823C18.125 5.53823 18.125 5.85406 18.125 6.21989V6.27406C18.125 6.64073 18.125 6.95739 18.1017 7.21573C18.0767 7.49073 18.0217 7.76239 17.8742 8.01823C17.7095 8.30345 17.4727 8.54028 17.1875 8.7049C16.9317 8.8524 16.66 8.90739 16.3858 8.93239C16.1258 8.95573 15.81 8.95573 15.4442 8.95573H7.88917C7.5225 8.95573 7.20583 8.95573 6.9475 8.93239C6.6725 8.90739 6.40083 8.8524 6.145 8.7049C5.85978 8.54028 5.62295 8.30345 5.45833 8.01823C5.31083 7.76239 5.25583 7.49073 5.23083 7.21656C5.2075 6.95656 5.2075 6.64073 5.2075 6.2749V6.22073C5.2075 5.85406 5.2075 5.5374 5.23083 5.27906C5.25583 5.00406 5.31083 4.7324 5.45833 4.47656C5.62295 4.19134 5.85978 3.95451 6.145 3.7899C6.40083 3.6424 6.6725 3.5874 6.94667 3.5624C7.20667 3.53906 7.5225 3.53906 7.88833 3.53906H7.89ZM7.06083 4.80739C6.87333 4.82406 6.805 4.85323 6.77083 4.8724C6.67562 4.9273 6.59658 5.00635 6.54167 5.10156C6.5225 5.1349 6.49333 5.20406 6.47667 5.39156C6.45917 5.5874 6.45833 5.84656 6.45833 6.2474C6.45833 6.64823 6.45833 6.9074 6.47667 7.10323C6.49333 7.29073 6.5225 7.35906 6.54167 7.39323C6.59658 7.48844 6.67562 7.56748 6.77083 7.62239C6.80417 7.64156 6.87333 7.67073 7.06083 7.68739C7.25667 7.70489 7.51583 7.70573 7.91667 7.70573H15.4167C15.8175 7.70573 16.0767 7.70573 16.2725 7.68739C16.46 7.67073 16.5283 7.64156 16.5625 7.62239C16.6574 7.56737 16.7362 7.48833 16.7908 7.39323C16.8108 7.35989 16.8392 7.29073 16.8567 7.10323C16.8742 6.9074 16.875 6.64823 16.875 6.2474C16.875 5.84656 16.875 5.5874 16.8567 5.39156C16.84 5.20406 16.8108 5.13573 16.7908 5.10156C16.7362 5.00646 16.6574 4.92742 16.5625 4.8724C16.5292 4.85323 16.46 4.82406 16.2725 4.80739C15.9876 4.78984 15.7021 4.78373 15.4167 4.78906H7.91667C7.51583 4.78906 7.25667 4.78906 7.06083 4.80739ZM7.89 11.0391H12.9433C13.31 11.0391 13.6267 11.0391 13.885 11.0624C14.16 11.0874 14.4317 11.1424 14.6875 11.2899C14.9725 11.4549 15.2092 11.6916 15.3742 11.9766C15.5217 12.2324 15.5767 12.5041 15.6017 12.7782C15.625 13.0382 15.625 13.3541 15.625 13.7199V13.7741C15.625 14.1407 15.625 14.4574 15.6017 14.7157C15.5767 14.9907 15.5217 15.2624 15.3742 15.5182C15.2095 15.8034 14.9727 16.0402 14.6875 16.2049C14.4317 16.3524 14.16 16.4074 13.8858 16.4324C13.6258 16.4557 13.31 16.4557 12.9442 16.4557H7.88917C7.5225 16.4557 7.20583 16.4557 6.9475 16.4324C6.6725 16.4074 6.40083 16.3524 6.145 16.2049C5.85978 16.0403 5.62295 15.8034 5.45833 15.5182C5.31083 15.2624 5.25583 14.9907 5.23083 14.7166C5.2075 14.4566 5.2075 14.1407 5.2075 13.7749V13.7207C5.2075 13.3541 5.2075 13.0374 5.23083 12.7791C5.25583 12.5041 5.31083 12.2324 5.45833 11.9766C5.62295 11.6913 5.85978 11.4545 6.145 11.2899C6.40083 11.1424 6.6725 11.0874 6.94667 11.0624C7.20667 11.0391 7.5225 11.0391 7.88833 11.0391H7.89ZM7.06083 12.3074C6.87333 12.3241 6.805 12.3532 6.77083 12.3732C6.67573 12.4279 6.59669 12.5067 6.54167 12.6016C6.5225 12.6349 6.49333 12.7041 6.47667 12.8916C6.45912 13.1765 6.453 13.462 6.45833 13.7474C6.45833 14.1482 6.45833 14.4074 6.47667 14.6032C6.49333 14.7907 6.5225 14.8591 6.54167 14.8932C6.59669 14.9881 6.67573 15.0669 6.77083 15.1216C6.80417 15.1416 6.87333 15.1699 7.06083 15.1874C7.25667 15.2049 7.51583 15.2057 7.91667 15.2057H12.9167C13.3175 15.2057 13.5767 15.2057 13.7725 15.1874C13.96 15.1707 14.0283 15.1416 14.0625 15.1216C14.1573 15.0668 14.236 14.988 14.2908 14.8932C14.3108 14.8599 14.3392 14.7907 14.3567 14.6032C14.3742 14.4074 14.375 14.1482 14.375 13.7474C14.375 13.3466 14.375 13.0874 14.3567 12.8916C14.34 12.7041 14.3108 12.6357 14.2908 12.6016C14.236 12.5068 14.1573 12.428 14.0625 12.3732C14.0292 12.3532 13.96 12.3241 13.7725 12.3074C13.4876 12.2898 13.2021 12.2837 12.9167 12.2891H7.91667C7.51583 12.2891 7.25667 12.2891 7.06083 12.3074Z" fill="#88827E" />
-                    </svg>
 
-                  </Button>
-                  <Button className="text-sprout-color-text-disabled bg-white hover:bg-white ">
-
-                    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 1.66406V4.16406M10 18.3307V15.8307M10 11.6641V8.33073" stroke="#695BE8" strokeWidth="1.2" strokeLinecap="round" />
-                      <path d="M4.16406 6.2474C4.16406 5.46823 4.16406 5.07906 4.33156 4.78906C4.44127 4.59905 4.59905 4.44127 4.78906 4.33156C5.07906 4.16406 5.46823 4.16406 6.2474 4.16406H13.7474C14.5266 4.16406 14.9157 4.16406 15.2057 4.33156C15.3957 4.44127 15.5535 4.59905 15.6632 4.78906C15.8307 5.07906 15.8307 5.46823 15.8307 6.2474C15.8307 7.02656 15.8307 7.41573 15.6632 7.70573C15.5535 7.89574 15.3957 8.05352 15.2057 8.16323C14.9157 8.33073 14.5266 8.33073 13.7474 8.33073H6.2474C5.46823 8.33073 5.07906 8.33073 4.78906 8.16323C4.59905 8.05352 4.44127 7.89574 4.33156 7.70573C4.16406 7.41573 4.16406 7.02656 4.16406 6.2474ZM5.83073 13.7474C5.83073 12.9682 5.83073 12.5791 5.99823 12.2891C6.10794 12.0991 6.26572 11.9413 6.45573 11.8316C6.74573 11.6641 7.1349 11.6641 7.91406 11.6641H12.0807C12.8599 11.6641 13.2491 11.6641 13.5391 11.8316C13.7291 11.9413 13.8869 12.0991 13.9966 12.2891C14.1641 12.5791 14.1641 12.9682 14.1641 13.7474C14.1641 14.5266 14.1641 14.9157 13.9966 15.2057C13.8869 15.3957 13.7291 15.5535 13.5391 15.6632C13.2491 15.8307 12.8599 15.8307 12.0807 15.8307H7.91406C7.1349 15.8307 6.74573 15.8307 6.45573 15.6632C6.26572 15.5535 6.10794 15.3957 5.99823 15.2057C5.83073 14.9157 5.83073 14.5266 5.83073 13.7474Z" stroke="#695BE8" strokeWidth="1.2" />
-                    </svg>
-
-                  </Button>
-                  <Button className="text-sprout-color-text-disabled bg-white hover:bg-white ">
-                    <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M17.5 1.03906C17.3342 1.03906 17.1753 1.10491 17.0581 1.22212C16.9408 1.33933 16.875 1.4983 16.875 1.66406V18.3307C16.875 18.4965 16.9408 18.6555 17.0581 18.7727C17.1753 18.8899 17.3342 18.9557 17.5 18.9557C17.6658 18.9557 17.8247 18.8899 17.9419 18.7727C18.0592 18.6555 18.125 18.4965 18.125 18.3307V1.66406C18.125 1.4983 18.0592 1.33933 17.9419 1.22212C17.8247 1.10491 17.6658 1.03906 17.5 1.03906ZM12.11 3.53906H4.55667C4.19 3.53906 3.87333 3.53906 3.615 3.5624C3.34 3.5874 3.06833 3.6424 2.8125 3.7899C2.5275 3.9549 2.29083 4.19156 2.12583 4.47656C1.97833 4.7324 1.92333 5.00406 1.89833 5.27823C1.875 5.53823 1.875 5.85406 1.875 6.21989V6.27406C1.875 6.64073 1.875 6.95739 1.89833 7.21573C1.92333 7.49073 1.97833 7.76239 2.12583 8.01823C2.29045 8.30345 2.52728 8.54028 2.8125 8.7049C3.06833 8.8524 3.34 8.90739 3.61417 8.93239C3.87417 8.95573 4.19 8.95573 4.55583 8.95573H12.1108C12.4775 8.95573 12.7942 8.95573 13.0525 8.93239C13.3275 8.90739 13.5992 8.8524 13.855 8.7049C14.1402 8.54028 14.3771 8.30345 14.5417 8.01823C14.6892 7.76239 14.7442 7.49073 14.7692 7.21656C14.7925 6.95656 14.7925 6.64073 14.7925 6.2749V6.22073C14.7925 5.85406 14.7925 5.5374 14.7692 5.27906C14.7442 5.00406 14.6892 4.7324 14.5417 4.47656C14.3771 4.19134 14.1402 3.95451 13.855 3.7899C13.5992 3.6424 13.3275 3.5874 13.0533 3.5624C12.7933 3.53906 12.4775 3.53906 12.1117 3.53906H12.11ZM12.9392 4.80739C13.1267 4.82406 13.195 4.85323 13.2292 4.8724C13.3244 4.9273 13.4034 5.00635 13.4583 5.10156C13.4775 5.1349 13.5067 5.20406 13.5233 5.39156C13.5408 5.5874 13.5417 5.84656 13.5417 6.2474C13.5417 6.64823 13.5417 6.9074 13.5233 7.10323C13.5067 7.29073 13.4775 7.35906 13.4583 7.39323C13.4034 7.48844 13.3244 7.56748 13.2292 7.62239C13.1958 7.64156 13.1267 7.67073 12.9392 7.68739C12.7433 7.70489 12.4842 7.70573 12.0833 7.70573H4.58333C4.1825 7.70573 3.92333 7.70573 3.7275 7.68739C3.54 7.67073 3.47167 7.64156 3.4375 7.62239C3.3426 7.56737 3.26385 7.48833 3.20917 7.39323C3.18917 7.35989 3.16083 7.29073 3.14333 7.10323C3.12583 6.9074 3.125 6.64823 3.125 6.2474C3.125 5.84656 3.125 5.5874 3.14333 5.39156C3.16 5.20406 3.18917 5.13573 3.20917 5.10156C3.26385 5.00646 3.3426 4.92742 3.4375 4.8724C3.47083 4.85323 3.54 4.82406 3.7275 4.80739C4.01242 4.78984 4.29793 4.78373 4.58333 4.78906H12.0833C12.4842 4.78906 12.7433 4.78906 12.9392 4.80739ZM12.11 11.0391H7.05667C6.69 11.0391 6.37333 11.0391 6.115 11.0624C5.84 11.0874 5.56833 11.1424 5.3125 11.2899C5.0275 11.4549 4.79083 11.6916 4.62583 11.9766C4.47833 12.2324 4.42333 12.5041 4.39833 12.7782C4.375 13.0382 4.375 13.3541 4.375 13.7199V13.7741C4.375 14.1407 4.375 14.4574 4.39833 14.7157C4.42333 14.9907 4.47833 15.2624 4.62583 15.5182C4.79048 15.8034 5.02731 16.0402 5.3125 16.2049C5.56833 16.3524 5.84 16.4074 6.11417 16.4324C6.37417 16.4557 6.69 16.4557 7.05583 16.4557H12.1108C12.4775 16.4557 12.7942 16.4557 13.0525 16.4324C13.3275 16.4074 13.5992 16.3524 13.855 16.2049C14.1402 16.0403 14.3771 15.8034 14.5417 15.5182C14.6892 15.2624 14.7442 14.9907 14.7692 14.7166C14.7925 14.4566 14.7925 14.1407 14.7925 13.7749V13.7207C14.7925 13.3541 14.7925 13.0374 14.7692 12.7791C14.7442 12.5041 14.6892 12.2324 14.5417 11.9766C14.3771 11.6913 14.1402 11.4545 13.855 11.2899C13.5992 11.1424 13.3275 11.0874 13.0533 11.0624C12.7933 11.0391 12.4775 11.0391 12.1117 11.0391H12.11ZM12.9392 12.3074C13.1267 12.3241 13.195 12.3532 13.2292 12.3732C13.3243 12.4279 13.4033 12.5067 13.4583 12.6016C13.4775 12.6349 13.5067 12.7041 13.5233 12.8916C13.5409 13.1765 13.547 13.462 13.5417 13.7474C13.5417 14.1482 13.5417 14.4074 13.5233 14.6032C13.5067 14.7907 13.4775 14.8591 13.4583 14.8932C13.4033 14.9881 13.3243 15.0669 13.2292 15.1216C13.1958 15.1416 13.1267 15.1699 12.9392 15.1874C12.7433 15.2049 12.4842 15.2057 12.0833 15.2057H7.08333C6.6825 15.2057 6.42333 15.2057 6.2275 15.1874C6.04 15.1707 5.97167 15.1416 5.9375 15.1216C5.8427 15.0668 5.76396 14.988 5.70917 14.8932C5.68917 14.8599 5.66083 14.7907 5.64333 14.6032C5.62583 14.4074 5.625 14.1482 5.625 13.7474C5.625 13.3466 5.625 13.0874 5.64333 12.8916C5.66 12.7041 5.68917 12.6357 5.70917 12.6016C5.76396 12.5068 5.8427 12.428 5.9375 12.3732C5.97083 12.3532 6.04 12.3241 6.2275 12.3074C6.51242 12.2898 6.79793 12.2837 7.08333 12.2891H12.0833C12.4842 12.2891 12.7433 12.2891 12.9392 12.3074Z" fill="#88827E" />
-                    </svg>
-                  </Button>
-                </div>
-              </div>
-            </div>
             <div className="flex flex-col gap-4 mt-4">
               <div className="flex justify-between p-2">
                 <div className="text-sprout-color-text-weakest mt-2 font-[500]">
                   Assets
                 </div>
-              <div className="border flex gap-2 border-sprout-color-border-weak rounded-md p-1">
+                <div className="border flex gap-2 border-sprout-color-border-weak rounded-md p-1">
                   <Button
                     className="h-8 w-8 p-0 flex items-center justify-center 
                    rounded-md border border-sprout-color-secondary 
@@ -683,8 +991,8 @@ setAllImages(imageElements)
 
                     </svg>
                   </Button>
-                  
-                   <Button
+
+                  <Button
                     className="h-8 w-8 p-0 flex items-center justify-center 
                    rounded-md border border-transparent hover:bg-white
                    text-sprout-color-text-disabled bg-white"
@@ -734,49 +1042,42 @@ setAllImages(imageElements)
               Colors
             </div>
             <div>
-              <div className="flex  relative justify-between p-2 border border-sprout-color-border-weak rounded-md  mt-4">
-                <div className="flex justify-between gap-4 p-1 pl-3" >
-                  <img src="./frame.png" alt="" srcSet="" />
-               <Popover>
-                <PopoverTrigger>
-                     <h1 className="text-sprout-color-text-default mt-0.5 font-[400]">Scheme_1</h1>
-                </PopoverTrigger>
-                <PopoverContent className="absolute bottom-10 left-1 bg-transparent border">
-                  <div className='bg-transparent border'>
-
-                  </div>
-                </PopoverContent>
-               </Popover>
-                </div>
-                <div className="mt-2">
-
-                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="#413735" strokeWidth="1.66667" strokeLinecap="square" strokeLinejoin="round" />
-                  </svg>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-    {
-      imageElements.length > 0 && (
-           <div className="pt-5 gap-8">
-          <div>
-            <div className='text-xl font-[500] text-sprout-color-text-default'>
-              Image
-            </div>
-            <div>
-              <div 
-                className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md mt-4 cursor-pointer hover:border-sprout-color-secondary transition-colors"
-                onClick={handleImageClick}
-              >
+              <div className="flex relative justify-between p-2 border border-sprout-color-border-weak rounded-md mt-4">
                 <div className="flex justify-between gap-4 p-1 pl-3">
-                  <img src="./frame2.png" alt="" srcSet="" />
-                  <h1 className="text-sprout-color-text-default mt-0.5 font-[400]">
-                    Image 
-                  </h1>
+                  <img src="./frame.png" alt="" />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="text-sprout-color-text-default mt-0.5 font-[400] hover:text-sprout-color-secondary transition-colors">
+                        {colorSchemes[selectedColorScheme]?.name || 'Scheme_1'}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-64 p-0 bg-white border border-sprout-color-border-weak rounded-md shadow-lg"
+                      align="start"
+                    >
+                      <div className='w-full'>
+                        <div className='flex flex-col'>
+                          {Object.entries(colorSchemes).map(([key, scheme]) => (
+                            <div
+                              key={key}
+                              className={`p-3 border-b border-sprout-color-border-weak last:border-b-0 cursor-pointer hover:bg-sprout-color-secondary-lightest transition-colors ${selectedColorScheme === key ? 'bg-sprout-color-secondary-lightest' : ''
+                                }`}
+                              onClick={() => handleColorSchemeChange(key)}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div
+                                  className={`w-6 h-6 rounded-full border border-sprout-color-border-weak ${scheme.bg}`}
+                                ></div>
+                                <span className={`font-medium ${scheme.text}`}>
+                                  {scheme.name}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <div className="mt-2">
                   <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -787,8 +1088,35 @@ setAllImages(imageElements)
             </div>
           </div>
         </div>
-      )
-    }
+        {
+          imageElements.length > 0 && (
+            <div className="pt-5 gap-8">
+              <div>
+                <div className='text-xl font-[500] text-sprout-color-text-default'>
+                  Image
+                </div>
+                <div>
+                  <div
+                    className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md mt-4 cursor-pointer hover:border-sprout-color-secondary transition-colors"
+                    onClick={handleImageClick}
+                  >
+                    <div className="flex justify-between gap-4 p-1 pl-3">
+                      <img src="./frame2.png" alt="" srcSet="" />
+                      <h1 className="text-sprout-color-text-default mt-0.5 font-[400]">
+                        Image
+                      </h1>
+                    </div>
+                    <div className="mt-2">
+                      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 12L10 8L6 4" stroke="#413735" strokeWidth="1.66667" strokeLinecap="square" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
 
         <div className="pt-5 gap-8">
           <div>
@@ -796,7 +1124,7 @@ setAllImages(imageElements)
               Icon
             </div>
             <div>
-              <div className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md  mt-4">
+              <div className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md  mt-4" onClick={() => setIconBoxOpen(true)}>
                 <div className="flex justify-between gap-4 p-1 pl-2" >
 
                   <div className="rounded-md border border-sprout-color-border-weak"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -804,7 +1132,7 @@ setAllImages(imageElements)
                     <path fillRule="evenodd" clipRule="evenodd" d="M16.2126 6.0392L16.3826 6.06053C16.8319 6.12253 17.4266 6.20586 17.7632 6.5432C18.0392 6.81853 18.1452 7.26653 18.2086 7.66653L18.2459 7.92386C18.3299 8.53053 18.3519 9.3252 18.2086 10.2079C17.9259 11.9499 16.9986 14.0285 14.6699 15.6379C14.6572 15.7632 14.6566 15.8899 14.6592 16.0165L14.6659 16.2059C14.6766 16.4972 14.6872 16.7885 14.6059 17.0712C14.4792 17.5112 14.0279 17.8012 13.6059 18.0092L13.3992 18.1072L13.1326 18.2245C12.6339 18.4365 11.9606 18.6539 11.5386 18.2312C11.2852 17.9785 11.1812 17.6079 11.0966 17.2392L11.0652 17.1012C11.0294 16.9271 10.9849 16.7549 10.9319 16.5852C10.8986 16.4874 10.8626 16.3885 10.8239 16.2885C10.7813 16.3408 10.7362 16.3908 10.6886 16.4385C10.4586 16.6685 10.1152 16.8292 9.83257 16.9419C9.52391 17.0639 9.17457 17.1705 8.85124 17.2585L8.68524 17.3025L8.36724 17.3819L8.07924 17.4485L7.73457 17.5219L7.51924 17.5639C7.41184 17.5837 7.30123 17.5772 7.19692 17.5448C7.09262 17.5124 6.99776 17.4551 6.92053 17.3779C6.8433 17.3007 6.78602 17.2058 6.75362 17.1015C6.72123 16.9972 6.71469 16.8866 6.73457 16.7792L6.7919 16.4919L6.89457 16.0265L6.97724 15.6865L7.0399 15.4465C7.1279 15.1239 7.23457 14.7745 7.35724 14.4665C7.46924 14.1832 7.6299 13.8399 7.8599 13.6099L7.91324 13.5585L7.87057 13.5412C7.75662 13.4979 7.64122 13.4586 7.52457 13.4232L7.3399 13.3665C6.87724 13.2265 6.38257 13.0759 6.07524 12.7679C5.7019 12.3952 5.8279 11.8279 6.0079 11.3559L6.08124 11.1732L6.19924 10.9065L6.29724 10.6999C6.50524 10.2785 6.79524 9.8272 7.23524 9.70053C7.46857 9.63386 7.71124 9.62986 7.95524 9.63653L8.1019 9.6412C8.29257 9.64786 8.48257 9.6552 8.66857 9.6372C10.2779 7.30786 12.3566 6.38053 14.0986 6.09786C14.7974 5.98325 15.5085 5.96351 16.2126 6.0392ZM9.67124 14.4892C9.56635 14.4115 9.44094 14.3662 9.31058 14.3591C9.18021 14.352 9.05063 14.3833 8.9379 14.4492L8.86457 14.4985L8.80257 14.5539L8.71924 14.6592C8.54591 14.9099 8.44724 15.2565 8.37057 15.5805L8.29857 15.8925L8.26457 16.0345L8.3919 16.0039L8.67057 15.9399C9.05591 15.8499 9.48324 15.7332 9.74591 15.4965C9.86011 15.3824 9.92901 15.2307 9.9398 15.0696C9.95059 14.9084 9.90254 14.7489 9.80457 14.6205L9.7499 14.5579L9.7339 14.5425L9.67124 14.4892ZM14.4599 9.83986C14.3361 9.71603 14.1891 9.61779 14.0274 9.55075C13.8656 9.48371 13.6922 9.44919 13.5171 9.44916C13.342 9.44913 13.1686 9.48359 13.0069 9.55057C12.8451 9.61755 12.6981 9.71574 12.5742 9.83953C12.4504 9.96332 12.3522 10.1103 12.2851 10.2721C12.2181 10.4338 12.1836 10.6072 12.1835 10.7823C12.1835 10.9574 12.218 11.1308 12.2849 11.2926C12.3519 11.4544 12.4501 11.6014 12.5739 11.7252C12.8239 11.9753 13.163 12.1158 13.5167 12.1159C13.8703 12.116 14.2095 11.9755 14.4596 11.7255C14.7097 11.4755 14.8502 11.1364 14.8503 10.7828C14.8503 10.4291 14.7099 10.09 14.4599 9.83986Z" fill="#413735" />
                   </svg></div>
 
-                  <h1 className="text-sprout-color-text-default mt-1 font-[400]">Image</h1>
+                  <h1 className="text-sprout-color-text-default mt-1 font-[400]">Icon</h1>
                 </div>
                 <div className="mt-3">
 
@@ -816,55 +1144,7 @@ setAllImages(imageElements)
               </div>
 
             </div>
-            <div>
-              <div className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md  mt-4">
-                <div className="flex justify-between gap-4 p-1 pl-2" >
 
-                  <div className="rounded-md border border-sprout-color-border-weak p-1">
-
-                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10.1486 4.89946L3.51523 11.5328C3.39379 11.6585 3.32659 11.8269 3.32811 12.0017C3.32963 12.1765 3.39974 12.3437 3.52335 12.4673C3.64695 12.5909 3.81416 12.6611 3.98896 12.6626C4.16376 12.6641 4.33216 12.5969 4.45789 12.4755L11.0912 5.84212V9.56612C11.0912 9.74293 11.1615 9.9125 11.2865 10.0375C11.4115 10.1626 11.5811 10.2328 11.7579 10.2328C11.9347 10.2328 12.1043 10.1626 12.2293 10.0375C12.3543 9.9125 12.4246 9.74293 12.4246 9.56612V4.23279C12.4246 4.05598 12.3543 3.88641 12.2293 3.76138C12.1043 3.63636 11.9347 3.56612 11.7579 3.56612H6.42456C6.24775 3.56612 6.07818 3.63636 5.95316 3.76138C5.82813 3.88641 5.75789 4.05598 5.75789 4.23279C5.75789 4.4096 5.82813 4.57917 5.95316 4.7042C6.07818 4.82922 6.24775 4.89946 6.42456 4.89946H10.1486Z" fill="#413735" />
-                    </svg>
-
-                  </div>
-
-                  <h1 className="text-sprout-color-text-default mt-1 font-[400]">Image</h1>
-                </div>
-                <div className="mt-3">
-
-                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="#413735" strokeWidth="1.66667" strokeLinecap="square" strokeLinejoin="round" />
-                  </svg>
-
-                </div>
-              </div>
-
-            </div>
-            <div>
-              <div className="flex justify-between p-2 border border-sprout-color-border-weak rounded-md  mt-4">
-                <div className="flex justify-between gap-4 p-1 pl-2" >
-
-                  <div className="rounded-md border border-sprout-color-border-weak p-1">
-
-
-                    <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7.99992 1.3335C4.31992 1.3335 1.33325 4.32016 1.33325 8.00016C1.33325 11.6802 4.31992 14.6668 7.99992 14.6668C11.6799 14.6668 14.6666 11.6802 14.6666 8.00016C14.6666 4.32016 11.6799 1.3335 7.99992 1.3335ZM6.33325 11.0002V5.00016L10.9999 8.00016L6.33325 11.0002Z" fill="#413735" />
-                    </svg>
-
-                  </div>
-
-                  <h1 className="text-sprout-color-text-default mt-1 font-[400]">Image</h1>
-                </div>
-                <div className="mt-3">
-
-                  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="#413735" strokeWidth="1.66667" strokeLinecap="square" strokeLinejoin="round" />
-                  </svg>
-
-                </div>
-              </div>
-
-            </div>
           </div>
 
         </div>

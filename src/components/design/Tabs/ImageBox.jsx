@@ -12,21 +12,23 @@ import { useImageBox } from '@/context/ImageBox'
 import { useElements } from '@/context/ElementsContext'
 
 const ImageBox = () => {
-  const { imageBoxOpen, setImageBoxOpen, allImages, setAllImages } = useImageBox();
-  const { activeTemplate, updateElementAndDOM, extractedElements } = useElements();
-  const [activeUpload,setActiveUpload] = useState(true)
-    const [activeLummi,setActiveLummi] = useState(false)
+
+      const { imageBoxOpen, setImageBoxOpen, allImages, setAllImages } = useImageBox();
+      const { activeTemplate, updateElementAndDOM, extractedElements } = useElements();
+      const [activeUpload,setActiveUpload] = useState(true)
+      const [activeLummi,setActiveLummi] = useState(false)
       const [activeGenerate,setActiveGenerate] = useState(false)
-  const [currentImage, setCurrentImage] = useState(null);
-  const [overlay, setOverlay] = useState('yes');
-    const [hideLabel, setHideLabel] = useState(false);
+      const [currentImage, setCurrentImage] = useState(null);
+      const [overlay, setOverlay] = useState('yes');
+     const [hideLabel, setHideLabel] = useState(false);
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('edit');
-  const [prompt,setPrompt] = useState('')
+      const [searchQuery, setSearchQuery] = useState('');
+      const [activeTab, setActiveTab] = useState('edit');
+      const [prompt,setPrompt] = useState('')
 
-  const templates = ['website2', 'website3'];
-  const currentElements = activeTemplate ? extractedElements[activeTemplate]?.elements || [] : [];
+      const templates = ['website2', 'website3'];
+      const currentElements = activeTemplate ? extractedElements[activeTemplate]?.elements || [] : [];
+
 const generateImageWithAI = async (prompt) => {
   try {
     const response = await fetch("https://router.huggingface.co/nebius/v1/images/generations", {
@@ -50,7 +52,7 @@ const generateImageWithAI = async (prompt) => {
     if (result?.data?.[0]?.b64_json) {
       const generatedImageSrc = `data:image/png;base64,${result.data[0].b64_json}`;
       
-      // Update the current image with the generated image
+      
       if (currentImage) {
         updateImageSource(currentImage, generatedImageSrc);
       }
@@ -117,7 +119,6 @@ const generateImageWithAI = async (prompt) => {
         }
       });
 
-      // Update allImages in context to reflect the change
       const updatedAllImages = allImages.map(img => 
         img.id === element.id 
           ? { ...img, attributes: { ...img.attributes, src: newSrc } }
@@ -125,7 +126,7 @@ const generateImageWithAI = async (prompt) => {
       );
       setAllImages(updatedAllImages);
 
-      // Update current image if it's the one being modified
+
       if (currentImage && currentImage.id === element.id) {
         setCurrentImage({
           ...currentImage,
@@ -221,8 +222,7 @@ const generateImageWithAI = async (prompt) => {
                   </Button>
                 </TabsTrigger>
               </TabsList>
-
-              <TabsContent value="edit" className="m-0 p-0 border-none">
+           <TabsContent value="edit" className="m-0 p-0 border-none">
                 <div>
                   <div className='pt-6'>
                     {currentImage && currentImage.attributes?.src ? (
@@ -237,10 +237,7 @@ const generateImageWithAI = async (prompt) => {
                       </div>
                     )}
                   </div>
-
-                  
-
-                  <div className='flex justify-between pt-7'>
+              <div className='flex justify-between pt-7'>
                     <div className='pt-2 text-sprout-color-text-disabled'>
                       Ratio
                     </div> 
@@ -267,7 +264,7 @@ const generateImageWithAI = async (prompt) => {
                       <Button 
                         className={`border ${
                           overlay === 'yes' 
-                            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary' 
+                            ? 'border-sprout-color-secondary hover:bg-sprout-color-secondary-lightest bg-sprout-color-secondary-lightest text-sprout-color-secondary' 
                             : 'text-sprout-color-text-disabled bg-white hover:bg-white'
                         }`}
                         onClick={() => setOverlay('yes')}
@@ -277,7 +274,7 @@ const generateImageWithAI = async (prompt) => {
                       <Button 
                         className={`border ${
                           overlay === 'no' 
-                            ? 'border-sprout-color-secondary bg-sprout-color-secondary-lightest text-sprout-color-secondary' 
+                            ? 'border-sprout-color-secondary hover:bg-bg-sprout-color-secondary-lightest bg-sprout-color-secondary-lightest text-sprout-color-secondary' 
                             : 'text-sprout-color-text-disabled bg-white hover:bg-white'
                         }`}
                         onClick={() => setOverlay('no')}
@@ -413,8 +410,7 @@ const generateImageWithAI = async (prompt) => {
     </>
   )
 }
-            
-               {
+             {
             activeLummi && (
                 <>
                 <div>No content Available</div>

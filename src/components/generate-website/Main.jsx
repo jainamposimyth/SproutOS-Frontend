@@ -1,11 +1,12 @@
-'use client'
+ 'use client'
 import React, { useEffect, useState, useRef } from 'react';
 import { useElements } from '@/context/ElementsContext';
-// import ElementsSidebar from '../design/Tabs/AIEditor';
+
 import { GoogleGenAI } from "@google/genai";
 
 export default function App() {
   const [templates, setTemplates] = useState(['website2', 'website3']);
+  
   const loadedTemplatesRef = useRef(new Set());
   const containerRefsRef = useRef({});
   
@@ -17,7 +18,9 @@ export default function App() {
   const [imagePromptBox, setImagePromptBox] = useState(false);
   const [imagePrompt, setImagePrompt] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-
+const [svgEditorOpen, setSvgEditorOpen] = useState(false);
+const [currentSVG, setCurrentSVG] = useState(null);
+const [svgStorageKey, setSvgStorageKey] = useState('');
   
 
 
@@ -189,6 +192,7 @@ useEffect(() => {
 
   const applyTailwindAsInlineStyles = (element, className) => {
     const classes = className.split(' ');
+
     const tailwindToInlineStyle = { 
       'text-red-500': { color: '#ef4444' },
       'text-red-200': { color: '#fecaca' },
@@ -218,6 +222,7 @@ useEffect(() => {
       'font-extrabold': { fontWeight: '800' }
     };
 
+
     classes.forEach(cls => {
       if (tailwindToInlineStyle[cls]) {
         const styles = tailwindToInlineStyle[cls];
@@ -227,6 +232,78 @@ useEffect(() => {
       }
     });
   };
+const handleSVGElement = (element, templateId, storageKey) => {
+  const svgElement = element.tagName === 'svg' ? element : element.querySelector('svg');
+  if (!svgElement) return;
+
+  // Add editable styling
+  element.style.cursor = 'pointer';
+  element.style.outline = '2px dashed transparent';
+  element.style.transition = 'outline 0.2s ease';
+  
+  element.addEventListener('mouseenter', () => {
+    element.style.outline = '2px dashed #3b82f6';
+  });
+  
+  element.addEventListener('mouseleave', () => {
+    if (!element.classList.contains('svg-selected')) {
+      element.style.outline = '2px dashed transparent';
+    }
+  });
+
+  // Load saved SVG if exists
+  const savedSVG = localStorage.getItem(storageKey);
+  if (savedSVG) {
+    if (savedSVG.startsWith('data:image/svg+xml') || savedSVG.startsWith('<svg')) {
+      replaceSVGContent(element, savedSVG);
+    }
+  }
+
+  // Make SVG editable on double click
+  element.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    openSVGEditor(element, templateId, storageKey);
+  });
+
+  // Right-click context menu for SVG
+  element.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    openSVGContextMenu(element, templateId, storageKey, e.clientX, e.clientY);
+  });
+};
+
+// Add these helper functions for SVG handling
+const replaceSVGContent = (element, newSVGContent) => {
+  if (newSVGContent.startsWith('data:image/svg+xml')) {
+    // Handle base64 encoded SVG
+    const img = document.createElement('img');
+    img.src = newSVGContent;
+    img.style.width = '100%';
+    img.style.height = '100%';
+    element.innerHTML = '';
+    element.appendChild(img);
+  } else if (newSVGContent.startsWith('<svg')) {
+    // Handle raw SVG string
+    element.innerHTML = newSVGContent;
+  }
+};
+
+const openSVGEditor = (element, templateId, storageKey) => {
+  // You can implement a proper SVG editor modal here
+  const newSVG = prompt('Paste your SVG code here:');
+  if (newSVG) {
+    replaceSVGContent(element, newSVG);
+    localStorage.setItem(storageKey, newSVG);
+  }
+};
+
+const openSVGContextMenu = (element, templateId, storageKey, x, y) => {
+  // Simple context menu implementation
+  const option = confirm('Do you want to replace this SVG?');
+  if (option) {
+    openSVGEditor(element, templateId, storageKey);
+  }
+};
 
   const makeEditable = (container, templateId) => {
     if (!container) return;
@@ -249,6 +326,10 @@ useEffect(() => {
         else el.innerText = saved;
       }
 
+          if (el.tagName === 'svg' || el.querySelector('svg')) {
+      handleSVGElement(el, templateId, key);
+    }
+  
       if (el.tagName !== 'IMG') {
 
         el.setAttribute('contentEditable', 'true');
@@ -594,70 +675,111 @@ const getTemplateEdits = (templateId, containerIndex) => {
   };
 };
 
-  const extractTemplateElements = (templateId, containerIndex) => {
-    const container = document.getElementById(`build-container-${containerIndex}`);
-    if (!container) return null;
+const extractTemplateElements = (templateId, containerIndex) => {
+  const container = document.getElementById(`build-container-${containerIndex}`);
+  if (!container) return null;
 
-    const extracted = {
-      templateId: templateId,
-      timestamp: new Date().toISOString(),
-      elements: [],
-      stats: {
-        totalElements: 0,
-        byType: {}
-      }
+  const extracted = {
+    templateId: templateId,
+    timestamp: new Date().toISOString(),
+    elements: [],
+    stats: {
+      totalElements: 0,
+      byType: {}
+    }
+  };
+
+  const editableElements = container.querySelectorAll('.editable[data-key], .editable[data-store][data-field]');
+  
+  editableElements.forEach((el, index) => {
+    const elementData = {
+      index: index,
+      tagName: el.tagName.toLowerCase(),
+      id: el.id || null,
+      className: el.className || null,
+      text: el.tagName === 'IMG' ? null : (el.innerText?.trim() || el.textContent?.trim() || null),
+      attributes: {},
+      type: 'standard' // Add type field
     };
 
-    const editableElements = container.querySelectorAll('.editable[data-key], .editable[data-store][data-field]');
-    
-    editableElements.forEach((el, index) => {
-      const elementData = {
-        index: index,
-        tagName: el.tagName.toLowerCase(),
-        id: el.id || null,
-        className: el.className || null,
-        text: el.tagName === 'IMG' ? null : (el.innerText?.trim() || el.textContent?.trim() || null),
-        attributes: {}
+    // Detect SVG elements
+    if (el.tagName === 'svg' || el.querySelector('svg')) {
+      elementData.type = 'svg';
+      const svgElement = el.tagName === 'svg' ? el : el.querySelector('svg');
+      elementData.svgInfo = {
+        viewBox: svgElement.getAttribute('viewBox'),
+        width: svgElement.getAttribute('width'),
+        height: svgElement.getAttribute('height'),
+        paths: svgElement.querySelectorAll('path').length,
+        circles: svgElement.querySelectorAll('circle').length,
+        rects: svgElement.querySelectorAll('rect').length,
+        polygons: svgElement.querySelectorAll('polygon').length,
+        totalShapes: svgElement.querySelectorAll('path, circle, rect, polygon, line').length
       };
-
-    
-      if (el.dataset.key) {
-        elementData.attributes.dataKey = el.dataset.key;
-      }
-      if (el.dataset.store) {
-        elementData.attributes.dataStore = el.dataset.store;
-      }
-      if (el.dataset.field) {
-        elementData.attributes.dataField = el.dataset.field;
-      }
-
-     
-      if (el.tagName === 'IMG') {
-        elementData.attributes.src = el.src || null;
-        elementData.attributes.alt = el.alt || null;
-      }
-
       
-      if (el.style.cssText) {
-        elementData.inlineStyles = el.style.cssText;
-      }
+      // Get SVG content
+      const serializer = new XMLSerializer();
+      elementData.svgContent = serializer.serializeToString(svgElement);
+    }
 
-      extracted.elements.push(elementData);
-    });
-
-   
-    extracted.stats.totalElements = extracted.elements.length;
+    // Detect icon elements (common icon classes)
+    const iconClasses = ['icon', 'fa-', 'fas', 'far', 'fal', 'fab', 'bi-', 'material-icons', 'material-symbols'];
+    const hasIconClass = iconClasses.some(iconClass => 
+      el.className?.includes(iconClass)
+    );
     
-    // Count by type
-    extracted.elements.forEach(element => {
-      if (!extracted.stats.byType[element.tagName]) {
-        extracted.stats.byType[element.tagName] = 0;
-      }
-      extracted.stats.byType[element.tagName]++;
-    });
+    if (hasIconClass) {
+      elementData.type = 'icon';
+      elementData.iconInfo = {
+        iconClasses: el.className.split(' ').filter(cls => 
+          iconClasses.some(iconClass => cls.includes(iconClass))
+        ),
+        isFontIcon: el.className?.includes('fa-') || el.className?.includes('bi-') || 
+                   el.className?.includes('material-icons') || el.className?.includes('material-symbols')
+      };
+    }
 
-    return extracted;
-  };
+    if (el.dataset.key) {
+      elementData.attributes.dataKey = el.dataset.key;
+    }
+    if (el.dataset.store) {
+      elementData.attributes.dataStore = el.dataset.store;
+    }
+    if (el.dataset.field) {
+      elementData.attributes.dataField = el.dataset.field;
+    }
+
+    if (el.tagName === 'IMG') {
+      elementData.attributes.src = el.src || null;
+      elementData.attributes.alt = el.alt || null;
+    }
+
+    if (el.style.cssText) {
+      elementData.inlineStyles = el.style.cssText;
+    }
+
+    extracted.elements.push(elementData);
+  });
+
+  extracted.stats.totalElements = extracted.elements.length;
+  
+  // Count by type - update this section
+  extracted.elements.forEach(element => {
+    // Count by tag name
+    if (!extracted.stats.byType[element.tagName]) {
+      extracted.stats.byType[element.tagName] = 0;
+    }
+    extracted.stats.byType[element.tagName]++;
+    
+    // Count by element type (standard, svg, icon)
+    if (!extracted.stats.byType[element.type]) {
+      extracted.stats.byType[element.type] = 0;
+    }
+    extracted.stats.byType[element.type]++;
+  });
+
+  return extracted;
+};
 
 const handleTemplateClick = (templateId, containerIndex) => {
   setActiveTemplate(templateId);
@@ -1026,7 +1148,7 @@ const downloadJSX = async ( index) => {
               >
                 Extract Elements
               </button> */}
-
+{/* 
               <button
                 onClick={() => downloadGutenbergTemplate(templateId, index)}
                 style={{
@@ -1070,7 +1192,7 @@ const downloadJSX = async ( index) => {
                 }}
               >
                 Export as React
-              </button>
+              </button> */}
             </div>
 
             {/* Template Container */}

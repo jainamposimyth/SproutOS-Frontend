@@ -7,9 +7,13 @@ import Sections from '@/components/design/Tabs/Sections'
 import StyleGuide from '@/components/design/Tabs/StyleGuide'
 import { useImageBox } from '@/context/ImageBox'
 import ImageBox from '@/components/design/Tabs/ImageBox'
+import { useIconTab } from '@/context/IconTabContext'
+import IconTabs from '@/components/design/Tabs/IconTabs'
 export default function DesignPage() {
     const [activeIndex, setActiveIndex] = useState(4)
     const { imageBoxOpen, setImageBoxOpen } = useImageBox()
+  const {iconBoxOpen,setIconBoxOpen} = useIconTab()
+    
     const tabs = [
 
         {
@@ -64,7 +68,11 @@ export default function DesignPage() {
                 </svg>
 
             ),
-            content: imageBoxOpen ? <ImageBox /> : <Sections />
+content: imageBoxOpen 
+  ? <ImageBox /> 
+  : iconBoxOpen 
+    ? <IconTabs /> 
+    : <Sections />
         },
         {
             icon: (

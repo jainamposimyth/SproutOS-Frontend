@@ -9,7 +9,7 @@ const Temp = () => {
       
       
         return (
-<AddSections/>
+<IconTabs/>
         );
       };
       

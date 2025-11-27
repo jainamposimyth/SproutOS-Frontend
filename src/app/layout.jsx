@@ -7,7 +7,8 @@ import { BoxProvider } from "@/context/BoxContext";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import { ImageBoxProvider } from "@/context/ImageBox";
-
+import { IconTabProvider } from "@/context/IconTabContext";
+import { SelectionProvider } from "@/context/SelectionContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,14 @@ export default function RootLayout({ children }) {
             <ElementsProvider>
               <SelectedElementProvider>
                 <ImageBoxProvider>
-                  {children}
+                  <SelectionProvider>
+
+          
+                  <IconTabProvider>
+                      {children}
+                  </IconTabProvider>
+                          </SelectionProvider>
+                
                 </ImageBoxProvider>
               </SelectedElementProvider>
 
