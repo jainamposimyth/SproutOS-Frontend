@@ -5,7 +5,7 @@ import { useElements } from '@/context/ElementsContext';
 import { GoogleGenAI } from "@google/genai";
 
 export default function App() {
-  const [templates, setTemplates] = useState(['website2', 'website3']);
+  const [templates, setTemplates] = useState(['website4', 'website3','website2']);
   
   const loadedTemplatesRef = useRef(new Set());
   const containerRefsRef = useRef({});
@@ -18,10 +18,10 @@ export default function App() {
   const [imagePromptBox, setImagePromptBox] = useState(false);
   const [imagePrompt, setImagePrompt] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-const [svgEditorOpen, setSvgEditorOpen] = useState(false);
-const [currentSVG, setCurrentSVG] = useState(null);
-const [svgStorageKey, setSvgStorageKey] = useState('');
-  
+  const [svgEditorOpen, setSvgEditorOpen] = useState(false);
+  const [currentSVG, setCurrentSVG] = useState(null);
+  const [svgStorageKey, setSvgStorageKey] = useState('');
+      
 
 
   const {
@@ -798,9 +798,9 @@ const handleTemplateClick = (templateId, containerIndex) => {
 };
 
 
-  const downloadGutenbergTemplate = async (templateId, index) => {
-    const { edits, styles } = getTemplateEdits(templateId, index);
-
+  const downloadGutenbergTemplate = async ( index) => {
+    const { edits, styles } = getTemplateEdits( index);
+    const templateId= 'website14'
     const htmlTags = 'h1|h2|h3|h4|h5|h6|div|span|p|a|img|header|footer|button|input';
     const GUTENBERG_SELECTOR_TRIM_REGEX = new RegExp(`^(.*?\\b(?:${htmlTags})\\b)(?:\\s.*)?$`, 'i');
     const sanitizeForGutenberg = (selector) => {
@@ -851,33 +851,36 @@ const handleTemplateClick = (templateId, containerIndex) => {
     }
   };
 
-const downloadJSX = async ( index) => {
-  const { edits, styles, theme, containerClasses } = getTemplateEdits(index);
-  const templateId = 'website12'
-  try {
-    const response = await fetch("http://localhost:3001/api/send-jsx", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        edits, 
-        styles, 
-        template: templateId,
-        theme: theme,
-        containerClasses: containerClasses 
-      }),
-    });
-
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${templateId}-template.jsx`;
-    a.click();
-  } catch (error) {
-    console.error("JSX export failed:", error);
-    alert("Export failed. Please ensure the backend server is running.");
-  }
-};
+  const downloadJSX = async (index) => {
+    const templateId = 'website15'; // Your hardcoded template ID
+    
+    // Pass the hardcoded templateId and index
+    const { edits, styles, theme, containerClasses } = getTemplateEdits(templateId, index);
+    
+    try {
+      const response = await fetch("http://localhost:3001/api/send-jsx", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          edits, 
+          styles, 
+          template: templateId,
+          theme: theme,
+          containerClasses: containerClasses 
+        }),
+      });
+  
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${templateId}-template.jsx`;
+      a.click();
+    } catch (error) {
+      console.error("JSX export failed:", error);
+      alert("Export failed. Please ensure the backend server is running.");
+    }
+  };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
@@ -1148,7 +1151,7 @@ const downloadJSX = async ( index) => {
               >
                 Extract Elements
               </button> */}
-{/* 
+
               <button
                 onClick={() => downloadGutenbergTemplate(templateId, index)}
                 style={{
@@ -1163,7 +1166,7 @@ const downloadJSX = async ( index) => {
               >
                 Export as Gutenberg
               </button>
-
+{/* 
               <button
                 onClick={() => downloadElementorTemplate(templateId, index)}
                 style={{
@@ -1178,21 +1181,21 @@ const downloadJSX = async ( index) => {
               >
                 Export as Elementor
               </button>
-
-              <button
-                onClick={() => downloadJSX(templateId, index)}
-                style={{
-                  padding: '8px 16px',
-                  border: '1px solid #333',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  backgroundColor: 'white',
-                  fontSize: '14px',
-                  fontWeight: '500'
-                }}
-              >
-                Export as React
-              </button> */}
+*/}
+            <button
+          onClick={() => downloadJSX(index)} 
+          style={{
+            padding: '8px 16px',
+            border: '1px solid #333',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            backgroundColor: 'white',
+            fontSize: '14px',
+            fontWeight: '500'
+          }}
+        >
+          Export as React
+        </button>
             </div>
 
             {/* Template Container */}

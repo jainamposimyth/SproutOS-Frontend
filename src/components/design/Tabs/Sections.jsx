@@ -1,5 +1,5 @@
-
 'use client'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import React from 'react'
@@ -22,7 +22,7 @@ const Sections = () => {
   const { iconBoxOpen, setIconBoxOpen } = useIconTab()
   const [selectedContainer, setSelectedContainer] = useState(null);
   const { selectedElement, selectElement } = useSelection()
-  const [showColorPicker, setShowColorPicker] = useState(false);
+
   const [selectedColor, setSelectedColor] = useState('#413735');
   const [currentTheme, setCurrentTheme] = useState('light');
   const [selectedImage, setSelectedImage] = useState(null);
@@ -330,26 +330,37 @@ const handleElementAlignmentChange = (alignment) => {
   }));
 };
 const handleAlignmentChange = (alignment) => {
+  console.log('Alignment change:', alignment, 'Selected Container:', selectedContainer, 'Selected Element:', selectedElement);
+  
   if (selectedContainer !== null) {
     // Handle container alignment
+    console.log('Applying container alignment');
     handleContainerAlignmentChange(alignment);
   } else if (selectedElement && activeTemplate) {
-    // Handle element alignment (your existing code)
+    // Handle element alignment
+    console.log('Applying element alignment');
     handleElementAlignmentChange(alignment);
+  } else {
+    console.log('No container or element selected');
   }
 };
 // Add this useEffect to listen for container selection
 useEffect(() => {
   const handleContainerSelected = (event) => {
     const { containerIndex, templateId } = event.detail;
+    console.log('Container selected event:', containerIndex, templateId);
+    
     setSelectedContainer(containerIndex);
     setSelectedElement(null);
+    selectElement(null, 'sidebar');
     setShowColorPicker(false);
     
     // Load saved container alignment
     const containerKey = `container_${containerIndex}_alignment`;
     const savedAlignment = localStorage.getItem(containerKey) || 'left';
     setSelectedAlignment(savedAlignment);
+    
+    console.log('Container selection state updated:', containerIndex, 'Alignment:', savedAlignment);
   };
 
   window.addEventListener('containerSelected', handleContainerSelected);
@@ -363,7 +374,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (activeTemplate) {
-      // Load saved theme
+    
       const savedTheme = localStorage.getItem(`${activeTemplate}_theme`) || 'light';
       setCurrentTheme(savedTheme);
 
@@ -525,10 +536,7 @@ const handleElementClick = (element, type) => {
   const savedAlignment = localStorage.getItem(`${activeTemplate}_${elementKey}_alignment`) || 'left';
   setSelectedAlignment(savedAlignment);
 
-  // Show color picker for text elements
-  if (type === 'title' || type === 'description') {
-    setShowColorPicker(true);
-  }
+
 };
 
 const AlignmentButtons = () => (
@@ -891,36 +899,7 @@ useEffect(() => {
         </div>
 
 
-        {showColorPicker && selectedElement && (
-          <div className="pt-5 gap-8">
-            <div>
-              <div className='text-xl font-[500] text-sprout-color-text-default'>
-                Text Color
-              </div>
-
-
-              <div className="mt-4">
-                <div className="flex items-center gap-3">
-                  <input
-                    type="color"
-                    value={selectedColor}
-                    onChange={handleCustomColorChange}
-                    className="w-10 h-10 rounded-md  cursor-pointer"
-                  />
-                  <Input
-                    type="text"
-                    value={selectedColor}
-                    onChange={handleCustomColorChange}
-                    placeholder="#000000"
-                    className="flex-1 border border-sprout-color-border-weak rounded-md px-3 py-2 text-sm"
-                  />
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-        )}
+   
 
         <div className="pt-5 gap-8">
 

@@ -6,21 +6,20 @@ export default function ElementsPage() {
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [showElementsList, setShowElementsList] = useState(true);
 
-
   useEffect(() => {
     const savedElements = localStorage.getItem('extractedElements');
     if (savedElements) {
       setExtractedElements(JSON.parse(savedElements));
     }
-    
-  
+
+
     const templateKeys = Object.keys(extractedElements);
     if (templateKeys.length > 0 && !activeTemplate) {
       setActiveTemplate(templateKeys[0]);
     }
   }, []);
 
-  // Function to handle template selection
+  
   const handleTemplateSelect = (templateId) => {
     setActiveTemplate(templateId);
     setShowElementsList(true);
@@ -32,7 +31,7 @@ export default function ElementsPage() {
         <h1 style={{ marginBottom: '20px', fontSize: '24px', fontWeight: '600' }}>
           Template Elements Manager
         </h1>
-        
+
         {/* Template Selection */}
         <div style={{ marginBottom: '30px' }}>
           <h2 style={{ marginBottom: '15px', fontSize: '18px' }}>Select Template</h2>
@@ -61,7 +60,7 @@ export default function ElementsPage() {
           </div>
         </div>
 
-        {/* Elements Summary */}
+
         {activeTemplate && extractedElements[activeTemplate] && (
           <div style={{
             backgroundColor: 'white',
